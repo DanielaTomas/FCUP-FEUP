@@ -1,0 +1,6 @@
+/home/danielatomas/2ºano/1ºsemestre/Programação/aula9e10/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/danielatomas/2ºano/1ºsemestre/Programação/aula9e10/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/danielatomas/2ºano/1ºsemestre/Programação/aula9e10/cmake-build-debug/CMakeFiles/ex1.dir
+/home/danielatomas/2ºano/1ºsemestre/Programação/aula9e10/cmake-build-debug/CMakeFiles/ex4.dir
+/home/danielatomas/2ºano/1ºsemestre/Programação/aula9e10/cmake-build-debug/CMakeFiles/ex5.dir
+/home/danielatomas/2ºano/1ºsemestre/Programação/aula9e10/cmake-build-debug/CMakeFiles/ex6.dir

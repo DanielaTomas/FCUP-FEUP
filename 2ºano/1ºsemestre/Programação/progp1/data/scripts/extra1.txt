@@ -1,0 +1,14 @@
+blank 1366 600 255 255 255
+add input/vu.png 255 255 255 0 0 
+add input/vu2.png 255 255 255 600 0 
+rotate_left
+rotate_right
+rotate_right
+rotate_right
+rotate_right
+rotate_right
+replace 255 255 255 0 0 0
+replace 0 0 0 255 255 255
+invert
+invert
+save output/extra1.png

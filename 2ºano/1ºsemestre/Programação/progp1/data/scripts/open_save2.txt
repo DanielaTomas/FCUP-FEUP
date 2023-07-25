@@ -1,0 +1,2 @@
+open input/unionjack.png
+save output/open_save2.png

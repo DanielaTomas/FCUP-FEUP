@@ -1,0 +1,392 @@
+Cripto 1
+
+Confidencialidade -> cifras simetricas/assimetricas, acordo chave 
+
+Autenticidade ( e integridade) -> assinaturas, acordos de chave, MAC 
+Não repudio!
+
+Cifras simetricas -> encrypt e decrypt com chave secreta k (pre partilhada por emissor e recetor) 
+
+Cifras de bloco -> DES e AES
+AES (Advanced Encryption Standard) - matrix 4x4 bytes, 1 round = 4 transformacoes 
+  	- addroundkey
+	- mixcolumn
+	- shiftrow
+	- bytesub
+
+Cifra de bloco pode ser eletronic codebook -> Plaintext -> block cipher encrypt -> ciphertext
+			ciper block chaining -> initialization vector 
+			counter mode -> não usa vector, mas usa nonce e counter antes do block cipher encrypt <- + seguro!
+
+
+Outras cifras simetricas -> ChaCha20 -> sequencial com nonce, com gerador pseudo-aleatorio (sequencial), estrutura semelhante ao countermode 
+
+-------------------------------------
+
+Cripto 2 
+
+Exemplo de Ataque ativo -> Bit Flip
+
+MAC - Message authenticaton codes -> solução para detetar remocao, duplicacao, e reordenacao de mensagens
+Garantir que M apenas é transmitida 1 vez
+t = MAC(k, n ||m) -> transmitimos (m,t), ou seja do outro lado a pessoa tem k, n
+
+chave secreta k 
+mensagem m
+tag t -> checksum criptografico -> não encriptam m 
+
+Cookie poisioning:
+- user edita cookies para mudar creditos dum jogo
+Solução: server autentica info na cookie com um MAC
+
+Construção usual: HMAC -> t = H(okey || H (ikey || m )) 
+outer key e innerkey
+
+Construção usual: Poly1305 -> t = f(m,r) + s 
+
+Sabemos que cifras = confidencialidade
+MAC = autenticidade
+Encrypt then mac = rubusto
+
+AEAD = authehticated encryption with associated data 
+canal seguro com cripto simetrica 
+garante confidencialidade e autenticidade
++ eficiente que composiçao de cifra + mac 
+
+AES-GCM Galois counter mode é o AEAD mais utilizado
+Alternativa é ChaCha20-Poly1305 recomendado no TLS 1.3 -> essencialmente encrypt then mac 
+
+Exemplo de aleatoriedade - Linux /dev/urandom
+
+-------------------------------------------------
+
+Cripto 3 
+
+Antes de anos 70 apenas existia cripto simética, e chaves pré partilhadas
+Apos 1975 surge: 
+	- Cifras de chaves PUBLICAS 
+	- Assinaturas digitais 
+	- Acordos de chaves 
+
+Gestão de chaves
+	Cripto simetrica - N agentes, pré distribuição de chaves
+
+Em contexto fechado: 
+	N agentes
+	Solucao Centralizada ( N Chaves) 
+	Key distribution center ( ponto central de falha) <- armazena 1 chave de longa duração entre agentes e KDC 
+
+Chaves de sessão <> chaves longa duração
+chaves sessão é tipo uma sessao num site: danos limitados se hackeado
+chaves longa duração é tipo smartcard, harware security module..
+
+Problema 1 - Chaves simetricas de longa duração pré partilhadas
+	- sistemas abertos assincronos -> cifras de chave publica 
+	- sistemas abertos sincronos -> acordos chave + assinaturas digitais
+
+Problema 2 -  Não repudio 
+	- sitemas abertos -> assinaturas digitais 
+
+
+Cifra de chave publica -> PK chave publica para cifrar, SK chave secreta para decrifar
+	- mais ineficientes que cifras simetricas 
+	- apenas viavel para mensagens pequenas 
+	- construção com one way trapdoor permutation - OAEP encryption
+
+Assinaturas digitais - SK chave assinatura, VK chave publica de verificacao
+		- não falsificavel, reutilizavel, repudiavel 
+		- garantem autenticidade e integridade 
+		- não necessitam de chave pre partilhada 
+		- assinaturas com base em RSA (mais populares)
+		- assinaturas com base em curvas elipticas ( mais eficientes), predominantes em protocolos handshake
+
+Usa-se chaves publicas para transportar chaves simetricas, porque as cifras publicas
+são mais eficientes para cifrar mensagens pequenas (como é o caso duma chave simetrica) 
+
+Envelopes digitais: 
+	- assinar doc e só depois cifrar
+	- acrescentar quem é o recetor 
+
+--------------------------------------------------------------------------
+
+Cripto 4 
+
+perfect forward secrecy: comprometer chaves de longa duração não compromete sessoes passadas 
+
+Acordo de chaves: não usa cifras de chave publica para transportar chaves simetricas 
+	- PROTOCOLO DIFFIE HELLMAN - vulneravel a Man in the middle
+	- autenticacao: assinaturas digitais
+
+Diffie hellman serve para:
+		- transportar chaves secretas por um meio de comunicacao inseguro, sem nenhuma das partes ter chaves
+		pré partilhadas
+
+
+Man in the middle possivel sempre que: 
+		- usam-se parametros publicos trocados na rede sem saber a sua origem
+		- podem ser chaves publicas, cifras, parametros diffie...
+
+canais seguros:
+	- autenticar chaves publicas -> Public Key Infrastructure PKI 
+	- protocolo acordo de chaves -> protege confidencialidade da chave simetrica
+
+-------------------------------------------------------------------------
+
+PKI 1 
+
+Cripto de chaves publicas pressupoe chaves autenticas caso contrario -> Man in the middle 
+
+PKI -> quando é necessario cobertura legal/regulamentar 
+
+Certificados de chave publica 
+	- alice envia a bob chave publica PK por canal inseguro
+	- bob tem de garantir que alice tem chave secreta
+	solucao: bob tem canal autenticado com trusted third party
+	- estes certificados usam assinaturas digitais
+
+TTP = Cerficiation authority (CA)
+	- fixa identidade de alice + chave publica de alice 
+	- info especifica da CA, identidade e numero serie
+	- validade
+CA assina o documento codificado com regras ASN.1 (Abstract syntax notation)
+Quando bob receber o doc de alice, alem de verificar os dados:
+	- a PKI verifica que CA é de confiança
+	- e obtem chave publica da CA para confirmar assinatura
+
+RESUMO:
+Quem envia/recebe certificados em cifras assimetricas: <- assimetricas ou de chave publica!! 
+	- chave publica pertence recetor
+	- emissor obtem certificado do recetor à priori
+
+Em assinaturas digitais:
+	- chave publica pertence ao emissor
+	- pode assinar e enviar certificado junamente com (M, teta) <- diffie hellman
+
+Se for em acordo chaves: 
+	- se mutuamente autenticado, ambos enviam certificados
+
+Certificados de chave publica : X.509
+
+--------------------------------------------------------------------------
+
+PKI 2 
+
+Assegura que: 
+	- utilizar dum certificado recebe garantia
+	- dada por CA
+	- chave publica pertence a outra entidade (confiavel)
+
+Cadeias de certificacao:
+	- certificados de raiz (root CAs) <- self signed -> não emitem diretamente certificados para utilizadores finais!!
+	- CA gera um par de chaves (sk, pk)
+	- cria seu proprio certificado com subject = issuer = CA name 
+	- inclui PK e o CA assina-o com sk 
+
+Hierarquia:
+	- para autenticar chave de alice, bob obtem certificado de alice
+	- para validade certificado, obtem CA da alice
+	- para decidir se confia em chave de alice pode precisar de sequencia de certificados CA
+
+Registration authorities (RA) -> loja cidadao (entrega cartão já feito)
+	-front-end
+	- verificam dados colocados nos certificados, e posse de chave privada correspondente à chave publica
+	presente no certificado
+
+CA = backend, produz chaves e certificados -> instalações da INCM onde produzem os cartões com os dados
+
+Revogar certificados: <- Certificate revokation lists (CRL)
+	- validade, perda chave secreta, CA corrompida...
+
+3 solucoes:
+	- trusted service provider lists (TSL) - whitelist de certificados
+	- online certificate status procolo (OCSP) - servidor seguro gerido pela CA
+	- certificate pinning - browsers/apps que tem whitelists proprias
+
+politicas de certificacao - regras de operacao OID 
+---------------------------------------------------------------------
+
+Autenticacao 1 
+
+Protocolo desafio resposta:
+	- bob cria um desafio.. valor aleatorio e envia a alice
+	- alice assina ou calcula um MAC e devolve
+	- bob verifica assinatura/mac dentro dum tempo limite
+desafio imprevisivel e com chaves autenticas impossivel falsificar!!
+
+Autenticacao de utilizadores:
+	- prova de identidade, password etc..
+
+Phishing: Homoglyphs -> registar sites falsos mas parecidos, facebook.com -> fabebook.com
+
+Server não precisa de saber pass, apenas reconhecer a certa -> guardar H(pw), H = hash criptografica
+
+Ataques de dicionario.. -> usar salt! aleatorio para cada user. (r, H (r || pw))
+	- usar funcoes hash pesadas, PBKDF2, bcrypt, scrypt
+
+------------------------------------------------------------------------
+
+Autenticacao 2 
+
+Autenticação multi-fator -> defesa em profundidade 
+	- cartão MB + codigo por exemplo -> prova de posse != prova identidade
+
+One time Tokens -> cripto simetrica -> gera MAC da hora atual
+One Time Passcode -> sms com codigo -> insuficiente para cenários security critical -> lançar 1 missil
+
+HTTP auth -> servers mantinham passwords em pastas
+Token de sessão - fica do lado do cliente, impede que tenha de fazer login a cada pagina
+	- pode ser roubado por XSS, eavesdropping, MITM..
+
+Session hijacking:
+	- token fixation
+
+Biometria -
+	Good : não é transferivel, boas garantias
+	Bad : esquecimento
+Registo      - Recolhe amostras, e extrai templates
+Autenticacao - Recolhe amostras, e match com templates
+
+FAR - falsos positivos - aceitar indevidamente
+FRR - falsos negativos - rejeitar indevidamente
+
+Deseja-se FAR baixo, mas isso tá associado a FRR alto (prejudica usabilidade) 
+	-> Equal Error Rate Point: FAR = FRR
+
+usurpação (spofing)
+
+----------------------------------------------------------------------------
+
+Segurança rede 1 
+
+Comunicar entre redes -> protocolos, semanticas, normas
+
+physical layer: cenas fisicas, hubs, repetidores, cabos
+data link layer: switches, bridges
+network layer: routers
+transport layer: gateways
+
+IP protocol :   - sem ligação
+		- best effort(não ha garantias de entrega)
+		- nem tentativas de recuperação
+
+Pedidos ARP dentro da rede
+
+Routing de pacotes: 	
+	- localmente : sysadmins
+	- globalmente : Border gateway protocol 
+
+TCP: ligações entre aplicacoes de maquinas diferentes 
+	-  com base em numeros de sequencia 32 bits
+	- 1 segmento = 1 pacote ip
+	- FIN termina ligação (implica ACK)
+	- RST cliente termina ligação sem ACK, (detetou erro)
+
+UDP: Wrapper do IP sem ligações/gestão do TCP
+DNS : mapeia nomes em endereços IP
+Modelo CIA : Confidencialidade, Integridade, Disponibilidade
+
+Camada Fisica/Logica:
+	- Wiretapping: escuta canal de comunicação onde entidades terceiras trocam info
+	- pode ser ativo ou passivo
+	- Eavesdropping/packet sniffing
+	- MAC flooding (melhor sniffing) -> injeta tabela com nosso MAC, e o switch retransmite tudo pra nos
+	- MAC spoofing - rouba endereço mac
+
+Network layer: 
+	- IP - não ha autenticacao
+	- ARP poisioning
+	- Hijacking de routing -> ICMP Router Discovery protocol -> permite descoberta de router em rede
+	- DHCP -> DORA
+	- DNS spoofing
+	- DNS cache poisioning -> kaminsky attack 
+-----------------------------------------------------------------------------------------------
+
+Segurança redes 2 
+
+Transport layer TCP - não existe forma de saber se pacote veio do emissor certo, basta que tenha formato correto
+	- ataque simples: enviar RST e terminar ligação -> Great Firewall da China
+	- TCP session hijack: utilizador já se autenticou -> eficaz e não há contra medidas eficazes -> + dificil que spoofing
+	- TCP spoofing: atacante precisa das credenciais para se autenticar
+
+UDP hijacking -> não ha controlo trafego como no tcp 
+	-> seconddate -> exploit que takes advantage of web-based protocols and man in the middle positioning
+
+Protocolos de redes não são secure by design
+	-> defesas -> firewall, NAT, Proxies..
+	-> firewalls podem ser host based(entre cada pc) ou network based (uma que protege a rede toda)
+		-> define politica de controlo de acessos
+				-> default allow
+				-> default deny -> mais conservadora
+
+Filtragem de packets:
+	-> sem estado -> forma limitada de filtragem
+	-> com estado -> mantem registo das ligacoes ativas para ver se pacote faz sentido nesse contexto
+
+NAT tables
+	Good: reduz exposicao ao exterior
+	Bad: pode perturbar funcionamento de alguns protocolos, facil de bypass (slipstream)
+
+Proxy: Man in the middle do bem
+
+-----------------------------------------------------------------------------------------------------
+
+Malware
+
+Tipos de tomadas de controlo (falado nas primeiras aulas)
+zero day exploits, botnets.
+
+Botnets podem ser: centralizada ou peer to peer
+	-> fazem push e pull
+
+Combater malware:
+	-> Intrusion detection system IDS -> apos ataque já ter sido feito 
+	-> Intrusion prevention system IPS -> prevencao
+
+Pode haver: (I = evento intrusao, D = evento alerta/detecao) 
+	falso positivo -> alerta de problema que nao existe -> Pr [ D | not I ]
+	falso negativo -> ausencia de alerta para problema existente -> Pr [ not D | I ] 
+EQUILIBRIO ENTRE AMBOS!!
+
+Como detetar?
+	- signatured based- reconhecer assinaturas e padroes de ataques(black listing)
+	- anomalias - utilizacao de recursos anomalos
+	- integridade/especificacao
+	- antivirus, bloqueios e URL, scanning de redes..
+
+NIDS - detecao em toda a rede, e não  só da fronteira com o exterior
+Network ids/ips - manter tabela das ligacoes ativas
+host based ids/ips - defesa em profundidade, detecao mais agressiva
+
+NIDS - Network intrusion detection system
+	Good:   1 sistema permite proteger N sistemas, 
+		simples gerir
+		nao ocupa recursos nos sistemas em producao
+
+
+HIDS - Host intrusion detection system
+	Good:   protege amaeacas que nao vem da rede (USB), 
+		nao afeta sistema todo, 
+		acesso direto à semantica da atividade maliciosa
+
+-Analise de logs
+-Pen-Testing
+-HoneyPots
+
+---------------------------------------------------------------------------------------
+
+TLS - Transport Layer security
+	- Handshake TLS 1.3 = Diffie hellman autenticado
+			- vantagens:  - eficiencia com curvas elipticas
+				      - perfect forward secrecy
+mensagens http sao transmitidas como payloads tls
+	- proxy precisa de saber o cabecalho http para establecer ligacao
+	- virtual hosts
+
+Usar HTTPS? -> AES-NI -> aceleradores de HW 
+SSL Strip attack -> MiM ligar-se em nosso nome a um site
+	-> MIM SÓ É IMPEDIDO SE AUTENTICARMOS CHAVE PUBLICA NO SERVIDOR 
+	-> NUNCA USAR OBJETOS EMBEBIDOS A PARTIR DE LINKS HTTP
+
+
+
+	

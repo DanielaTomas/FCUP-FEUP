@@ -1,0 +1,8 @@
+
+<svg width="600" height="600" xmlns="http://www.w3.org/2000/svg">
+  <circle transform-origin="300 300" cx="300" cy="300" r="20" fill="blue" transform="scale(10)"/>
+  <circle transform-origin="300 300" cx="300" cy="300" r="20" fill="yellow" transform="scale(8)"/>
+  <circle transform-origin="300 300" cx="300" cy="300" r="20" fill="green" transform="scale(4)"/>
+  <circle transform-origin="300 300" cx="300" cy="300" r="20" fill="red" transform="scale(2)"/>
+  <circle transform-origin="300 300" cx="300" cy="300" r="20" fill="black"/>
+</svg>

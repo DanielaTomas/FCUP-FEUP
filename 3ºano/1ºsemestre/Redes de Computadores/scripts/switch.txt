@@ -1,0 +1,21 @@
+tux42 eth0 -> port 5
+tux43 eth0 -> port 7
+tux44 eth0 -> port 9
+tux44 eth1 -> port 11
+router -> port 13
+
+/system reset-configuration
+
+/interface bridge port remove [find interface=ether5]
+/interface bridge port remove [find interface=ether7]
+/interface bridge port remove [find interface=ether9]
+/interface bridge port remove [find interface=ether11]
+/interface bridge port remove [find interface=ether13]
+
+/interface bridge port add bridge=bridge40 interface=ether7
+/interface bridge port add bridge=bridge40 interface=ether9
+/interface bridge port add bridge=bridge41 interface=ether5
+/interface bridge port add bridge=bridge41 interface=ether11
+/interface bridge port add bridge=bridge41 interface=ether13
+
+/interface bridge port print brief

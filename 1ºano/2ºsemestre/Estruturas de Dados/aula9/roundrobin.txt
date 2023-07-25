@@ -1,0 +1,6 @@
+5
+4
+emacs 9
+firefox 3
+bash 12
+dia 5

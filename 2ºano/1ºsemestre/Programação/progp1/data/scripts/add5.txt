@@ -1,0 +1,14 @@
+blank 900 600
+ 255 255 255
+add input/fernando-pessoa.png
+ 255 255 255 
+ 0 0
+ add input/fernando-pessoa.png
+ 255 255 255 
+ 300 125
+add input/fernando-pessoa.png
+ 255 255 255 
+ 600 225
+save output/add5.png
+
+ 

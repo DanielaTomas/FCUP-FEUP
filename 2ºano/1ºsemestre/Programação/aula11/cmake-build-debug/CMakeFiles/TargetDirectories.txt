@@ -1,0 +1,3 @@
+/home/danielatomas/2ºano/1ºsemestre/Programação/aula11/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/danielatomas/2ºano/1ºsemestre/Programação/aula11/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/danielatomas/2ºano/1ºsemestre/Programação/aula11/cmake-build-debug/CMakeFiles/aula11.dir

@@ -1,0 +1,1 @@
+/usr/bin/c++  -Wall -g -fsanitize=address -fsanitize=undefined -fno-omit-frame-pointer -g CMakeFiles/ex3.dir/ex3.cpp.o -o ex3 

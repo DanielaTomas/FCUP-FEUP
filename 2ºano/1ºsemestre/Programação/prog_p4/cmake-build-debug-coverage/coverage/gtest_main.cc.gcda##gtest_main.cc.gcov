@@ -1,0 +1,67 @@
+        -:    0:Source:/home/daniela/2ºano/Programação/prog_p4/gtest/googletest/src/gtest_main.cc
+        -:    0:Graph:/home/daniela/2ºano/Programação/prog_p4/cmake-build-debug-coverage/gtest/googletest/CMakeFiles/gtest_main.dir/src/gtest_main.cc.gcno
+        -:    0:Data:/home/daniela/2ºano/Programação/prog_p4/cmake-build-debug-coverage/gtest/googletest/CMakeFiles/gtest_main.dir/src/gtest_main.cc.gcda
+        -:    0:Runs:1
+        -:    1:// Copyright 2006, Google Inc.
+        -:    2:// All rights reserved.
+        -:    3://
+        -:    4:// Redistribution and use in source and binary forms, with or without
+        -:    5:// modification, are permitted provided that the following conditions are
+        -:    6:// met:
+        -:    7://
+        -:    8://     * Redistributions of source code must retain the above copyright
+        -:    9:// notice, this list of conditions and the following disclaimer.
+        -:   10://     * Redistributions in binary form must reproduce the above
+        -:   11:// copyright notice, this list of conditions and the following disclaimer
+        -:   12:// in the documentation and/or other materials provided with the
+        -:   13:// distribution.
+        -:   14://     * Neither the name of Google Inc. nor the names of its
+        -:   15:// contributors may be used to endorse or promote products derived from
+        -:   16:// this software without specific prior written permission.
+        -:   17://
+        -:   18:// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+        -:   19:// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+        -:   20:// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+        -:   21:// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+        -:   22:// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+        -:   23:// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+        -:   24:// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+        -:   25:// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+        -:   26:// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+        -:   27:// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+        -:   28:// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+        -:   29:
+        -:   30:#include <cstdio>
+        -:   31:#include "gtest/gtest.h"
+        -:   32:
+        -:   33:#if GTEST_OS_ESP8266 || GTEST_OS_ESP32
+        -:   34:#if GTEST_OS_ESP8266
+        -:   35:extern "C" {
+        -:   36:#endif
+        -:   37:void setup() {
+        -:   38:  testing::InitGoogleTest();
+        -:   39:}
+        -:   40:
+        -:   41:void loop() { RUN_ALL_TESTS(); }
+        -:   42:
+        -:   43:#if GTEST_OS_ESP8266
+        -:   44:}
+        -:   45:#endif
+        -:   46:
+        -:   47:#else
+        -:   48:
+function main called 1 returned 100% blocks executed 86%
+        1:   49:GTEST_API_ int main(int argc, char **argv) {
+       1*:   50:  printf("Running main() from %s\n", __FILE__);
+        1:   50-block  0
+branch  0 taken 0 (fallthrough)
+branch  1 taken 1
+    %%%%%:   50-block  1
+        1:   50-block  2
+call    2 returned 1
+        1:   51:  testing::InitGoogleTest(&argc, argv);
+call    0 returned 1
+        1:   52:  return RUN_ALL_TESTS();
+call    0 returned 1
+        -:   53:}
+        -:   54:#endif

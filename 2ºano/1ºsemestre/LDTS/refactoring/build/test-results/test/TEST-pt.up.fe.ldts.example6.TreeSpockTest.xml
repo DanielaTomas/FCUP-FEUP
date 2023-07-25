@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="pt.up.fe.ldts.example6.TreeSpockTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2021-12-07T17:24:18" hostname="daniela-VirtualBox" time="0.118">
+  <properties/>
+  <testcase name="Tree Creation" classname="pt.up.fe.ldts.example6.TreeSpockTest" time="0.033"/>
+  <testcase name="Tree Set Location" classname="pt.up.fe.ldts.example6.TreeSpockTest" time="0.003"/>
+  <testcase name="Tree to String" classname="pt.up.fe.ldts.example6.TreeSpockTest" time="0.005"/>
+  <testcase name="Add Appraisal" classname="pt.up.fe.ldts.example6.TreeSpockTest" time="0.026"/>
+  <testcase name="Next Appraisal Overdue" classname="pt.up.fe.ldts.example6.TreeSpockTest" time="0.048"/>
+  <testcase name="Next Appraisal Not Overdue" classname="pt.up.fe.ldts.example6.TreeSpockTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

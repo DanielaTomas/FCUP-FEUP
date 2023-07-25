@@ -1,0 +1,11 @@
+<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
+    <line x1="0" y1="0" x2="100" y2="100" stroke="black"/>
+    <line x1="0" y1="0" x2="100" y2="100" stroke="red"
+       transform="rotate(30)" />
+    <line x1="0" y1="0" x2="100" y2="100" stroke="green"
+          transform="rotate(-30)" />
+    <line x1="0" y1="0" x2="100" y2="100" stroke="blue"
+          transform="rotate(15)" />
+    <line x1="0" y1="0" x2="100" y2="100" stroke="yellow"
+          transform="rotate(-15)" />
+</svg>

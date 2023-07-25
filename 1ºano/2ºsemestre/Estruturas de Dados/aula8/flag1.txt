@@ -1,0 +1,5 @@
+1
+1
+MiguelCoimbra Laranja 0 20
+RitaRibeiro Verde 0 5
+FernandoSilva Amarelo 5 15

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="pt.up.fe.ldts.example4.WorkerSpockTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2021-12-07T17:24:17" hostname="daniela-VirtualBox" time="0.113">
+  <properties/>
+  <testcase name="Worker" classname="pt.up.fe.ldts.example4.WorkerSpockTest" time="0.079"/>
+  <testcase name="Supervisor" classname="pt.up.fe.ldts.example4.WorkerSpockTest" time="0.031"/>
+  <testcase name="Client" classname="pt.up.fe.ldts.example4.WorkerSpockTest" time="0.003"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

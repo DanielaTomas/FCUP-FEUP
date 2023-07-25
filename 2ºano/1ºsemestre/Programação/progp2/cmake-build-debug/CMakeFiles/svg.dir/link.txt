@@ -1,0 +1,2 @@
+/usr/bin/ar qc libsvg.a CMakeFiles/svg.dir/svg/png_image.cpp.o CMakeFiles/svg.dir/svg/svg_to_png.cpp.o CMakeFiles/svg.dir/svg/shape.cpp.o CMakeFiles/svg.dir/svg/elements.cpp.o
+/usr/bin/ranlib libsvg.a

@@ -1,0 +1,3 @@
+open input/pacman.png
+replace 0 0 0 255 255 255 
+save output/replace1.png

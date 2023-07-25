@@ -1,0 +1,1 @@
+/usr/bin/c++  -Wall -g -fsanitize=address -fsanitize=undefined -fno-omit-frame-pointer -g CMakeFiles/ex4.dir/ex4.cpp.o -o ex4 

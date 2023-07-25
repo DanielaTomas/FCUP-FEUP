@@ -1,0 +1,3 @@
+open input/pacman-game.png
+crop 300 300 300 300 
+save output/crop4.png

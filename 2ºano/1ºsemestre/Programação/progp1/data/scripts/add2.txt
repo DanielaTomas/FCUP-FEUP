@@ -1,0 +1,16 @@
+blank 
+ 800 800 
+ 0 0 255 
+add input/lion.png 
+255 255 255
+0 0  
+add input/lion.png 
+255 255 255
+0 400
+add input/mondrian.png 
+255 255 255
+400 0
+add input/mondrian.png 
+255 255 255
+400 400
+save output/add2.png

@@ -1,0 +1,56 @@
+Performing C SOURCE FILE Test CMAKE_HAVE_LIBC_PTHREAD failed with the following output:
+Change Dir: /home/daniela/2ºano/Programação/prog_p4/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_afae6/fast && /usr/bin/make -f CMakeFiles/cmTC_afae6.dir/build.make CMakeFiles/cmTC_afae6.dir/build
+make[1]: a entrar na pasta "/home/daniela/2ºano/Programação/prog_p4/build/CMakeFiles/CMakeTmp"
+Building C object CMakeFiles/cmTC_afae6.dir/src.c.o
+/usr/bin/cc   -Wall -g -fsanitize=address -fsanitize=undefined -fno-omit-frame-pointer -DCMAKE_HAVE_LIBC_PTHREAD   -o CMakeFiles/cmTC_afae6.dir/src.c.o   -c /home/daniela/2ºano/Programação/prog_p4/build/CMakeFiles/CMakeTmp/src.c
+Linking C executable cmTC_afae6
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_afae6.dir/link.txt --verbose=1
+/usr/bin/cc  -Wall -g -fsanitize=address -fsanitize=undefined -fno-omit-frame-pointer -DCMAKE_HAVE_LIBC_PTHREAD    CMakeFiles/cmTC_afae6.dir/src.c.o  -o cmTC_afae6 
+/usr/bin/ld: CMakeFiles/cmTC_afae6.dir/src.c.o: referência indefinida a símbolo "pthread_detach@@GLIBC_2.2.5"
+/usr/bin/ld: /lib/x86_64-linux-gnu/libpthread.so.0: erro ao adicionar símbolos: DSO em falta da linha de comandos
+collect2: error: ld returned 1 exit status
+make[1]: *** [CMakeFiles/cmTC_afae6.dir/build.make:87: cmTC_afae6] Erro 1
+make[1]: a sair da pasta "/home/daniela/2ºano/Programação/prog_p4/build/CMakeFiles/CMakeTmp"
+make: *** [Makefile:121: cmTC_afae6/fast] Erro 2
+
+
+Source file was:
+#include <pthread.h>
+
+void* test_func(void* data)
+{
+  return data;
+}
+
+int main(void)
+{
+  pthread_t thread;
+  pthread_create(&thread, NULL, test_func, NULL);
+  pthread_detach(thread);
+  pthread_join(thread, NULL);
+  pthread_atfork(NULL, NULL, NULL);
+  pthread_exit(NULL);
+
+  return 0;
+}
+
+Determining if the function pthread_create exists in the pthreads failed with the following output:
+Change Dir: /home/daniela/2ºano/Programação/prog_p4/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_528ff/fast && /usr/bin/make -f CMakeFiles/cmTC_528ff.dir/build.make CMakeFiles/cmTC_528ff.dir/build
+make[1]: a entrar na pasta "/home/daniela/2ºano/Programação/prog_p4/build/CMakeFiles/CMakeTmp"
+Building C object CMakeFiles/cmTC_528ff.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -Wall -g -fsanitize=address -fsanitize=undefined -fno-omit-frame-pointer -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTC_528ff.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-3.16/Modules/CheckFunctionExists.c
+Linking C executable cmTC_528ff
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_528ff.dir/link.txt --verbose=1
+/usr/bin/cc  -Wall -g -fsanitize=address -fsanitize=undefined -fno-omit-frame-pointer -DCHECK_FUNCTION_EXISTS=pthread_create    CMakeFiles/cmTC_528ff.dir/CheckFunctionExists.c.o  -o cmTC_528ff  -lpthreads 
+/usr/bin/ld: não foi possível localizar -lpthreads
+collect2: error: ld returned 1 exit status
+make[1]: *** [CMakeFiles/cmTC_528ff.dir/build.make:87: cmTC_528ff] Erro 1
+make[1]: a sair da pasta "/home/daniela/2ºano/Programação/prog_p4/build/CMakeFiles/CMakeTmp"
+make: *** [Makefile:121: cmTC_528ff/fast] Erro 2
+
+
+

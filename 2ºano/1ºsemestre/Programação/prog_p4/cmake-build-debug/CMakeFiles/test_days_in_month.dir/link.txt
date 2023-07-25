@@ -1,0 +1,1 @@
+/usr/bin/c++  -Wall -g -fsanitize=address -fsanitize=undefined -fno-omit-frame-pointer -g CMakeFiles/test_days_in_month.dir/src/test_days_in_month.cpp.o -o test_days_in_month  lib/libgtestd.a lib/libgtest_maind.a -lpthread libfuncs.a lib/libgtestd.a -lpthread 

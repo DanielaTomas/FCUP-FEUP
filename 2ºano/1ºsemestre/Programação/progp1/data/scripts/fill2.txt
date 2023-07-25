@@ -1,0 +1,5 @@
+open input/unionjack.png
+fill 0 0 100 50 255 0 0 
+fill 150 75 50 25 0 255 0 
+fill 275 125 25 25 0 0 255 
+save output/fill2.png

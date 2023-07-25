@@ -1,0 +1,4 @@
+open input/pacman-game.png
+rotate_right
+rotate_right
+save output/rotate8.png

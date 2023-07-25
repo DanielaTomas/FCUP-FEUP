@@ -1,0 +1,2 @@
+open input/lion.png
+save output/open_save1.png

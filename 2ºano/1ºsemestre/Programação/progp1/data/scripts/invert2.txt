@@ -1,0 +1,4 @@
+open input/xkcd.png
+invert
+invert
+save output/invert2.png

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="pt.up.fe.ldts.example2.ShapeSpockTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2021-12-07T17:24:18" hostname="daniela-VirtualBox" time="0.289">
+  <properties/>
+  <testcase name="Get Area Circle" classname="pt.up.fe.ldts.example2.ShapeSpockTest" time="0.235"/>
+  <testcase name="Get Area Rectangle" classname="pt.up.fe.ldts.example2.ShapeSpockTest" time="0.001"/>
+  <testcase name="Get Perimeter Circle" classname="pt.up.fe.ldts.example2.ShapeSpockTest" time="0.006"/>
+  <testcase name="Get Perimeter Rectangle" classname="pt.up.fe.ldts.example2.ShapeSpockTest" time="0.001"/>
+  <testcase name="Draw Circle" classname="pt.up.fe.ldts.example2.ShapeSpockTest" time="0.038"/>
+  <testcase name="Draw Rectangle" classname="pt.up.fe.ldts.example2.ShapeSpockTest" time="0.005"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

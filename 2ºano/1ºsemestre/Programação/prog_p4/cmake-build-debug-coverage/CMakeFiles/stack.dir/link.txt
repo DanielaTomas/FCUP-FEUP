@@ -1,0 +1,2 @@
+/usr/bin/ar qc libstack.a CMakeFiles/stack.dir/src/stack.c.o
+/usr/bin/ranlib libstack.a

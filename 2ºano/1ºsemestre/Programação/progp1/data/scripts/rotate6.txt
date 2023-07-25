@@ -1,0 +1,5 @@
+open input/unionjack.png
+rotate_left
+rotate_left
+rotate_right
+save output/rotate6.png

@@ -1,0 +1,13 @@
+<svg width="1001" height="1001" xmlns="http://www.w3.org/2000/svg">
+    <g id="captain_america_shield">
+        <rect x="0" y="0" width="500" height="500" fill="red"/>
+        <rect x="50" y="50" width="400" height="400" fill="white"/>
+        <rect x="100" y="100" width="300" height="300" fill="red"/>
+        <rect x="150" y="150" width="200" height="200" fill="blue"/>
+        <polygon fill="white"  points="250,150 280,209 346,219 298,265 309,330 250,300 192,330 203,265 155,219 221,209"/>
+
+    </g>
+    <use href="#captain_america_shield" transform="translate(500,0)"/>
+    <use href="#captain_america_shield" transform="translate(0,500)"/>
+    <use href="#captain_america_shield" transform="translate(500,500)"/>
+</svg>

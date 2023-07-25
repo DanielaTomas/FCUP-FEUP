@@ -1,0 +1,1 @@
+/usr/bin/c++ -g CMakeFiles/TP3a.dir/main.cpp.o CMakeFiles/TP3a.dir/TP3a/ex1.cpp.o CMakeFiles/TP3a.dir/TP3a/ex2.cpp.o CMakeFiles/TP3a.dir/TP3a/ex3.cpp.o CMakeFiles/TP3a.dir/TP3a/ex4.cpp.o CMakeFiles/TP3a.dir/TP3a/ex5.cpp.o CMakeFiles/TP3a.dir/TP3a/ex6.cpp.o -o TP3a  lib/libgtest_maind.a lib/libgmock_maind.a lib/libgmockd.a lib/libgtestd.a -lpthread 

@@ -1,0 +1,9 @@
+<svg width="210" height="210"  xmlns="http://www.w3.org/2000/svg">
+  <polygon points="25,25 50,25 50,50" fill="red"/>
+  <polygon points="25,25 50,25 50,50"
+           fill="blue"
+           transform="scale(2)"/>
+  <polygon points="25,25 50,25 50,50"
+           fill="green"
+           transform="scale(4)"/>
+</svg>

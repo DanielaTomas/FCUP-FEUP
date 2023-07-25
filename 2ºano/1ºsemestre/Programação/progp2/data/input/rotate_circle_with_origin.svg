@@ -1,0 +1,16 @@
+
+<svg width="600" height="600" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="300" cy="300" r="220" fill="#f0f0f0"/>
+  <circle cx="300" cy="200" r="100" fill="red"
+    transform="rotate(45)" transform-origin="300 300"/>
+  <circle cx="300" cy="200" r="100" fill="green"
+          transform="rotate(90)" transform-origin="300 300"/>
+  <circle cx="300" cy="200" r="100" fill="blue"
+          transform="rotate(135)" transform-origin="300 300"/>
+  <circle cx="300" cy="200" r="100" fill="red"
+          transform="rotate(180)" transform-origin="300 300"/>
+  <circle cx="300" cy="200" r="100" fill="green"
+          transform="rotate(225)" transform-origin="300 300"/>
+  <circle cx="300" cy="200" r="100" fill="blue"
+          transform="rotate(270)" transform-origin="300 300"/>
+</svg>

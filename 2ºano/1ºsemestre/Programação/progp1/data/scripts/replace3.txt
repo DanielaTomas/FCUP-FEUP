@@ -1,0 +1,4 @@
+open input/dali.png
+replace 255 255 255 245 245 245
+replace 250 250 250 200 200 200
+save output/replace3.png

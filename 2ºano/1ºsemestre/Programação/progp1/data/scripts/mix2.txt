@@ -1,0 +1,5 @@
+blank 
+ 150 150 
+ 255 255 255
+mix input/squares.png 0
+save output/mix2.png

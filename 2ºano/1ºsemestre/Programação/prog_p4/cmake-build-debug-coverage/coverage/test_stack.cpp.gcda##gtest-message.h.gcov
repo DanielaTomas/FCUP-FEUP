@@ -1,0 +1,221 @@
+        -:    0:Source:/home/daniela/2ºano/Programação/prog_p4/gtest/googletest/include/gtest/gtest-message.h
+        -:    0:Graph:/home/daniela/2ºano/Programação/prog_p4/cmake-build-debug-coverage/CMakeFiles/test_stack.dir/src/test_stack.cpp.gcno
+        -:    0:Data:/home/daniela/2ºano/Programação/prog_p4/cmake-build-debug-coverage/CMakeFiles/test_stack.dir/src/test_stack.cpp.gcda
+        -:    0:Runs:1
+        -:    1:// Copyright 2005, Google Inc.
+        -:    2:// All rights reserved.
+        -:    3://
+        -:    4:// Redistribution and use in source and binary forms, with or without
+        -:    5:// modification, are permitted provided that the following conditions are
+        -:    6:// met:
+        -:    7://
+        -:    8://     * Redistributions of source code must retain the above copyright
+        -:    9:// notice, this list of conditions and the following disclaimer.
+        -:   10://     * Redistributions in binary form must reproduce the above
+        -:   11:// copyright notice, this list of conditions and the following disclaimer
+        -:   12:// in the documentation and/or other materials provided with the
+        -:   13:// distribution.
+        -:   14://     * Neither the name of Google Inc. nor the names of its
+        -:   15:// contributors may be used to endorse or promote products derived from
+        -:   16:// this software without specific prior written permission.
+        -:   17://
+        -:   18:// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+        -:   19:// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+        -:   20:// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+        -:   21:// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+        -:   22:// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+        -:   23:// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+        -:   24:// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+        -:   25:// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+        -:   26:// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+        -:   27:// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+        -:   28:// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+        -:   29:
+        -:   30://
+        -:   31:// The Google C++ Testing and Mocking Framework (Google Test)
+        -:   32://
+        -:   33:// This header file defines the Message class.
+        -:   34://
+        -:   35:// IMPORTANT NOTE: Due to limitation of the C++ language, we have to
+        -:   36:// leave some internal implementation details in this header file.
+        -:   37:// They are clearly marked by comments like this:
+        -:   38://
+        -:   39://   // INTERNAL IMPLEMENTATION - DO NOT USE IN A USER PROGRAM.
+        -:   40://
+        -:   41:// Such code is NOT meant to be used by a user directly, and is subject
+        -:   42:// to CHANGE WITHOUT NOTICE.  Therefore DO NOT DEPEND ON IT in a user
+        -:   43:// program!
+        -:   44:
+        -:   45:#ifndef GOOGLETEST_INCLUDE_GTEST_GTEST_MESSAGE_H_
+        -:   46:#define GOOGLETEST_INCLUDE_GTEST_GTEST_MESSAGE_H_
+        -:   47:
+        -:   48:#include <limits>
+        -:   49:#include <memory>
+        -:   50:#include <sstream>
+        -:   51:
+        -:   52:#include "gtest/internal/gtest-port.h"
+        -:   53:
+        -:   54:GTEST_DISABLE_MSC_WARNINGS_PUSH_(4251 \
+        -:   55:/* class A needs to have dll-interface to be used by clients of class B */)
+        -:   56:
+        -:   57:// Ensures that there is at least one operator<< in the global namespace.
+        -:   58:// See Message& operator<<(...) below for why.
+        -:   59:void operator<<(const testing::internal::Secret&, int);
+        -:   60:
+        -:   61:namespace testing {
+        -:   62:
+        -:   63:// The Message class works like an ostream repeater.
+        -:   64://
+        -:   65:// Typical usage:
+        -:   66://
+        -:   67://   1. You stream a bunch of values to a Message object.
+        -:   68://      It will remember the text in a stringstream.
+        -:   69://   2. Then you stream the Message object to an ostream.
+        -:   70://      This causes the text in the Message to be streamed
+        -:   71://      to the ostream.
+        -:   72://
+        -:   73:// For example;
+        -:   74://
+        -:   75://   testing::Message foo;
+        -:   76://   foo << 1 << " != " << 2;
+        -:   77://   std::cout << foo;
+        -:   78://
+        -:   79:// will print "1 != 2".
+        -:   80://
+        -:   81:// Message is not intended to be inherited from.  In particular, its
+        -:   82:// destructor is not virtual.
+        -:   83://
+        -:   84:// Note that stringstream behaves differently in gcc and in MSVC.  You
+        -:   85:// can stream a NULL char pointer to it in the former, but not in the
+        -:   86:// latter (it causes an access violation if you do).  The Message
+        -:   87:// class hides this difference by treating a NULL char pointer as
+        -:   88:// "(null)".
+        -:   89:class GTEST_API_ Message {
+        -:   90: private:
+        -:   91:  // The type of basic IO manipulators (endl, ends, and flush) for
+        -:   92:  // narrow streams.
+        -:   93:  typedef std::ostream& (*BasicNarrowIoManip)(std::ostream&);
+        -:   94:
+        -:   95: public:
+        -:   96:  // Constructs an empty Message.
+        -:   97:  Message();
+        -:   98:
+        -:   99:  // Copy constructor.
+        -:  100:  Message(const Message& msg) : ss_(new ::std::stringstream) {  // NOLINT
+        -:  101:    *ss_ << msg.GetString();
+        -:  102:  }
+        -:  103:
+        -:  104:  // Constructs a Message from a C-string.
+        -:  105:  explicit Message(const char* str) : ss_(new ::std::stringstream) {
+        -:  106:    *ss_ << str;
+        -:  107:  }
+        -:  108:
+        -:  109:  // Streams a non-pointer value to this object.
+        -:  110:  template <typename T>
+       7*:  111:  inline Message& operator <<(const T& val) {
+        -:  112:    // Some libraries overload << for STL containers.  These
+        -:  113:    // overloads are defined in the global namespace instead of ::std.
+        -:  114:    //
+        -:  115:    // C++'s symbol lookup rule (i.e. Koenig lookup) says that these
+        -:  116:    // overloads are visible in either the std namespace or the global
+        -:  117:    // namespace, but not other namespaces, including the testing
+        -:  118:    // namespace which Google Test's Message class is in.
+        -:  119:    //
+        -:  120:    // To allow STL containers (and other types that has a << operator
+        -:  121:    // defined in the global namespace) to be used in Google Test
+        -:  122:    // assertions, testing::Message must access the custom << operator
+        -:  123:    // from the global namespace.  With this using declaration,
+        -:  124:    // overloads of << defined in the global namespace and those
+        -:  125:    // visible via Koenig lookup are both exposed in this function.
+        -:  126:    using ::operator <<;
+       7*:  127:    *ss_ << val;
+       7*:  128:    return *this;
+        -:  129:  }
+        -:  130:
+        -:  131:  // Streams a pointer value to this object.
+        -:  132:  //
+        -:  133:  // This function is an overload of the previous one.  When you
+        -:  134:  // stream a pointer to a Message, this definition will be used as it
+        -:  135:  // is more specialized.  (The C++ Standard, section
+        -:  136:  // [temp.func.order].)  If you stream a non-pointer, then the
+        -:  137:  // previous definition will be used.
+        -:  138:  //
+        -:  139:  // The reason for this overload is that streaming a NULL pointer to
+        -:  140:  // ostream is undefined behavior.  Depending on the compiler, you
+        -:  141:  // may get "0", "(nil)", "(null)", or an access violation.  To
+        -:  142:  // ensure consistent result across compilers, we always treat NULL
+        -:  143:  // as "(null)".
+        -:  144:  template <typename T>
+        -:  145:  inline Message& operator <<(T* const& pointer) {  // NOLINT
+        -:  146:    if (pointer == nullptr) {
+        -:  147:      *ss_ << "(null)";
+        -:  148:    } else {
+        -:  149:      *ss_ << pointer;
+        -:  150:    }
+        -:  151:    return *this;
+        -:  152:  }
+        -:  153:
+        -:  154:  // Since the basic IO manipulators are overloaded for both narrow
+        -:  155:  // and wide streams, we have to provide this specialized definition
+        -:  156:  // of operator <<, even though its body is the same as the
+        -:  157:  // templatized version above.  Without this definition, streaming
+        -:  158:  // endl or other basic IO manipulators to Message will confuse the
+        -:  159:  // compiler.
+        -:  160:  Message& operator <<(BasicNarrowIoManip val) {
+        -:  161:    *ss_ << val;
+        -:  162:    return *this;
+        -:  163:  }
+        -:  164:
+        -:  165:  // Instead of 1/0, we want to see true/false for bool values.
+        -:  166:  Message& operator <<(bool b) {
+        -:  167:    return *this << (b ? "true" : "false");
+        -:  168:  }
+        -:  169:
+        -:  170:  // These two overloads allow streaming a wide C string to a Message
+        -:  171:  // using the UTF-8 encoding.
+        -:  172:  Message& operator <<(const wchar_t* wide_c_str);
+        -:  173:  Message& operator <<(wchar_t* wide_c_str);
+        -:  174:
+        -:  175:#if GTEST_HAS_STD_WSTRING
+        -:  176:  // Converts the given wide string to a narrow string using the UTF-8
+        -:  177:  // encoding, and streams the result to this Message object.
+        -:  178:  Message& operator <<(const ::std::wstring& wstr);
+        -:  179:#endif  // GTEST_HAS_STD_WSTRING
+        -:  180:
+        -:  181:  // Gets the text streamed to this object so far as an std::string.
+        -:  182:  // Each '\0' character in the buffer is replaced with "\\0".
+        -:  183:  //
+        -:  184:  // INTERNAL IMPLEMENTATION - DO NOT USE IN A USER PROGRAM.
+        -:  185:  std::string GetString() const;
+        -:  186:
+        -:  187: private:
+        -:  188:  // We'll hold the text streamed to this object here.
+        -:  189:  const std::unique_ptr< ::std::stringstream> ss_;
+        -:  190:
+        -:  191:  // We declare (but don't implement) this to prevent the compiler
+        -:  192:  // from implementing the assignment operator.
+        -:  193:  void operator=(const Message&);
+        -:  194:};
+        -:  195:
+        -:  196:// Streams a Message to an ostream.
+        -:  197:inline std::ostream& operator <<(std::ostream& os, const Message& sb) {
+        -:  198:  return os << sb.GetString();
+        -:  199:}
+        -:  200:
+        -:  201:namespace internal {
+        -:  202:
+        -:  203:// Converts a streamable value to an std::string.  A NULL pointer is
+        -:  204:// converted to "(null)".  When the input value is a ::string,
+        -:  205:// ::std::string, ::wstring, or ::std::wstring object, each NUL
+        -:  206:// character in it is replaced with "\\0".
+        -:  207:template <typename T>
+        -:  208:std::string StreamableToString(const T& streamable) {
+        -:  209:  return (Message() << streamable).GetString();
+        -:  210:}
+        -:  211:
+        -:  212:}  // namespace internal
+        -:  213:}  // namespace testing
+        -:  214:
+        -:  215:GTEST_DISABLE_MSC_WARNINGS_POP_()  //  4251
+        -:  216:
+        -:  217:#endif  // GOOGLETEST_INCLUDE_GTEST_GTEST_MESSAGE_H_

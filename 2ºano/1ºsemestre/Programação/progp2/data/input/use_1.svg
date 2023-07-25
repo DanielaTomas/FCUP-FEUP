@@ -1,0 +1,7 @@
+<svg width="30" height="10" xmlns="http://www.w3.org/2000/svg">
+  <circle id="myCircle" cx="5" cy="5" r="4" fill="red"/>
+  <use href="#myCircle" transform="translate(10,0)" />
+  <use href="#myCircle" transform="translate(20,0)" />
+</svg>
+
+

@@ -1,0 +1,2 @@
+/usr/bin/ar qc librgb.a  CMakeFiles/rgb.dir/rgb/color.cpp.o CMakeFiles/rgb.dir/rgb/image.cpp.o CMakeFiles/rgb.dir/rgb/script.cpp.o CMakeFiles/rgb.dir/png/png.cpp.o
+/usr/bin/ranlib librgb.a

@@ -1,0 +1,13 @@
+<svg width="530" height="530" xmlns="http://www.w3.org/2000/svg">
+    <g transform="translate(10 10)">
+        <g>
+            <circle cx="250" cy="250" r="250" fill="red" />
+            <circle cx="250" cy="250" r="200" fill="white" />
+            <circle cx="250" cy="250" r="150" fill="red" />
+            <circle cx="250" cy="250" r="100" fill="blue" />
+        </g>
+        <polygon fill="white" points="250,150 280,209 346,219 298,265 309,330 250,300 192,330 203,265 155,219 221,209"
+             transform-origin="250 250"
+             transform="rotate(45)"/>
+  </g>
+</svg>

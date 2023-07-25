@@ -1,0 +1,355 @@
+        -:    0:Source:/home/daniela/2ºano/Programação/prog_p4/gtest/googletest/src/gtest-matchers.cc
+        -:    0:Graph:/home/daniela/2ºano/Programação/prog_p4/cmake-build-debug-coverage/gtest/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.gcno
+        -:    0:Data:/home/daniela/2ºano/Programação/prog_p4/cmake-build-debug-coverage/gtest/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.gcda
+        -:    0:Runs:1
+        -:    1:// Copyright 2007, Google Inc.
+        -:    2:// All rights reserved.
+        -:    3://
+        -:    4:// Redistribution and use in source and binary forms, with or without
+        -:    5:// modification, are permitted provided that the following conditions are
+        -:    6:// met:
+        -:    7://
+        -:    8://     * Redistributions of source code must retain the above copyright
+        -:    9:// notice, this list of conditions and the following disclaimer.
+        -:   10://     * Redistributions in binary form must reproduce the above
+        -:   11:// copyright notice, this list of conditions and the following disclaimer
+        -:   12:// in the documentation and/or other materials provided with the
+        -:   13:// distribution.
+        -:   14://     * Neither the name of Google Inc. nor the names of its
+        -:   15:// contributors may be used to endorse or promote products derived from
+        -:   16:// this software without specific prior written permission.
+        -:   17://
+        -:   18:// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+        -:   19:// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+        -:   20:// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+        -:   21:// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+        -:   22:// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+        -:   23:// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+        -:   24:// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+        -:   25:// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+        -:   26:// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+        -:   27:// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+        -:   28:// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+        -:   29:
+        -:   30:// The Google C++ Testing and Mocking Framework (Google Test)
+        -:   31://
+        -:   32:// This file implements just enough of the matcher interface to allow
+        -:   33:// EXPECT_DEATH and friends to accept a matcher argument.
+        -:   34:
+        -:   35:#include "gtest/internal/gtest-internal.h"
+        -:   36:#include "gtest/internal/gtest-port.h"
+        -:   37:#include "gtest/gtest-matchers.h"
+        -:   38:
+        -:   39:#include <string>
+        -:   40:
+        -:   41:namespace testing {
+        -:   42:
+        -:   43:// Constructs a matcher that matches a const std::string& whose value is
+        -:   44:// equal to s.
+function _ZN7testing7MatcherIRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEC2ES8_ called 0 returned 0% blocks executed 0%
+    #####:   45:Matcher<const std::string&>::Matcher(const std::string& s) { *this = Eq(s); }
+    %%%%%:   45-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+    %%%%%:   45-block  1
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+    %%%%%:   45-block  2
+call   17 never executed
+call   18 never executed
+branch 19 never executed
+branch 20 never executed
+    %%%%%:   45-block  3
+call   21 never executed
+call   22 never executed
+call   23 never executed
+call   24 never executed
+call   25 never executed
+branch 26 never executed
+branch 27 never executed
+    %%%%%:   45-block  4
+call   28 never executed
+call   29 never executed
+call   30 never executed
+call   31 never executed
+call   32 never executed
+call   33 never executed
+call   34 never executed
+    $$$$$:   45-block  5
+call   35 never executed
+call   36 never executed
+    $$$$$:   45-block  6
+call   37 never executed
+    $$$$$:   45-block  7
+call   38 never executed
+    $$$$$:   45-block  8
+call   39 never executed
+    $$$$$:   45-block  9
+call   40 never executed
+    $$$$$:   45-block 10
+call   41 never executed
+    $$$$$:   45-block 11
+call   42 never executed
+call   43 never executed
+call   44 never executed
+call   45 never executed
+call   46 never executed
+        -:   46:
+        -:   47:// Constructs a matcher that matches a const std::string& whose value is
+        -:   48:// equal to s.
+function _ZN7testing7MatcherIRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEC2EPKc called 0 returned 0% blocks executed 0%
+    #####:   49:Matcher<const std::string&>::Matcher(const char* s) {
+    %%%%%:   49-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+    $$$$$:   49-block  1
+call    7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+call   11 never executed
+    #####:   50:  *this = Eq(std::string(s));
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+    %%%%%:   50-block  0
+call    8 never executed
+branch  9 never executed
+branch 10 never executed
+    %%%%%:   50-block  1
+call   11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+    %%%%%:   50-block  2
+call   15 never executed
+call   16 never executed
+call   17 never executed
+call   18 never executed
+call   19 never executed
+branch 20 never executed
+branch 21 never executed
+    %%%%%:   50-block  3
+call   22 never executed
+call   23 never executed
+call   24 never executed
+call   25 never executed
+call   26 never executed
+call   27 never executed
+call   28 never executed
+call   29 never executed
+call   30 never executed
+    $$$$$:   50-block  4
+call   31 never executed
+call   32 never executed
+    $$$$$:   50-block  5
+call   33 never executed
+    $$$$$:   50-block  6
+call   34 never executed
+    $$$$$:   50-block  7
+call   35 never executed
+    $$$$$:   50-block  8
+call   36 never executed
+    $$$$$:   50-block  9
+call   37 never executed
+    $$$$$:   50-block 10
+call   38 never executed
+    $$$$$:   50-block 11
+call   39 never executed
+    #####:   51:}
+        -:   52:
+        -:   53:// Constructs a matcher that matches a std::string whose value is equal to
+        -:   54:// s.
+function _ZN7testing7MatcherINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEC2ERKS6_ called 0 returned 0% blocks executed 0%
+    #####:   55:Matcher<std::string>::Matcher(const std::string& s) { *this = Eq(s); }
+    %%%%%:   55-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+    %%%%%:   55-block  1
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+    %%%%%:   55-block  2
+call   17 never executed
+call   18 never executed
+branch 19 never executed
+branch 20 never executed
+    %%%%%:   55-block  3
+call   21 never executed
+call   22 never executed
+call   23 never executed
+call   24 never executed
+call   25 never executed
+branch 26 never executed
+branch 27 never executed
+    %%%%%:   55-block  4
+call   28 never executed
+call   29 never executed
+call   30 never executed
+call   31 never executed
+call   32 never executed
+call   33 never executed
+call   34 never executed
+    $$$$$:   55-block  5
+call   35 never executed
+call   36 never executed
+    $$$$$:   55-block  6
+call   37 never executed
+    $$$$$:   55-block  7
+call   38 never executed
+    $$$$$:   55-block  8
+call   39 never executed
+    $$$$$:   55-block  9
+call   40 never executed
+    $$$$$:   55-block 10
+call   41 never executed
+    $$$$$:   55-block 11
+call   42 never executed
+call   43 never executed
+call   44 never executed
+call   45 never executed
+call   46 never executed
+        -:   56:
+        -:   57:// Constructs a matcher that matches a std::string whose value is equal to
+        -:   58:// s.
+function _ZN7testing7MatcherINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEC2EPKc called 0 returned 0% blocks executed 0%
+    #####:   59:Matcher<std::string>::Matcher(const char* s) { *this = Eq(std::string(s)); }
+    %%%%%:   59-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+call   11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+    %%%%%:   59-block  1
+call   15 never executed
+branch 16 never executed
+branch 17 never executed
+    %%%%%:   59-block  2
+call   18 never executed
+call   19 never executed
+branch 20 never executed
+branch 21 never executed
+    %%%%%:   59-block  3
+call   22 never executed
+call   23 never executed
+call   24 never executed
+call   25 never executed
+call   26 never executed
+branch 27 never executed
+branch 28 never executed
+    %%%%%:   59-block  4
+call   29 never executed
+call   30 never executed
+call   31 never executed
+call   32 never executed
+call   33 never executed
+call   34 never executed
+call   35 never executed
+call   36 never executed
+call   37 never executed
+    $$$$$:   59-block  5
+call   38 never executed
+call   39 never executed
+    $$$$$:   59-block  6
+call   40 never executed
+    $$$$$:   59-block  7
+call   41 never executed
+    $$$$$:   59-block  8
+call   42 never executed
+    $$$$$:   59-block  9
+call   43 never executed
+    $$$$$:   59-block 10
+call   44 never executed
+    $$$$$:   59-block 11
+call   45 never executed
+    $$$$$:   59-block 12
+call   46 never executed
+    $$$$$:   59-block 13
+call   47 never executed
+call   48 never executed
+call   49 never executed
+call   50 never executed
+call   51 never executed
+        -:   60:
+        -:   61:#if GTEST_INTERNAL_HAS_STRING_VIEW
+        -:   62:// Constructs a matcher that matches a const StringView& whose value is
+        -:   63:// equal to s.
+        -:   64:Matcher<const internal::StringView&>::Matcher(const std::string& s) {
+        -:   65:  *this = Eq(s);
+        -:   66:}
+        -:   67:
+        -:   68:// Constructs a matcher that matches a const StringView& whose value is
+        -:   69:// equal to s.
+        -:   70:Matcher<const internal::StringView&>::Matcher(const char* s) {
+        -:   71:  *this = Eq(std::string(s));
+        -:   72:}
+        -:   73:
+        -:   74:// Constructs a matcher that matches a const StringView& whose value is
+        -:   75:// equal to s.
+        -:   76:Matcher<const internal::StringView&>::Matcher(internal::StringView s) {
+        -:   77:  *this = Eq(std::string(s));
+        -:   78:}
+        -:   79:
+        -:   80:// Constructs a matcher that matches a StringView whose value is equal to
+        -:   81:// s.
+        -:   82:Matcher<internal::StringView>::Matcher(const std::string& s) { *this = Eq(s); }
+        -:   83:
+        -:   84:// Constructs a matcher that matches a StringView whose value is equal to
+        -:   85:// s.
+        -:   86:Matcher<internal::StringView>::Matcher(const char* s) {
+        -:   87:  *this = Eq(std::string(s));
+        -:   88:}
+        -:   89:
+        -:   90:// Constructs a matcher that matches a StringView whose value is equal to
+        -:   91:// s.
+        -:   92:Matcher<internal::StringView>::Matcher(internal::StringView s) {
+        -:   93:  *this = Eq(std::string(s));
+        -:   94:}
+        -:   95:#endif  // GTEST_INTERNAL_HAS_STRING_VIEW
+        -:   96:
+        -:   97:}  // namespace testing

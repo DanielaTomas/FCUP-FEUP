@@ -1,0 +1,1 @@
+/usr/bin/c++  -Wall -g -fsanitize=address -fsanitize=undefined -fno-omit-frame-pointer -DROOT_PROJ_DIR='"/home/danielatomas/2ºano/1ºsemestre/Programação/progp2/data"' -g CMakeFiles/test_group.dir/test/test_group.cpp.o -o test_group  libsvg.a libtinyxml2.a lib/libgtestd.a lib/libgtest_maind.a -lpthread lib/libgtestd.a -lpthread 

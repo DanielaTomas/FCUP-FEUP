@@ -1,0 +1,4 @@
+open input/lion.png
+rotate_right
+rotate_left
+save output/rotate3.png

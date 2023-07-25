@@ -1,0 +1,188 @@
+Resolução do Exame de IC
+
+
+1. 
+modelo matemático capaz de realizar qualquer computação que pode ser descrita sob a forma de um algoritmo. O algoritmo é escrito numa linguagem específica da máquina - um programa.
+MT  - cabeça contém o programa, só executa um programa, input/output fita
+MTU - cabeça genérica, executa qualquer programa escrito na fita, input/output fita 
+
+
+2. 
+von Neumann:
+CPU, memoria, I/O devices
+programa em memoria executado por CPU
+buses a ligar componentes
+
+Harvard:
+buses diferenciados entre CPU e memória para dados e instruções 
+(ou memória diferente para dados e instruções)
+
+
+3. 
+controla o fluxo e amplifica corrente
+componentes básicas na implementação gates
+miniaturização extrema em especial em integrados
+
+
+4. 
+duplica densidade de transistores em integrados a cada 18 meses
+
+
+5. 
+   71 = 64 + 4 + 2 + 1 = 01000111  
+   52 = 32 + 16 + 4    = 00110100
+                       ----------
+                         01111011 (não há overflow)
+
+
+6. 
+   91 = 64 + 16 + 8 + 2 + 1 = 01011011
+                              10100100
+                                    +1
+                              --------
+                              10100101
+
+   sign extend p/ 16 bits
+
+   -91 = 1111111110100101
+
+
+7. 
+   FP:
+   -162.375 = -(2^7 + 2^5 + 2^1 + 2^-2 + 2^-3)
+            = -(1 + 2^-2 + 2^-6 + 2^-9 + 2^-10)
+            = -1.0100010011 x 2^7
+ 
+   IEEE:
+   1 10000110 01000100110000000000000
+
+
+8. 
+   1.0001 x 2^1 + 1.1111 x 2^3 =
+   0.010001 x 2^3 + 1.1111 x 2^3 
+
+   1.111100
+   0.010001
+   --------
+  10.001101 x 2^3 = 1.0001101 x 2^4
+
+
+9. 
+Especificação de conjunto de instruções, com respectivos tipos e modos de endereçamento que fazem interface mais básica do software com hardware. Microprocessador implementa um ISA específico em hardware.
+
+
+10. 
+Maior performance. 
+Opções de desenho (escolher 3): muitos registos, load/store, instruções mesmo tamanho, poucos modos endereçamento, pipelining
+
+
+11. 
+O tipo de instrução especifica a forma como partimos os bits das instruções (descodificação).
+O modo de endereçamento especifica a forma como são executadas as instruções depois de descodificadas (como são usados os blocos de bits da instrução).
+
+R2000: immediate addressing, register addressing, base addressing, PC-relative, PC-pseudo direct.
+
+
+12. 
+    tipo I: op(6) | 19(5) | 17(5) | -12(16, compl. 2)    
+
+    op=35
+    
+    100011 10011 10001 1111111111110100
+
+    12 = 00001100
+         11110011
+               +1
+         --------
+         11110100
+
+
+13. 
+A operação sw $17, Delta($19) transfere o valor do registo $17 para a posição de memória dada pela adição do valor de $19 e Delta, logo: Memory[Delta+$19] = $17.
+
+
+14. 
+A instrução /jal/, como aliás a /j/, recebe um deslocamento de 26 bits contado a partir do início do programa (endereço 0). O valor é guardado em unidades de "número de instruções", logo 0 <= Delta <= 2^26-1.
+
+
+15. 
+O "linker" é o programa que analisa os ficheiros binários (object file, .o) gerados pelo compilador de C e verifica se há código em falta para formar a partir deles um ficheiro executável. Em caso afirmativo, o código em falta é, em geral, obtido a partir de bibliotecas fornecidas pela linguagem de programação ou pelo sistema operativo.
+
+16. 
+Um programa escrito numa linguagem interpretada é executado a partir do seu código fonte, instrução a instrução, através de um programa auxiliar designado, por razões óbvias, de "interpretador". Cada instrução é verificada para erros sintáticos (mal escrita) e semânticos (tipos errados). Se passar estes testes o interpretador executa a parte do seu código binário que reproduz os efeitos da instrução.
+
+
+17. 
+O kernel de um sistema operativo é a sua interface de mais baixo nível e que interage directamente com o hardware, sendo responsável pela sua gestão. No caso de um sistema UNIX o kernel inclui funcionalidades como a gestão de: tempo de CPU (processos), memória, dispositivos de I/O e sistema de ficheiros.
+
+
+18. 
+A operação de bootstrap permite carregar o kernel de um sistema operativo para memória, iniciando a sua execução, quando um computador é ligado. Como o kernel se encontra inicialmente num periférico de armazenamento persistente (HDD/SSD), quando o computador é ligado o microprocessador executa um pequeno bloco de instruções guardadas numa ROM na motherboard (BIOS). Este código encontra o kernel do sistema operativo nos HDD/SSD do computador e carrega-o para memória, passando-lhe depois o controlo do computador.
+
+
+19.
+O loader é um programa do sistema operativo que é invocado de cada vez que executamos um comando, transformando-o num processo. A cada comando corresponde um ficheiro binário executável que é carregado para uma zona de memória (espaço de endereçamento) criado pelo loader. No caso do UNIX, o loader cria também uma estrutura de dados, o PCB, que mantém informação sobre o estado do processo.
+
+
+20. 
+Um processo é uma instância de um programa em execução. Como referido na pergunta anterior, é representado no sistema operativo por um espaço endereçamento e por uma estrutura de dados (PCB).
+
+
+21.
+Um tal processo está à espera que lhe seja atribuído tempo de CPU para poder executar.
+
+
+22.
+Estes ficheiros representam dispositivos de I/O ligados ao computador, e.g., teclado, monitor, placa de rede, discos, etc.
+
+
+23. 
+Um interrupt é um evento assíncrono, independente da execução dos processos, que sinaliza ao CPU necessidade de intervenção para mediar alguma operação externa ou falhas de hardware ou de alimentação.
+
+Cada interrupt tem associado um número inteiro que indica a sua natureza. Ao receber um interrupt, o CPU pára a execução do código do processo actual e salta para uma função (designada por handler) do sistema operativo que trata todos os interrupts com esse número inteiro. Executado o handler o CPU retoma execução do processo.
+
+
+24.
+4 linhas.
+Todos os ficheiros começados em 'f' ou 'g', com mais um (e apenas um) caracter, e terminados em ".txt".
+
+25. 
+Envia para o stdout o conteúdo dos ficheiros cap1.txt ... cap3.txt, com as ocorrências de "emma" substituídas por "nicole". O conteúdo dos ficheiros não é alterado.
+
+
+26. 
+Cria um directório ".trash" no directório casa, se não existir.
+Move todos os argumentos para esse directório.
+Se o argumento "-c" ocorrer, o conteúdo do directório é removido antes de processar argumentos subsequentes.
+
+
+27. 
+
+  | 0 | 1
+---------
+0 | 0 | 1
+---------
+1 | 1 | 0
+---------
+
+Tabela de verdade da função lógica XOR.
+
+
+28. 
+Trata-se de um d-flip-flop.
+Nestes circuitos, o sinal /c/ controla o processo de escrita.
+Se é permitida a escrita (c=1), a célula fica com o valor em /d/.
+Se não é permitida a escrita (c=0), a célula mantém o valor actual.
+
+caso 1. 
+(c=0) não é permitida a escrita. 
+Qualquer que seja /d/, o valor de /q/ mantêm-se.
+Logo q* = q.
+
+caso 2.
+(c=1) é permitida a escrita.
+O valor de /d/ passa a ser o novo valor de /q/.
+Logo q* = 1.
+
+
+

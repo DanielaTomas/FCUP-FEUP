@@ -1,0 +1,7 @@
+6
+Liverpool Chelsea 4 2
+Leeds Arsenal 2 1
+Arsenal Liverpool 4 5
+Chelsea Leeds 0 1
+Liverpool Leeds 0 0
+Chelsea Arsenal 3 1

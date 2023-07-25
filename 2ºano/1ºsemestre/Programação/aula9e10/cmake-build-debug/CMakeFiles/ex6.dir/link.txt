@@ -1,0 +1,1 @@
+/usr/bin/c++ -g CMakeFiles/ex6.dir/ex6.cpp.o -o ex6 

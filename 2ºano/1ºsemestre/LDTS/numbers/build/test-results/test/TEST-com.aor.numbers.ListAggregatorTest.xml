@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.aor.numbers.ListAggregatorTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2021-11-27T17:57:47" hostname="daniela-VirtualBox" time="0.108">
+  <properties/>
+  <testcase name="distinct_bug_8726()" classname="com.aor.numbers.ListAggregatorTest" time="0.04"/>
+  <testcase name="max_bug_7263()" classname="com.aor.numbers.ListAggregatorTest" time="0.013"/>
+  <testcase name="max()" classname="com.aor.numbers.ListAggregatorTest" time="0.001"/>
+  <testcase name="min()" classname="com.aor.numbers.ListAggregatorTest" time="0.012"/>
+  <testcase name="sum()" classname="com.aor.numbers.ListAggregatorTest" time="0.012"/>
+  <testcase name="distinct()" classname="com.aor.numbers.ListAggregatorTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

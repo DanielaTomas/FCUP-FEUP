@@ -1,0 +1,340 @@
+        -:    0:Source:/home/daniela/2ºano/Programação/prog_p4/gtest/googletest/include/gtest/gtest-test-part.h
+        -:    0:Graph:/home/daniela/2ºano/Programação/prog_p4/cmake-build-debug-coverage/gtest/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.gcno
+        -:    0:Data:/home/daniela/2ºano/Programação/prog_p4/cmake-build-debug-coverage/gtest/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.gcda
+        -:    0:Runs:1
+        -:    1:// Copyright 2008, Google Inc.
+        -:    2:// All rights reserved.
+        -:    3://
+        -:    4:// Redistribution and use in source and binary forms, with or without
+        -:    5:// modification, are permitted provided that the following conditions are
+        -:    6:// met:
+        -:    7://
+        -:    8://     * Redistributions of source code must retain the above copyright
+        -:    9:// notice, this list of conditions and the following disclaimer.
+        -:   10://     * Redistributions in binary form must reproduce the above
+        -:   11:// copyright notice, this list of conditions and the following disclaimer
+        -:   12:// in the documentation and/or other materials provided with the
+        -:   13:// distribution.
+        -:   14://     * Neither the name of Google Inc. nor the names of its
+        -:   15:// contributors may be used to endorse or promote products derived from
+        -:   16:// this software without specific prior written permission.
+        -:   17://
+        -:   18:// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+        -:   19:// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+        -:   20:// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+        -:   21:// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+        -:   22:// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+        -:   23:// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+        -:   24:// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+        -:   25:// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+        -:   26:// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+        -:   27:// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+        -:   28:// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+        -:   29:
+        -:   30:#ifndef GOOGLETEST_INCLUDE_GTEST_GTEST_TEST_PART_H_
+        -:   31:#define GOOGLETEST_INCLUDE_GTEST_GTEST_TEST_PART_H_
+        -:   32:
+        -:   33:#include <iosfwd>
+        -:   34:#include <vector>
+        -:   35:#include "gtest/internal/gtest-internal.h"
+        -:   36:#include "gtest/internal/gtest-string.h"
+        -:   37:
+        -:   38:GTEST_DISABLE_MSC_WARNINGS_PUSH_(4251 \
+        -:   39:/* class A needs to have dll-interface to be used by clients of class B */)
+        -:   40:
+        -:   41:namespace testing {
+        -:   42:
+        -:   43:// A copyable object representing the result of a test part (i.e. an
+        -:   44:// assertion or an explicit FAIL(), ADD_FAILURE(), or SUCCESS()).
+        -:   45://
+        -:   46:// Don't inherit from TestPartResult as its destructor is not virtual.
+        -:   47:class GTEST_API_ TestPartResult {
+        -:   48: public:
+        -:   49:  // The possible outcomes of a test part (i.e. an assertion or an
+        -:   50:  // explicit SUCCEED(), FAIL(), or ADD_FAILURE()).
+        -:   51:  enum Type {
+        -:   52:    kSuccess,          // Succeeded.
+        -:   53:    kNonFatalFailure,  // Failed but the test can continue.
+        -:   54:    kFatalFailure,     // Failed and the test should be terminated.
+        -:   55:    kSkip              // Skipped.
+        -:   56:  };
+        -:   57:
+        -:   58:  // C'tor.  TestPartResult does NOT have a default constructor.
+        -:   59:  // Always use this constructor (with parameters) to create a
+        -:   60:  // TestPartResult object.
+function _ZN7testing14TestPartResultC2ENS0_4TypeEPKciS3_ called 0 returned 0% blocks executed 0%
+    #####:   61:  TestPartResult(Type a_type, const char* a_file_name, int a_line_number,
+        -:   62:                 const char* a_message)
+    #####:   63:      : type_(a_type),
+    %%%%%:   63-block  0
+call    0 never executed
+        -:   64:        file_name_(a_file_name == nullptr ? "" : a_file_name),
+        -:   65:        line_number_(a_line_number),
+        -:   66:        summary_(ExtractSummary(a_message)),
+    #####:   67:        message_(a_message) {}
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+    %%%%%:   67-block  0
+    %%%%%:   67-block  1
+    %%%%%:   67-block  2
+call    8 never executed
+branch  9 never executed
+branch 10 never executed
+    %%%%%:   67-block  3
+call   11 never executed
+call   12 never executed
+call   13 never executed
+call   14 never executed
+call   15 never executed
+call   16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+    %%%%%:   67-block  4
+call   20 never executed
+call   21 never executed
+call   22 never executed
+call   23 never executed
+call   24 never executed
+call   25 never executed
+branch 26 never executed
+branch 27 never executed
+    %%%%%:   67-block  5
+call   28 never executed
+call   29 never executed
+    $$$$$:   67-block  6
+call   30 never executed
+    $$$$$:   67-block  7
+call   31 never executed
+    $$$$$:   67-block  8
+call   32 never executed
+    $$$$$:   67-block  9
+call   33 never executed
+    $$$$$:   67-block 10
+call   34 never executed
+call   35 never executed
+call   36 never executed
+call   37 never executed
+    $$$$$:   67-block 11
+call   38 never executed
+call   39 never executed
+call   40 never executed
+call   41 never executed
+        -:   68:
+        -:   69:  // Gets the outcome of the test part.
+function _ZNK7testing14TestPartResult4typeEv called 0 returned 0% blocks executed 0%
+    #####:   70:  Type type() const { return type_; }
+    %%%%%:   70-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    %%%%%:   70-block  1
+    %%%%%:   70-block  2
+        -:   71:
+        -:   72:  // Gets the name of the source file where the test part took place, or
+        -:   73:  // NULL if it's unknown.
+function _ZNK7testing14TestPartResult9file_nameEv called 0 returned 0% blocks executed 0%
+    #####:   74:  const char* file_name() const {
+    #####:   75:    return file_name_.empty() ? nullptr : file_name_.c_str();
+    %%%%%:   75-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+    %%%%%:   75-block  1
+    %%%%%:   75-block  2
+call    8 never executed
+call    9 never executed
+call   10 never executed
+call   11 never executed
+call   12 never executed
+call   13 never executed
+    %%%%%:   75-block  3
+        -:   76:  }
+        -:   77:
+        -:   78:  // Gets the line in the source file where the test part took place,
+        -:   79:  // or -1 if it's unknown.
+function _ZNK7testing14TestPartResult11line_numberEv called 0 returned 0% blocks executed 0%
+    #####:   80:  int line_number() const { return line_number_; }
+    %%%%%:   80-block  0
+call    0 never executed
+call    1 never executed
+        -:   81:
+        -:   82:  // Gets the summary of the failure message.
+function _ZNK7testing14TestPartResult7summaryEv called 0 returned 0% blocks executed 0%
+    #####:   83:  const char* summary() const { return summary_.c_str(); }
+    %%%%%:   83-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+        -:   84:
+        -:   85:  // Gets the message associated with the test part.
+function _ZNK7testing14TestPartResult7messageEv called 0 returned 0% blocks executed 0%
+    #####:   86:  const char* message() const { return message_.c_str(); }
+    %%%%%:   86-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+        -:   87:
+        -:   88:  // Returns true if and only if the test part was skipped.
+function _ZNK7testing14TestPartResult7skippedEv called 0 returned 0% blocks executed 0%
+    #####:   89:  bool skipped() const { return type_ == kSkip; }
+    %%%%%:   89-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    %%%%%:   89-block  1
+    %%%%%:   89-block  2
+        -:   90:
+        -:   91:  // Returns true if and only if the test part passed.
+        -:   92:  bool passed() const { return type_ == kSuccess; }
+        -:   93:
+        -:   94:  // Returns true if and only if the test part non-fatally failed.
+function _ZNK7testing14TestPartResult17nonfatally_failedEv called 0 returned 0% blocks executed 0%
+    #####:   95:  bool nonfatally_failed() const { return type_ == kNonFatalFailure; }
+    %%%%%:   95-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    %%%%%:   95-block  1
+    %%%%%:   95-block  2
+        -:   96:
+        -:   97:  // Returns true if and only if the test part fatally failed.
+function _ZNK7testing14TestPartResult14fatally_failedEv called 0 returned 0% blocks executed 0%
+    #####:   98:  bool fatally_failed() const { return type_ == kFatalFailure; }
+    %%%%%:   98-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    %%%%%:   98-block  1
+    %%%%%:   98-block  2
+        -:   99:
+        -:  100:  // Returns true if and only if the test part failed.
+function _ZNK7testing14TestPartResult6failedEv called 0 returned 0% blocks executed 0%
+    #####:  101:  bool failed() const { return fatally_failed() || nonfatally_failed(); }
+    %%%%%:  101-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    %%%%%:  101-block  1
+call    4 never executed
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+    %%%%%:  101-block  2
+    %%%%%:  101-block  3
+    %%%%%:  101-block  4
+        -:  102:
+        -:  103: private:
+        -:  104:  Type type_;
+        -:  105:
+        -:  106:  // Gets the summary of the failure message by omitting the stack
+        -:  107:  // trace in it.
+        -:  108:  static std::string ExtractSummary(const char* message);
+        -:  109:
+        -:  110:  // The name of the source file where the test part took place, or
+        -:  111:  // "" if the source file is unknown.
+        -:  112:  std::string file_name_;
+        -:  113:  // The line in the source file where the test part took place, or -1
+        -:  114:  // if the line number is unknown.
+        -:  115:  int line_number_;
+        -:  116:  std::string summary_;  // The test failure summary.
+        -:  117:  std::string message_;  // The test failure message.
+        -:  118:};
+        -:  119:
+        -:  120:// Prints a TestPartResult object.
+        -:  121:std::ostream& operator<<(std::ostream& os, const TestPartResult& result);
+        -:  122:
+        -:  123:// An array of TestPartResult objects.
+        -:  124://
+        -:  125:// Don't inherit from TestPartResultArray as its destructor is not
+        -:  126:// virtual.
+        -:  127:class GTEST_API_ TestPartResultArray {
+        -:  128: public:
+        -:  129:  TestPartResultArray() {}
+        -:  130:
+        -:  131:  // Appends the given TestPartResult to the array.
+        -:  132:  void Append(const TestPartResult& result);
+        -:  133:
+        -:  134:  // Returns the TestPartResult at the given index (0-based).
+        -:  135:  const TestPartResult& GetTestPartResult(int index) const;
+        -:  136:
+        -:  137:  // Returns the number of TestPartResult objects in the array.
+        -:  138:  int size() const;
+        -:  139:
+        -:  140: private:
+        -:  141:  std::vector<TestPartResult> array_;
+        -:  142:
+        -:  143:  GTEST_DISALLOW_COPY_AND_ASSIGN_(TestPartResultArray);
+        -:  144:};
+        -:  145:
+        -:  146:// This interface knows how to report a test part result.
+        -:  147:class GTEST_API_ TestPartResultReporterInterface {
+        -:  148: public:
+       2*:  149:  virtual ~TestPartResultReporterInterface() {}
+------------------
+_ZN7testing31TestPartResultReporterInterfaceD0Ev:
+function _ZN7testing31TestPartResultReporterInterfaceD0Ev called 0 returned 0% blocks executed 0%
+    #####:  149:  virtual ~TestPartResultReporterInterface() {}
+    %%%%%:  149-block  0
+call    0 never executed
+call    1 never executed
+------------------
+_ZN7testing31TestPartResultReporterInterfaceD2Ev:
+function _ZN7testing31TestPartResultReporterInterfaceD2Ev called 2 returned 100% blocks executed 100%
+        2:  149:  virtual ~TestPartResultReporterInterface() {}
+        2:  149-block  0
+call    0 returned 2
+call    1 returned 2
+call    2 returned 2
+------------------
+        -:  150:
+        -:  151:  virtual void ReportTestPartResult(const TestPartResult& result) = 0;
+        -:  152:};
+        -:  153:
+        -:  154:namespace internal {
+        -:  155:
+        -:  156:// This helper class is used by {ASSERT|EXPECT}_NO_FATAL_FAILURE to check if a
+        -:  157:// statement generates new fatal failures. To do so it registers itself as the
+        -:  158:// current test part result reporter. Besides checking if fatal failures were
+        -:  159:// reported, it only delegates the reporting to the former result reporter.
+        -:  160:// The original result reporter is restored in the destructor.
+        -:  161:// INTERNAL IMPLEMENTATION - DO NOT USE IN A USER PROGRAM.
+        -:  162:class GTEST_API_ HasNewFatalFailureHelper
+        -:  163:    : public TestPartResultReporterInterface {
+        -:  164: public:
+        -:  165:  HasNewFatalFailureHelper();
+        -:  166:  ~HasNewFatalFailureHelper() override;
+        -:  167:  void ReportTestPartResult(const TestPartResult& result) override;
+        -:  168:  bool has_new_fatal_failure() const { return has_new_fatal_failure_; }
+        -:  169: private:
+        -:  170:  bool has_new_fatal_failure_;
+        -:  171:  TestPartResultReporterInterface* original_reporter_;
+        -:  172:
+        -:  173:  GTEST_DISALLOW_COPY_AND_ASSIGN_(HasNewFatalFailureHelper);
+        -:  174:};
+        -:  175:
+        -:  176:}  // namespace internal
+        -:  177:
+        -:  178:}  // namespace testing
+        -:  179:
+        -:  180:GTEST_DISABLE_MSC_WARNINGS_POP_()  //  4251
+        -:  181:
+        -:  182:#endif  // GOOGLETEST_INCLUDE_GTEST_GTEST_TEST_PART_H_

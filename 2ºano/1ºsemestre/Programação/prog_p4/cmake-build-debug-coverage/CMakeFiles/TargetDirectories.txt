@@ -1,0 +1,15 @@
+/home/danielatomas/2ºano/1ºsemestre/Programação/prog_p4/cmake-build-debug-coverage/CMakeFiles/edit_cache.dir
+/home/danielatomas/2ºano/1ºsemestre/Programação/prog_p4/cmake-build-debug-coverage/CMakeFiles/doxdocs.dir
+/home/danielatomas/2ºano/1ºsemestre/Programação/prog_p4/cmake-build-debug-coverage/CMakeFiles/test_exp_taylor.dir
+/home/danielatomas/2ºano/1ºsemestre/Programação/prog_p4/cmake-build-debug-coverage/CMakeFiles/funcs.dir
+/home/danielatomas/2ºano/1ºsemestre/Programação/prog_p4/cmake-build-debug-coverage/CMakeFiles/stack.dir
+/home/danielatomas/2ºano/1ºsemestre/Programação/prog_p4/cmake-build-debug-coverage/CMakeFiles/test_stack.dir
+/home/danielatomas/2ºano/1ºsemestre/Programação/prog_p4/cmake-build-debug-coverage/CMakeFiles/test_days_in_month.dir
+/home/danielatomas/2ºano/1ºsemestre/Programação/prog_p4/cmake-build-debug-coverage/CMakeFiles/rebuild_cache.dir
+/home/danielatomas/2ºano/1ºsemestre/Programação/prog_p4/cmake-build-debug-coverage/CMakeFiles/test_hexstr_convert.dir
+/home/danielatomas/2ºano/1ºsemestre/Programação/prog_p4/cmake-build-debug-coverage/gtest/CMakeFiles/rebuild_cache.dir
+/home/danielatomas/2ºano/1ºsemestre/Programação/prog_p4/cmake-build-debug-coverage/gtest/CMakeFiles/edit_cache.dir
+/home/danielatomas/2ºano/1ºsemestre/Programação/prog_p4/cmake-build-debug-coverage/gtest/googletest/CMakeFiles/rebuild_cache.dir
+/home/danielatomas/2ºano/1ºsemestre/Programação/prog_p4/cmake-build-debug-coverage/gtest/googletest/CMakeFiles/edit_cache.dir
+/home/danielatomas/2ºano/1ºsemestre/Programação/prog_p4/cmake-build-debug-coverage/gtest/googletest/CMakeFiles/gtest_main.dir
+/home/danielatomas/2ºano/1ºsemestre/Programação/prog_p4/cmake-build-debug-coverage/gtest/googletest/CMakeFiles/gtest.dir

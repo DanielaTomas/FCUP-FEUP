@@ -1,0 +1,12 @@
+3
+10
+PedroRibeiro ED213 Accepted
+ManuelPinto ED213 Accepted
+PedroRibeiro ED212 Accepted
+ManuelPinto ED213 WrongAnswer
+ClaudioCunha ED212 RuntimeError
+ClaudioCunha ED211 CompileError
+PedroRibeiro ED211 Accepted
+PedroRibeiro ED212 Accepted
+ManuelPinto ED213 CompileError
+AntonioFerreira ED213 TimeLimitExceeded

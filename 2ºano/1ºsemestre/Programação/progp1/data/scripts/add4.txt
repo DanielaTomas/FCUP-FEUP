@@ -1,0 +1,13 @@
+open input/jungle.png
+add input/lion.png
+ 255 255 255 
+ 1 50
+ add input/lion.png
+ 255 255 255 
+ 301 50
+add input/lion.png
+ 255 255 255 
+ 601 100
+save output/add4.png
+
+ 

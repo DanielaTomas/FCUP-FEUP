@@ -1,0 +1,10 @@
+.idea
+.cpack_ignore
+CMakeLists.txt
+cmake-build-debug
+*build*
+data
+external
+png
+programs
+test

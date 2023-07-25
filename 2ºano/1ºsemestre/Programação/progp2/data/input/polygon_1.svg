@@ -1,0 +1,4 @@
+<svg width="400" height="400" xmlns="http://www.w3.org/2000/svg">
+	<polygon points="0,0 0,399 399,399, 399,199" fill="red"/>
+	<polygon points="399,199 399,0 1,1" fill="green"/>
+</svg>

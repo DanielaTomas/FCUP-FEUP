@@ -1,0 +1,76 @@
+(Está resolvido apenas até ao 6.1.)
+
+Grupo 1
+1.1.
+ a) a.equals(b);
+ b) boolean[] v = new boolean[k];
+ c) m[0].length < k;
+ d) s.charAt(s.length()/2);
+
+Grupo 2
+2.1.
+ class Matrix {
+   public int[][] matrix;
+   public int lado;
+   Matrix(int n) { //construtor
+      lado = n;
+      matrix = new int[n][n];
+   }
+ }
+
+2.2.
+ Matrix clone() {
+   Matrix nova = new Matrix(lado);
+   for(int i = 0; i < lado; i++)
+    for(int j = 0; j < lado; j++)
+     nova.matrix[i][j] = matrix[i][j];
+   return nova;
+ }
+
+Grupo 3
+3.2.
+ a) O(1)
+ b) O(n)
+ c) O(n)
+
+Grupo 4
+4.1. Ω , Θ ou O
+ 4n = Θ(n)
+ 3n = O(n^3)
+ 2^n = Ω(n^4)
+ n^2 = Ω(n log n)
+ log₂ 8 = Θ(42)
+ n^n = Ω(n!)
+
+4.2.
+ a) O(n^3)
+ b) O(n^2)
+ c) O(log n)
+ d) O(n)
+
+ 4.3. T(n) = 2T(n/2) + Θ(1)
+
+                T(n)
+           /            \
+        T(n/2)         T(n/2)
+         /   \          /   \
+     T(n/4) T(n/4)  T(n/4)  T(n/4)
+        .      .       .       .
+        .      .       .       .
+     /  .      .       .       .
+   T(1) T(1) T(1) ... T(1)  T(1) T(1)
+
+4.4.
+ A → O(1); 10ms
+ B → O(n); 25ms
+ C → quadrática; 80ms
+ D → O(n^3); 5ms
+ E → exponencial; 2^10 * 10
+
+Grupo 6
+6.1.
+ a) Preorder: A B C E D F G
+ b) Inorder: C B E A D G F
+ c) Postorder: C E B G F D A
+
+6.2. 7 ; 

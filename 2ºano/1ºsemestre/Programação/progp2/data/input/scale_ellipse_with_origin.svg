@@ -1,0 +1,8 @@
+
+<svg width="600" height="600" xmlns="http://www.w3.org/2000/svg">
+  <ellipse transform-origin="300 300" cx="300" cy="300" rx="20" ry="25" fill="blue" transform="scale(10)"/>
+  <ellipse transform-origin="300 300" cx="300" cy="300" rx="20" ry="25" fill="yellow" transform="scale(8)"/>
+  <ellipse transform-origin="300 300" cx="300" cy="300" rx="20" ry="25" fill="green" transform="scale(4)"/>
+  <ellipse transform-origin="300 300" cx="300" cy="300" rx="20" ry="25" fill="red" transform="scale(2)"/>
+  <ellipse transform-origin="300 300" cx="300" cy="300" rx="20" ry="25" fill="black"/>
+</svg>

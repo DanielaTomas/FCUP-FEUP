@@ -1,0 +1,2561 @@
+        -:    0:Source:/home/daniela/2ºano/Programação/prog_p4/gtest/googletest/src/gtest-port.cc
+        -:    0:Graph:/home/daniela/2ºano/Programação/prog_p4/cmake-build-debug-coverage/gtest/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.gcno
+        -:    0:Data:/home/daniela/2ºano/Programação/prog_p4/cmake-build-debug-coverage/gtest/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.gcda
+        -:    0:Runs:1
+        -:    1:// Copyright 2008, Google Inc.
+        -:    2:// All rights reserved.
+        -:    3://
+        -:    4:// Redistribution and use in source and binary forms, with or without
+        -:    5:// modification, are permitted provided that the following conditions are
+        -:    6:// met:
+        -:    7://
+        -:    8://     * Redistributions of source code must retain the above copyright
+        -:    9:// notice, this list of conditions and the following disclaimer.
+        -:   10://     * Redistributions in binary form must reproduce the above
+        -:   11:// copyright notice, this list of conditions and the following disclaimer
+        -:   12:// in the documentation and/or other materials provided with the
+        -:   13:// distribution.
+        -:   14://     * Neither the name of Google Inc. nor the names of its
+        -:   15:// contributors may be used to endorse or promote products derived from
+        -:   16:// this software without specific prior written permission.
+        -:   17://
+        -:   18:// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+        -:   19:// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+        -:   20:// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+        -:   21:// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+        -:   22:// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+        -:   23:// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+        -:   24:// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+        -:   25:// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+        -:   26:// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+        -:   27:// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+        -:   28:// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+        -:   29:
+        -:   30:
+        -:   31:#include "gtest/internal/gtest-port.h"
+        -:   32:
+        -:   33:#include <limits.h>
+        -:   34:#include <stdio.h>
+        -:   35:#include <stdlib.h>
+        -:   36:#include <string.h>
+        -:   37:#include <cstdint>
+        -:   38:#include <fstream>
+        -:   39:#include <memory>
+        -:   40:
+        -:   41:#if GTEST_OS_WINDOWS
+        -:   42:# include <windows.h>
+        -:   43:# include <io.h>
+        -:   44:# include <sys/stat.h>
+        -:   45:# include <map>  // Used in ThreadLocal.
+        -:   46:# ifdef _MSC_VER
+        -:   47:#  include <crtdbg.h>
+        -:   48:# endif  // _MSC_VER
+        -:   49:#else
+        -:   50:# include <unistd.h>
+        -:   51:#endif  // GTEST_OS_WINDOWS
+        -:   52:
+        -:   53:#if GTEST_OS_MAC
+        -:   54:# include <mach/mach_init.h>
+        -:   55:# include <mach/task.h>
+        -:   56:# include <mach/vm_map.h>
+        -:   57:#endif  // GTEST_OS_MAC
+        -:   58:
+        -:   59:#if GTEST_OS_DRAGONFLY || GTEST_OS_FREEBSD || GTEST_OS_GNU_KFREEBSD || \
+        -:   60:    GTEST_OS_NETBSD || GTEST_OS_OPENBSD
+        -:   61:# include <sys/sysctl.h>
+        -:   62:# if GTEST_OS_DRAGONFLY || GTEST_OS_FREEBSD || GTEST_OS_GNU_KFREEBSD
+        -:   63:#  include <sys/user.h>
+        -:   64:# endif
+        -:   65:#endif
+        -:   66:
+        -:   67:#if GTEST_OS_QNX
+        -:   68:# include <devctl.h>
+        -:   69:# include <fcntl.h>
+        -:   70:# include <sys/procfs.h>
+        -:   71:#endif  // GTEST_OS_QNX
+        -:   72:
+        -:   73:#if GTEST_OS_AIX
+        -:   74:# include <procinfo.h>
+        -:   75:# include <sys/types.h>
+        -:   76:#endif  // GTEST_OS_AIX
+        -:   77:
+        -:   78:#if GTEST_OS_FUCHSIA
+        -:   79:# include <zircon/process.h>
+        -:   80:# include <zircon/syscalls.h>
+        -:   81:#endif  // GTEST_OS_FUCHSIA
+        -:   82:
+        -:   83:#include "gtest/gtest-spi.h"
+        -:   84:#include "gtest/gtest-message.h"
+        -:   85:#include "gtest/internal/gtest-internal.h"
+        -:   86:#include "gtest/internal/gtest-string.h"
+        -:   87:#include "src/gtest-internal-inl.h"
+        -:   88:
+        -:   89:namespace testing {
+        -:   90:namespace internal {
+        -:   91:
+        -:   92:#if defined(_MSC_VER) || defined(__BORLANDC__)
+        -:   93:// MSVC and C++Builder do not provide a definition of STDERR_FILENO.
+        -:   94:const int kStdOutFileno = 1;
+        -:   95:const int kStdErrFileno = 2;
+        -:   96:#else
+        -:   97:const int kStdOutFileno = STDOUT_FILENO;
+        -:   98:const int kStdErrFileno = STDERR_FILENO;
+        -:   99:#endif  // _MSC_VER
+        -:  100:
+        -:  101:#if GTEST_OS_LINUX || GTEST_OS_GNU_HURD
+        -:  102:
+        -:  103:namespace {
+        -:  104:template <typename T>
+function _ZN7testing8internal12_GLOBAL__N_117ReadProcFileFieldImEET_RKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEi called 0 returned 0% blocks executed 0%
+    #####:  105:T ReadProcFileField(const std::string& filename, int field) {
+    #####:  106:  std::string dummy;
+    %%%%%:  106-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    $$$$$:  106-block  1
+call    3 never executed
+    #####:  107:  std::ifstream file(filename.c_str());
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+    $$$$$:  107-block  0
+call    7 never executed
+call    8 never executed
+    #####:  108:  while (field-- > 0) {
+    %%%%%:  108-block  0
+branch  0 never executed
+branch  1 never executed
+    %%%%%:  108-block  1
+    #####:  109:    file >> dummy;
+    %%%%%:  109-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  110:  }
+    #####:  111:  T output = 0;
+    %%%%%:  111-block  0
+call    0 never executed
+    #####:  112:  file >> output;
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    #####:  113:  return output;
+    %%%%%:  113-block  0
+call    0 never executed
+        -:  114:}
+        -:  115:}  // namespace
+        -:  116:
+        -:  117:// Returns the number of active threads, or 0 when there is an error.
+function _ZN7testing8internal14GetThreadCountEv called 0 returned 0% blocks executed 0%
+    #####:  118:size_t GetThreadCount() {
+    #####:  119:  const std::string filename =
+    %%%%%:  119-block  0
+call    0 never executed
+    #####:  120:      (Message() << "/proc/" << getpid() << "/stat").GetString();
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    %%%%%:  120-block  0
+call    4 never executed
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+    %%%%%:  120-block  1
+call    8 never executed
+call    9 never executed
+call   10 never executed
+call   11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+    %%%%%:  120-block  2
+call   15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+    %%%%%:  120-block  3
+call   19 never executed
+branch 20 never executed
+branch 21 never executed
+    %%%%%:  120-block  4
+call   22 never executed
+call   23 never executed
+    %%%%%:  120-block  5
+call   24 never executed
+    $$$$$:  120-block  6
+call   25 never executed
+    $$$$$:  120-block  7
+call   26 never executed
+    $$$$$:  120-block  8
+call   27 never executed
+    #####:  121:  return ReadProcFileField<size_t>(filename, 19);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    %%%%%:  121-block  0
+        -:  122:}
+        -:  123:
+        -:  124:#elif GTEST_OS_MAC
+        -:  125:
+        -:  126:size_t GetThreadCount() {
+        -:  127:  const task_t task = mach_task_self();
+        -:  128:  mach_msg_type_number_t thread_count;
+        -:  129:  thread_act_array_t thread_list;
+        -:  130:  const kern_return_t status = task_threads(task, &thread_list, &thread_count);
+        -:  131:  if (status == KERN_SUCCESS) {
+        -:  132:    // task_threads allocates resources in thread_list and we need to free them
+        -:  133:    // to avoid leaks.
+        -:  134:    vm_deallocate(task,
+        -:  135:                  reinterpret_cast<vm_address_t>(thread_list),
+        -:  136:                  sizeof(thread_t) * thread_count);
+        -:  137:    return static_cast<size_t>(thread_count);
+        -:  138:  } else {
+        -:  139:    return 0;
+        -:  140:  }
+        -:  141:}
+        -:  142:
+        -:  143:#elif GTEST_OS_DRAGONFLY || GTEST_OS_FREEBSD || GTEST_OS_GNU_KFREEBSD || \
+        -:  144:      GTEST_OS_NETBSD
+        -:  145:
+        -:  146:#if GTEST_OS_NETBSD
+        -:  147:#undef KERN_PROC
+        -:  148:#define KERN_PROC KERN_PROC2
+        -:  149:#define kinfo_proc kinfo_proc2
+        -:  150:#endif
+        -:  151:
+        -:  152:#if GTEST_OS_DRAGONFLY
+        -:  153:#define KP_NLWP(kp) (kp.kp_nthreads)
+        -:  154:#elif GTEST_OS_FREEBSD || GTEST_OS_GNU_KFREEBSD
+        -:  155:#define KP_NLWP(kp) (kp.ki_numthreads)
+        -:  156:#elif GTEST_OS_NETBSD
+        -:  157:#define KP_NLWP(kp) (kp.p_nlwps)
+        -:  158:#endif
+        -:  159:
+        -:  160:// Returns the number of threads running in the process, or 0 to indicate that
+        -:  161:// we cannot detect it.
+        -:  162:size_t GetThreadCount() {
+        -:  163:  int mib[] = {
+        -:  164:    CTL_KERN,
+        -:  165:    KERN_PROC,
+        -:  166:    KERN_PROC_PID,
+        -:  167:    getpid(),
+        -:  168:#if GTEST_OS_NETBSD
+        -:  169:    sizeof(struct kinfo_proc),
+        -:  170:    1,
+        -:  171:#endif
+        -:  172:  };
+        -:  173:  u_int miblen = sizeof(mib) / sizeof(mib[0]);
+        -:  174:  struct kinfo_proc info;
+        -:  175:  size_t size = sizeof(info);
+        -:  176:  if (sysctl(mib, miblen, &info, &size, NULL, 0)) {
+        -:  177:    return 0;
+        -:  178:  }
+        -:  179:  return static_cast<size_t>(KP_NLWP(info));
+        -:  180:}
+        -:  181:#elif GTEST_OS_OPENBSD
+        -:  182:
+        -:  183:// Returns the number of threads running in the process, or 0 to indicate that
+        -:  184:// we cannot detect it.
+        -:  185:size_t GetThreadCount() {
+        -:  186:  int mib[] = {
+        -:  187:    CTL_KERN,
+        -:  188:    KERN_PROC,
+        -:  189:    KERN_PROC_PID | KERN_PROC_SHOW_THREADS,
+        -:  190:    getpid(),
+        -:  191:    sizeof(struct kinfo_proc),
+        -:  192:    0,
+        -:  193:  };
+        -:  194:  u_int miblen = sizeof(mib) / sizeof(mib[0]);
+        -:  195:
+        -:  196:  // get number of structs
+        -:  197:  size_t size;
+        -:  198:  if (sysctl(mib, miblen, NULL, &size, NULL, 0)) {
+        -:  199:    return 0;
+        -:  200:  }
+        -:  201:
+        -:  202:  mib[5] = static_cast<int>(size / static_cast<size_t>(mib[4]));
+        -:  203:
+        -:  204:  // populate array of structs
+        -:  205:  struct kinfo_proc info[mib[5]];
+        -:  206:  if (sysctl(mib, miblen, &info, &size, NULL, 0)) {
+        -:  207:    return 0;
+        -:  208:  }
+        -:  209:
+        -:  210:  // exclude empty members
+        -:  211:  size_t nthreads = 0;
+        -:  212:  for (size_t i = 0; i < size / static_cast<size_t>(mib[4]); i++) {
+        -:  213:    if (info[i].p_tid != -1)
+        -:  214:      nthreads++;
+        -:  215:  }
+        -:  216:  return nthreads;
+        -:  217:}
+        -:  218:
+        -:  219:#elif GTEST_OS_QNX
+        -:  220:
+        -:  221:// Returns the number of threads running in the process, or 0 to indicate that
+        -:  222:// we cannot detect it.
+        -:  223:size_t GetThreadCount() {
+        -:  224:  const int fd = open("/proc/self/as", O_RDONLY);
+        -:  225:  if (fd < 0) {
+        -:  226:    return 0;
+        -:  227:  }
+        -:  228:  procfs_info process_info;
+        -:  229:  const int status =
+        -:  230:      devctl(fd, DCMD_PROC_INFO, &process_info, sizeof(process_info), nullptr);
+        -:  231:  close(fd);
+        -:  232:  if (status == EOK) {
+        -:  233:    return static_cast<size_t>(process_info.num_threads);
+        -:  234:  } else {
+        -:  235:    return 0;
+        -:  236:  }
+        -:  237:}
+        -:  238:
+        -:  239:#elif GTEST_OS_AIX
+        -:  240:
+        -:  241:size_t GetThreadCount() {
+        -:  242:  struct procentry64 entry;
+        -:  243:  pid_t pid = getpid();
+        -:  244:  int status = getprocs64(&entry, sizeof(entry), nullptr, 0, &pid, 1);
+        -:  245:  if (status == 1) {
+        -:  246:    return entry.pi_thcount;
+        -:  247:  } else {
+        -:  248:    return 0;
+        -:  249:  }
+        -:  250:}
+        -:  251:
+        -:  252:#elif GTEST_OS_FUCHSIA
+        -:  253:
+        -:  254:size_t GetThreadCount() {
+        -:  255:  int dummy_buffer;
+        -:  256:  size_t avail;
+        -:  257:  zx_status_t status = zx_object_get_info(
+        -:  258:      zx_process_self(),
+        -:  259:      ZX_INFO_PROCESS_THREADS,
+        -:  260:      &dummy_buffer,
+        -:  261:      0,
+        -:  262:      nullptr,
+        -:  263:      &avail);
+        -:  264:  if (status == ZX_OK) {
+        -:  265:    return avail;
+        -:  266:  } else {
+        -:  267:    return 0;
+        -:  268:  }
+        -:  269:}
+        -:  270:
+        -:  271:#else
+        -:  272:
+        -:  273:size_t GetThreadCount() {
+        -:  274:  // There's no portable way to detect the number of threads, so we just
+        -:  275:  // return 0 to indicate that we cannot detect it.
+        -:  276:  return 0;
+        -:  277:}
+        -:  278:
+        -:  279:#endif  // GTEST_OS_LINUX
+        -:  280:
+        -:  281:#if GTEST_IS_THREADSAFE && GTEST_OS_WINDOWS
+        -:  282:
+        -:  283:void SleepMilliseconds(int n) {
+        -:  284:  ::Sleep(static_cast<DWORD>(n));
+        -:  285:}
+        -:  286:
+        -:  287:AutoHandle::AutoHandle()
+        -:  288:    : handle_(INVALID_HANDLE_VALUE) {}
+        -:  289:
+        -:  290:AutoHandle::AutoHandle(Handle handle)
+        -:  291:    : handle_(handle) {}
+        -:  292:
+        -:  293:AutoHandle::~AutoHandle() {
+        -:  294:  Reset();
+        -:  295:}
+        -:  296:
+        -:  297:AutoHandle::Handle AutoHandle::Get() const {
+        -:  298:  return handle_;
+        -:  299:}
+        -:  300:
+        -:  301:void AutoHandle::Reset() {
+        -:  302:  Reset(INVALID_HANDLE_VALUE);
+        -:  303:}
+        -:  304:
+        -:  305:void AutoHandle::Reset(HANDLE handle) {
+        -:  306:  // Resetting with the same handle we already own is invalid.
+        -:  307:  if (handle_ != handle) {
+        -:  308:    if (IsCloseable()) {
+        -:  309:      ::CloseHandle(handle_);
+        -:  310:    }
+        -:  311:    handle_ = handle;
+        -:  312:  } else {
+        -:  313:    GTEST_CHECK_(!IsCloseable())
+        -:  314:        << "Resetting a valid handle to itself is likely a programmer error "
+        -:  315:            "and thus not allowed.";
+        -:  316:  }
+        -:  317:}
+        -:  318:
+        -:  319:bool AutoHandle::IsCloseable() const {
+        -:  320:  // Different Windows APIs may use either of these values to represent an
+        -:  321:  // invalid handle.
+        -:  322:  return handle_ != nullptr && handle_ != INVALID_HANDLE_VALUE;
+        -:  323:}
+        -:  324:
+        -:  325:Notification::Notification()
+        -:  326:    : event_(::CreateEvent(nullptr,     // Default security attributes.
+        -:  327:                           TRUE,        // Do not reset automatically.
+        -:  328:                           FALSE,       // Initially unset.
+        -:  329:                           nullptr)) {  // Anonymous event.
+        -:  330:  GTEST_CHECK_(event_.Get() != nullptr);
+        -:  331:}
+        -:  332:
+        -:  333:void Notification::Notify() {
+        -:  334:  GTEST_CHECK_(::SetEvent(event_.Get()) != FALSE);
+        -:  335:}
+        -:  336:
+        -:  337:void Notification::WaitForNotification() {
+        -:  338:  GTEST_CHECK_(
+        -:  339:      ::WaitForSingleObject(event_.Get(), INFINITE) == WAIT_OBJECT_0);
+        -:  340:}
+        -:  341:
+        -:  342:Mutex::Mutex()
+        -:  343:    : owner_thread_id_(0),
+        -:  344:      type_(kDynamic),
+        -:  345:      critical_section_init_phase_(0),
+        -:  346:      critical_section_(new CRITICAL_SECTION) {
+        -:  347:  ::InitializeCriticalSection(critical_section_);
+        -:  348:}
+        -:  349:
+        -:  350:Mutex::~Mutex() {
+        -:  351:  // Static mutexes are leaked intentionally. It is not thread-safe to try
+        -:  352:  // to clean them up.
+        -:  353:  if (type_ == kDynamic) {
+        -:  354:    ::DeleteCriticalSection(critical_section_);
+        -:  355:    delete critical_section_;
+        -:  356:    critical_section_ = nullptr;
+        -:  357:  }
+        -:  358:}
+        -:  359:
+        -:  360:void Mutex::Lock() {
+        -:  361:  ThreadSafeLazyInit();
+        -:  362:  ::EnterCriticalSection(critical_section_);
+        -:  363:  owner_thread_id_ = ::GetCurrentThreadId();
+        -:  364:}
+        -:  365:
+        -:  366:void Mutex::Unlock() {
+        -:  367:  ThreadSafeLazyInit();
+        -:  368:  // We don't protect writing to owner_thread_id_ here, as it's the
+        -:  369:  // caller's responsibility to ensure that the current thread holds the
+        -:  370:  // mutex when this is called.
+        -:  371:  owner_thread_id_ = 0;
+        -:  372:  ::LeaveCriticalSection(critical_section_);
+        -:  373:}
+        -:  374:
+        -:  375:// Does nothing if the current thread holds the mutex. Otherwise, crashes
+        -:  376:// with high probability.
+        -:  377:void Mutex::AssertHeld() {
+        -:  378:  ThreadSafeLazyInit();
+        -:  379:  GTEST_CHECK_(owner_thread_id_ == ::GetCurrentThreadId())
+        -:  380:      << "The current thread is not holding the mutex @" << this;
+        -:  381:}
+        -:  382:
+        -:  383:namespace {
+        -:  384:
+        -:  385:#ifdef _MSC_VER
+        -:  386:// Use the RAII idiom to flag mem allocs that are intentionally never
+        -:  387:// deallocated. The motivation is to silence the false positive mem leaks
+        -:  388:// that are reported by the debug version of MS's CRT which can only detect
+        -:  389:// if an alloc is missing a matching deallocation.
+        -:  390:// Example:
+        -:  391://    MemoryIsNotDeallocated memory_is_not_deallocated;
+        -:  392://    critical_section_ = new CRITICAL_SECTION;
+        -:  393://
+        -:  394:class MemoryIsNotDeallocated
+        -:  395:{
+        -:  396: public:
+        -:  397:  MemoryIsNotDeallocated() : old_crtdbg_flag_(0) {
+        -:  398:    old_crtdbg_flag_ = _CrtSetDbgFlag(_CRTDBG_REPORT_FLAG);
+        -:  399:    // Set heap allocation block type to _IGNORE_BLOCK so that MS debug CRT
+        -:  400:    // doesn't report mem leak if there's no matching deallocation.
+        -:  401:    _CrtSetDbgFlag(old_crtdbg_flag_ & ~_CRTDBG_ALLOC_MEM_DF);
+        -:  402:  }
+        -:  403:
+        -:  404:  ~MemoryIsNotDeallocated() {
+        -:  405:    // Restore the original _CRTDBG_ALLOC_MEM_DF flag
+        -:  406:    _CrtSetDbgFlag(old_crtdbg_flag_);
+        -:  407:  }
+        -:  408:
+        -:  409: private:
+        -:  410:  int old_crtdbg_flag_;
+        -:  411:
+        -:  412:  GTEST_DISALLOW_COPY_AND_ASSIGN_(MemoryIsNotDeallocated);
+        -:  413:};
+        -:  414:#endif  // _MSC_VER
+        -:  415:
+        -:  416:}  // namespace
+        -:  417:
+        -:  418:// Initializes owner_thread_id_ and critical_section_ in static mutexes.
+        -:  419:void Mutex::ThreadSafeLazyInit() {
+        -:  420:  // Dynamic mutexes are initialized in the constructor.
+        -:  421:  if (type_ == kStatic) {
+        -:  422:    switch (
+        -:  423:        ::InterlockedCompareExchange(&critical_section_init_phase_, 1L, 0L)) {
+        -:  424:      case 0:
+        -:  425:        // If critical_section_init_phase_ was 0 before the exchange, we
+        -:  426:        // are the first to test it and need to perform the initialization.
+        -:  427:        owner_thread_id_ = 0;
+        -:  428:        {
+        -:  429:          // Use RAII to flag that following mem alloc is never deallocated.
+        -:  430:#ifdef _MSC_VER
+        -:  431:          MemoryIsNotDeallocated memory_is_not_deallocated;
+        -:  432:#endif  // _MSC_VER
+        -:  433:          critical_section_ = new CRITICAL_SECTION;
+        -:  434:        }
+        -:  435:        ::InitializeCriticalSection(critical_section_);
+        -:  436:        // Updates the critical_section_init_phase_ to 2 to signal
+        -:  437:        // initialization complete.
+        -:  438:        GTEST_CHECK_(::InterlockedCompareExchange(
+        -:  439:                          &critical_section_init_phase_, 2L, 1L) ==
+        -:  440:                      1L);
+        -:  441:        break;
+        -:  442:      case 1:
+        -:  443:        // Somebody else is already initializing the mutex; spin until they
+        -:  444:        // are done.
+        -:  445:        while (::InterlockedCompareExchange(&critical_section_init_phase_,
+        -:  446:                                            2L,
+        -:  447:                                            2L) != 2L) {
+        -:  448:          // Possibly yields the rest of the thread's time slice to other
+        -:  449:          // threads.
+        -:  450:          ::Sleep(0);
+        -:  451:        }
+        -:  452:        break;
+        -:  453:
+        -:  454:      case 2:
+        -:  455:        break;  // The mutex is already initialized and ready for use.
+        -:  456:
+        -:  457:      default:
+        -:  458:        GTEST_CHECK_(false)
+        -:  459:            << "Unexpected value of critical_section_init_phase_ "
+        -:  460:            << "while initializing a static mutex.";
+        -:  461:    }
+        -:  462:  }
+        -:  463:}
+        -:  464:
+        -:  465:namespace {
+        -:  466:
+        -:  467:class ThreadWithParamSupport : public ThreadWithParamBase {
+        -:  468: public:
+        -:  469:  static HANDLE CreateThread(Runnable* runnable,
+        -:  470:                             Notification* thread_can_start) {
+        -:  471:    ThreadMainParam* param = new ThreadMainParam(runnable, thread_can_start);
+        -:  472:    DWORD thread_id;
+        -:  473:    HANDLE thread_handle = ::CreateThread(
+        -:  474:        nullptr,  // Default security.
+        -:  475:        0,        // Default stack size.
+        -:  476:        &ThreadWithParamSupport::ThreadMain,
+        -:  477:        param,        // Parameter to ThreadMainStatic
+        -:  478:        0x0,          // Default creation flags.
+        -:  479:        &thread_id);  // Need a valid pointer for the call to work under Win98.
+        -:  480:    GTEST_CHECK_(thread_handle != nullptr)
+        -:  481:        << "CreateThread failed with error " << ::GetLastError() << ".";
+        -:  482:    if (thread_handle == nullptr) {
+        -:  483:      delete param;
+        -:  484:    }
+        -:  485:    return thread_handle;
+        -:  486:  }
+        -:  487:
+        -:  488: private:
+        -:  489:  struct ThreadMainParam {
+        -:  490:    ThreadMainParam(Runnable* runnable, Notification* thread_can_start)
+        -:  491:        : runnable_(runnable),
+        -:  492:          thread_can_start_(thread_can_start) {
+        -:  493:    }
+        -:  494:    std::unique_ptr<Runnable> runnable_;
+        -:  495:    // Does not own.
+        -:  496:    Notification* thread_can_start_;
+        -:  497:  };
+        -:  498:
+        -:  499:  static DWORD WINAPI ThreadMain(void* ptr) {
+        -:  500:    // Transfers ownership.
+        -:  501:    std::unique_ptr<ThreadMainParam> param(static_cast<ThreadMainParam*>(ptr));
+        -:  502:    if (param->thread_can_start_ != nullptr)
+        -:  503:      param->thread_can_start_->WaitForNotification();
+        -:  504:    param->runnable_->Run();
+        -:  505:    return 0;
+        -:  506:  }
+        -:  507:
+        -:  508:  // Prohibit instantiation.
+        -:  509:  ThreadWithParamSupport();
+        -:  510:
+        -:  511:  GTEST_DISALLOW_COPY_AND_ASSIGN_(ThreadWithParamSupport);
+        -:  512:};
+        -:  513:
+        -:  514:}  // namespace
+        -:  515:
+        -:  516:ThreadWithParamBase::ThreadWithParamBase(Runnable *runnable,
+        -:  517:                                         Notification* thread_can_start)
+        -:  518:      : thread_(ThreadWithParamSupport::CreateThread(runnable,
+        -:  519:                                                     thread_can_start)) {
+        -:  520:}
+        -:  521:
+        -:  522:ThreadWithParamBase::~ThreadWithParamBase() {
+        -:  523:  Join();
+        -:  524:}
+        -:  525:
+        -:  526:void ThreadWithParamBase::Join() {
+        -:  527:  GTEST_CHECK_(::WaitForSingleObject(thread_.Get(), INFINITE) == WAIT_OBJECT_0)
+        -:  528:      << "Failed to join the thread with error " << ::GetLastError() << ".";
+        -:  529:}
+        -:  530:
+        -:  531:// Maps a thread to a set of ThreadIdToThreadLocals that have values
+        -:  532:// instantiated on that thread and notifies them when the thread exits.  A
+        -:  533:// ThreadLocal instance is expected to persist until all threads it has
+        -:  534:// values on have terminated.
+        -:  535:class ThreadLocalRegistryImpl {
+        -:  536: public:
+        -:  537:  // Registers thread_local_instance as having value on the current thread.
+        -:  538:  // Returns a value that can be used to identify the thread from other threads.
+        -:  539:  static ThreadLocalValueHolderBase* GetValueOnCurrentThread(
+        -:  540:      const ThreadLocalBase* thread_local_instance) {
+        -:  541:#ifdef _MSC_VER
+        -:  542:    MemoryIsNotDeallocated memory_is_not_deallocated;
+        -:  543:#endif  // _MSC_VER
+        -:  544:    DWORD current_thread = ::GetCurrentThreadId();
+        -:  545:    MutexLock lock(&mutex_);
+        -:  546:    ThreadIdToThreadLocals* const thread_to_thread_locals =
+        -:  547:        GetThreadLocalsMapLocked();
+        -:  548:    ThreadIdToThreadLocals::iterator thread_local_pos =
+        -:  549:        thread_to_thread_locals->find(current_thread);
+        -:  550:    if (thread_local_pos == thread_to_thread_locals->end()) {
+        -:  551:      thread_local_pos = thread_to_thread_locals->insert(
+        -:  552:          std::make_pair(current_thread, ThreadLocalValues())).first;
+        -:  553:      StartWatcherThreadFor(current_thread);
+        -:  554:    }
+        -:  555:    ThreadLocalValues& thread_local_values = thread_local_pos->second;
+        -:  556:    ThreadLocalValues::iterator value_pos =
+        -:  557:        thread_local_values.find(thread_local_instance);
+        -:  558:    if (value_pos == thread_local_values.end()) {
+        -:  559:      value_pos =
+        -:  560:          thread_local_values
+        -:  561:              .insert(std::make_pair(
+        -:  562:                  thread_local_instance,
+        -:  563:                  std::shared_ptr<ThreadLocalValueHolderBase>(
+        -:  564:                      thread_local_instance->NewValueForCurrentThread())))
+        -:  565:              .first;
+        -:  566:    }
+        -:  567:    return value_pos->second.get();
+        -:  568:  }
+        -:  569:
+        -:  570:  static void OnThreadLocalDestroyed(
+        -:  571:      const ThreadLocalBase* thread_local_instance) {
+        -:  572:    std::vector<std::shared_ptr<ThreadLocalValueHolderBase> > value_holders;
+        -:  573:    // Clean up the ThreadLocalValues data structure while holding the lock, but
+        -:  574:    // defer the destruction of the ThreadLocalValueHolderBases.
+        -:  575:    {
+        -:  576:      MutexLock lock(&mutex_);
+        -:  577:      ThreadIdToThreadLocals* const thread_to_thread_locals =
+        -:  578:          GetThreadLocalsMapLocked();
+        -:  579:      for (ThreadIdToThreadLocals::iterator it =
+        -:  580:          thread_to_thread_locals->begin();
+        -:  581:          it != thread_to_thread_locals->end();
+        -:  582:          ++it) {
+        -:  583:        ThreadLocalValues& thread_local_values = it->second;
+        -:  584:        ThreadLocalValues::iterator value_pos =
+        -:  585:            thread_local_values.find(thread_local_instance);
+        -:  586:        if (value_pos != thread_local_values.end()) {
+        -:  587:          value_holders.push_back(value_pos->second);
+        -:  588:          thread_local_values.erase(value_pos);
+        -:  589:          // This 'if' can only be successful at most once, so theoretically we
+        -:  590:          // could break out of the loop here, but we don't bother doing so.
+        -:  591:        }
+        -:  592:      }
+        -:  593:    }
+        -:  594:    // Outside the lock, let the destructor for 'value_holders' deallocate the
+        -:  595:    // ThreadLocalValueHolderBases.
+        -:  596:  }
+        -:  597:
+        -:  598:  static void OnThreadExit(DWORD thread_id) {
+        -:  599:    GTEST_CHECK_(thread_id != 0) << ::GetLastError();
+        -:  600:    std::vector<std::shared_ptr<ThreadLocalValueHolderBase> > value_holders;
+        -:  601:    // Clean up the ThreadIdToThreadLocals data structure while holding the
+        -:  602:    // lock, but defer the destruction of the ThreadLocalValueHolderBases.
+        -:  603:    {
+        -:  604:      MutexLock lock(&mutex_);
+        -:  605:      ThreadIdToThreadLocals* const thread_to_thread_locals =
+        -:  606:          GetThreadLocalsMapLocked();
+        -:  607:      ThreadIdToThreadLocals::iterator thread_local_pos =
+        -:  608:          thread_to_thread_locals->find(thread_id);
+        -:  609:      if (thread_local_pos != thread_to_thread_locals->end()) {
+        -:  610:        ThreadLocalValues& thread_local_values = thread_local_pos->second;
+        -:  611:        for (ThreadLocalValues::iterator value_pos =
+        -:  612:            thread_local_values.begin();
+        -:  613:            value_pos != thread_local_values.end();
+        -:  614:            ++value_pos) {
+        -:  615:          value_holders.push_back(value_pos->second);
+        -:  616:        }
+        -:  617:        thread_to_thread_locals->erase(thread_local_pos);
+        -:  618:      }
+        -:  619:    }
+        -:  620:    // Outside the lock, let the destructor for 'value_holders' deallocate the
+        -:  621:    // ThreadLocalValueHolderBases.
+        -:  622:  }
+        -:  623:
+        -:  624: private:
+        -:  625:  // In a particular thread, maps a ThreadLocal object to its value.
+        -:  626:  typedef std::map<const ThreadLocalBase*,
+        -:  627:                   std::shared_ptr<ThreadLocalValueHolderBase> >
+        -:  628:      ThreadLocalValues;
+        -:  629:  // Stores all ThreadIdToThreadLocals having values in a thread, indexed by
+        -:  630:  // thread's ID.
+        -:  631:  typedef std::map<DWORD, ThreadLocalValues> ThreadIdToThreadLocals;
+        -:  632:
+        -:  633:  // Holds the thread id and thread handle that we pass from
+        -:  634:  // StartWatcherThreadFor to WatcherThreadFunc.
+        -:  635:  typedef std::pair<DWORD, HANDLE> ThreadIdAndHandle;
+        -:  636:
+        -:  637:  static void StartWatcherThreadFor(DWORD thread_id) {
+        -:  638:    // The returned handle will be kept in thread_map and closed by
+        -:  639:    // watcher_thread in WatcherThreadFunc.
+        -:  640:    HANDLE thread = ::OpenThread(SYNCHRONIZE | THREAD_QUERY_INFORMATION,
+        -:  641:                                 FALSE,
+        -:  642:                                 thread_id);
+        -:  643:    GTEST_CHECK_(thread != nullptr);
+        -:  644:    // We need to pass a valid thread ID pointer into CreateThread for it
+        -:  645:    // to work correctly under Win98.
+        -:  646:    DWORD watcher_thread_id;
+        -:  647:    HANDLE watcher_thread = ::CreateThread(
+        -:  648:        nullptr,  // Default security.
+        -:  649:        0,        // Default stack size
+        -:  650:        &ThreadLocalRegistryImpl::WatcherThreadFunc,
+        -:  651:        reinterpret_cast<LPVOID>(new ThreadIdAndHandle(thread_id, thread)),
+        -:  652:        CREATE_SUSPENDED, &watcher_thread_id);
+        -:  653:    GTEST_CHECK_(watcher_thread != nullptr);
+        -:  654:    // Give the watcher thread the same priority as ours to avoid being
+        -:  655:    // blocked by it.
+        -:  656:    ::SetThreadPriority(watcher_thread,
+        -:  657:                        ::GetThreadPriority(::GetCurrentThread()));
+        -:  658:    ::ResumeThread(watcher_thread);
+        -:  659:    ::CloseHandle(watcher_thread);
+        -:  660:  }
+        -:  661:
+        -:  662:  // Monitors exit from a given thread and notifies those
+        -:  663:  // ThreadIdToThreadLocals about thread termination.
+        -:  664:  static DWORD WINAPI WatcherThreadFunc(LPVOID param) {
+        -:  665:    const ThreadIdAndHandle* tah =
+        -:  666:        reinterpret_cast<const ThreadIdAndHandle*>(param);
+        -:  667:    GTEST_CHECK_(
+        -:  668:        ::WaitForSingleObject(tah->second, INFINITE) == WAIT_OBJECT_0);
+        -:  669:    OnThreadExit(tah->first);
+        -:  670:    ::CloseHandle(tah->second);
+        -:  671:    delete tah;
+        -:  672:    return 0;
+        -:  673:  }
+        -:  674:
+        -:  675:  // Returns map of thread local instances.
+        -:  676:  static ThreadIdToThreadLocals* GetThreadLocalsMapLocked() {
+        -:  677:    mutex_.AssertHeld();
+        -:  678:#ifdef _MSC_VER
+        -:  679:    MemoryIsNotDeallocated memory_is_not_deallocated;
+        -:  680:#endif  // _MSC_VER
+        -:  681:    static ThreadIdToThreadLocals* map = new ThreadIdToThreadLocals();
+        -:  682:    return map;
+        -:  683:  }
+        -:  684:
+        -:  685:  // Protects access to GetThreadLocalsMapLocked() and its return value.
+        -:  686:  static Mutex mutex_;
+        -:  687:  // Protects access to GetThreadMapLocked() and its return value.
+        -:  688:  static Mutex thread_map_mutex_;
+        -:  689:};
+        -:  690:
+        -:  691:Mutex ThreadLocalRegistryImpl::mutex_(Mutex::kStaticMutex);  // NOLINT
+        -:  692:Mutex ThreadLocalRegistryImpl::thread_map_mutex_(Mutex::kStaticMutex);  // NOLINT
+        -:  693:
+        -:  694:ThreadLocalValueHolderBase* ThreadLocalRegistry::GetValueOnCurrentThread(
+        -:  695:      const ThreadLocalBase* thread_local_instance) {
+        -:  696:  return ThreadLocalRegistryImpl::GetValueOnCurrentThread(
+        -:  697:      thread_local_instance);
+        -:  698:}
+        -:  699:
+        -:  700:void ThreadLocalRegistry::OnThreadLocalDestroyed(
+        -:  701:      const ThreadLocalBase* thread_local_instance) {
+        -:  702:  ThreadLocalRegistryImpl::OnThreadLocalDestroyed(thread_local_instance);
+        -:  703:}
+        -:  704:
+        -:  705:#endif  // GTEST_IS_THREADSAFE && GTEST_OS_WINDOWS
+        -:  706:
+        -:  707:#if GTEST_USES_POSIX_RE
+        -:  708:
+        -:  709:// Implements RE.  Currently only needed for death tests.
+        -:  710:
+function _ZN7testing8internal2RED2Ev called 0 returned 0% blocks executed 0%
+    #####:  711:RE::~RE() {
+    #####:  712:  if (is_valid_) {
+    %%%%%:  712-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    %%%%%:  712-block  1
+    %%%%%:  712-block  2
+branch  3 never executed
+branch  4 never executed
+        -:  713:    // regfree'ing an invalid regex might crash because the content
+        -:  714:    // of the regex is undefined. Since the regex's are essentially
+        -:  715:    // the same, one cannot be valid (or invalid) without the other
+        -:  716:    // being so too.
+    #####:  717:    regfree(&partial_regex_);
+    %%%%%:  717-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    #####:  718:    regfree(&full_regex_);
+call    0 never executed
+call    1 never executed
+call    2 never executed
+        -:  719:  }
+    #####:  720:  free(const_cast<char*>(pattern_));
+    %%%%%:  720-block  0
+call    0 never executed
+call    1 never executed
+    #####:  721:}
+        -:  722:
+        -:  723:// Returns true if and only if regular expression re matches the entire str.
+function _ZN7testing8internal2RE9FullMatchEPKcRKS1_ called 0 returned 0% blocks executed 0%
+    #####:  724:bool RE::FullMatch(const char* str, const RE& re) {
+    #####:  725:  if (!re.is_valid_) return false;
+    %%%%%:  725-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    %%%%%:  725-block  1
+    %%%%%:  725-block  2
+branch  3 never executed
+branch  4 never executed
+    %%%%%:  725-block  3
+        -:  726:
+    #####:  727:  regmatch_t match;
+    %%%%%:  727-block  0
+call    0 never executed
+    #####:  728:  return regexec(&re.full_regex_, str, 1, &match, 0) == 0;
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+    %%%%%:  728-block  0
+        -:  729:}
+        -:  730:
+        -:  731:// Returns true if and only if regular expression re matches a substring of
+        -:  732:// str (including str itself).
+function _ZN7testing8internal2RE12PartialMatchEPKcRKS1_ called 0 returned 0% blocks executed 0%
+    #####:  733:bool RE::PartialMatch(const char* str, const RE& re) {
+    #####:  734:  if (!re.is_valid_) return false;
+    %%%%%:  734-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    %%%%%:  734-block  1
+    %%%%%:  734-block  2
+branch  3 never executed
+branch  4 never executed
+    %%%%%:  734-block  3
+        -:  735:
+    #####:  736:  regmatch_t match;
+    %%%%%:  736-block  0
+call    0 never executed
+    #####:  737:  return regexec(&re.partial_regex_, str, 1, &match, 0) == 0;
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+    %%%%%:  737-block  0
+        -:  738:}
+        -:  739:
+        -:  740:// Initializes an RE from its string representation.
+function _ZN7testing8internal2RE4InitEPKc called 0 returned 0% blocks executed 0%
+    #####:  741:void RE::Init(const char* regex) {
+    #####:  742:  pattern_ = posix::StrDup(regex);
+    %%%%%:  742-block  0
+call    0 never executed
+call    1 never executed
+        -:  743:
+        -:  744:  // Reserves enough bytes to hold the regular expression used for a
+        -:  745:  // full match.
+    #####:  746:  const size_t full_regex_len = strlen(regex) + 10;
+branch  0 never executed
+branch  1 never executed
+    %%%%%:  746-block  0
+    #####:  747:  char* const full_pattern = new char[full_regex_len];
+    %%%%%:  747-block  0
+call    0 never executed
+        -:  748:
+    #####:  749:  snprintf(full_pattern, full_regex_len, "^(%s)$", regex);
+    #####:  750:  is_valid_ = regcomp(&full_regex_, full_pattern, REG_EXTENDED) == 0;
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+        -:  751:  // We want to call regcomp(&partial_regex_, ...) even if the
+        -:  752:  // previous expression returns false.  Otherwise partial_regex_ may
+        -:  753:  // not be properly initialized can may cause trouble when it's
+        -:  754:  // freed.
+        -:  755:  //
+        -:  756:  // Some implementation of POSIX regex (e.g. on at least some
+        -:  757:  // versions of Cygwin) doesn't accept the empty string as a valid
+        -:  758:  // regex.  We change it to an equivalent form "()" to be safe.
+    #####:  759:  if (is_valid_) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    %%%%%:  759-block  0
+    %%%%%:  759-block  1
+branch  3 never executed
+branch  4 never executed
+    #####:  760:    const char* const partial_regex = (*regex == '\0') ? "()" : regex;
+    %%%%%:  760-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    %%%%%:  760-block  1
+    %%%%%:  760-block  2
+    #####:  761:    is_valid_ = regcomp(&partial_regex_, partial_regex, REG_EXTENDED) == 0;
+    %%%%%:  761-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+        -:  762:  }
+    #####:  763:  EXPECT_TRUE(is_valid_)
+    %%%%%:  763-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+call    8 never executed
+branch  9 never executed
+branch 10 never executed
+call   11 never executed
+call   12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+    %%%%%:  763-block  1
+call   16 never executed
+call   17 never executed
+call   18 never executed
+branch 19 never executed
+branch 20 never executed
+    %%%%%:  763-block  2
+call   21 never executed
+call   22 never executed
+branch 23 never executed
+branch 24 never executed
+    %%%%%:  763-block  3
+call   25 never executed
+call   26 never executed
+call   27 never executed
+call   28 never executed
+call   29 never executed
+call   30 never executed
+    %%%%%:  763-block  4
+call   31 never executed
+    $$$$$:  763-block  5
+call   32 never executed
+    $$$$$:  763-block  6
+call   33 never executed
+    $$$$$:  763-block  7
+call   34 never executed
+    $$$$$:  763-block  8
+call   35 never executed
+    $$$$$:  763-block  9
+call   36 never executed
+    $$$$$:  763-block 10
+call   37 never executed
+    $$$$$:  763-block 11
+call   38 never executed
+    #####:  764:      << "Regular expression \"" << regex
+    %%%%%:  764-block  0
+call    0 never executed
+    %%%%%:  764-block  1
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+    %%%%%:  764-block  2
+call    5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+    #####:  765:      << "\" is not a valid POSIX Extended regular expression.";
+    %%%%%:  765-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    %%%%%:  765-block  1
+call    4 never executed
+        -:  766:
+    #####:  767:  delete[] full_pattern;
+branch  0 never executed
+branch  1 never executed
+    %%%%%:  767-block  0
+call    2 never executed
+    #####:  768:}
+    %%%%%:  768-block  0
+        -:  769:
+        -:  770:#elif GTEST_USES_SIMPLE_RE
+        -:  771:
+        -:  772:// Returns true if and only if ch appears anywhere in str (excluding the
+        -:  773:// terminating '\0' character).
+        -:  774:bool IsInSet(char ch, const char* str) {
+        -:  775:  return ch != '\0' && strchr(str, ch) != nullptr;
+        -:  776:}
+        -:  777:
+        -:  778:// Returns true if and only if ch belongs to the given classification.
+        -:  779:// Unlike similar functions in <ctype.h>, these aren't affected by the
+        -:  780:// current locale.
+        -:  781:bool IsAsciiDigit(char ch) { return '0' <= ch && ch <= '9'; }
+        -:  782:bool IsAsciiPunct(char ch) {
+        -:  783:  return IsInSet(ch, "^-!\"#$%&'()*+,./:;<=>?@[\\]_`{|}~");
+        -:  784:}
+        -:  785:bool IsRepeat(char ch) { return IsInSet(ch, "?*+"); }
+        -:  786:bool IsAsciiWhiteSpace(char ch) { return IsInSet(ch, " \f\n\r\t\v"); }
+        -:  787:bool IsAsciiWordChar(char ch) {
+        -:  788:  return ('a' <= ch && ch <= 'z') || ('A' <= ch && ch <= 'Z') ||
+        -:  789:      ('0' <= ch && ch <= '9') || ch == '_';
+        -:  790:}
+        -:  791:
+        -:  792:// Returns true if and only if "\\c" is a supported escape sequence.
+        -:  793:bool IsValidEscape(char c) {
+        -:  794:  return (IsAsciiPunct(c) || IsInSet(c, "dDfnrsStvwW"));
+        -:  795:}
+        -:  796:
+        -:  797:// Returns true if and only if the given atom (specified by escaped and
+        -:  798:// pattern) matches ch.  The result is undefined if the atom is invalid.
+        -:  799:bool AtomMatchesChar(bool escaped, char pattern_char, char ch) {
+        -:  800:  if (escaped) {  // "\\p" where p is pattern_char.
+        -:  801:    switch (pattern_char) {
+        -:  802:      case 'd': return IsAsciiDigit(ch);
+        -:  803:      case 'D': return !IsAsciiDigit(ch);
+        -:  804:      case 'f': return ch == '\f';
+        -:  805:      case 'n': return ch == '\n';
+        -:  806:      case 'r': return ch == '\r';
+        -:  807:      case 's': return IsAsciiWhiteSpace(ch);
+        -:  808:      case 'S': return !IsAsciiWhiteSpace(ch);
+        -:  809:      case 't': return ch == '\t';
+        -:  810:      case 'v': return ch == '\v';
+        -:  811:      case 'w': return IsAsciiWordChar(ch);
+        -:  812:      case 'W': return !IsAsciiWordChar(ch);
+        -:  813:    }
+        -:  814:    return IsAsciiPunct(pattern_char) && pattern_char == ch;
+        -:  815:  }
+        -:  816:
+        -:  817:  return (pattern_char == '.' && ch != '\n') || pattern_char == ch;
+        -:  818:}
+        -:  819:
+        -:  820:// Helper function used by ValidateRegex() to format error messages.
+        -:  821:static std::string FormatRegexSyntaxError(const char* regex, int index) {
+        -:  822:  return (Message() << "Syntax error at index " << index
+        -:  823:          << " in simple regular expression \"" << regex << "\": ").GetString();
+        -:  824:}
+        -:  825:
+        -:  826:// Generates non-fatal failures and returns false if regex is invalid;
+        -:  827:// otherwise returns true.
+        -:  828:bool ValidateRegex(const char* regex) {
+        -:  829:  if (regex == nullptr) {
+        -:  830:    ADD_FAILURE() << "NULL is not a valid simple regular expression.";
+        -:  831:    return false;
+        -:  832:  }
+        -:  833:
+        -:  834:  bool is_valid = true;
+        -:  835:
+        -:  836:  // True if and only if ?, *, or + can follow the previous atom.
+        -:  837:  bool prev_repeatable = false;
+        -:  838:  for (int i = 0; regex[i]; i++) {
+        -:  839:    if (regex[i] == '\\') {  // An escape sequence
+        -:  840:      i++;
+        -:  841:      if (regex[i] == '\0') {
+        -:  842:        ADD_FAILURE() << FormatRegexSyntaxError(regex, i - 1)
+        -:  843:                      << "'\\' cannot appear at the end.";
+        -:  844:        return false;
+        -:  845:      }
+        -:  846:
+        -:  847:      if (!IsValidEscape(regex[i])) {
+        -:  848:        ADD_FAILURE() << FormatRegexSyntaxError(regex, i - 1)
+        -:  849:                      << "invalid escape sequence \"\\" << regex[i] << "\".";
+        -:  850:        is_valid = false;
+        -:  851:      }
+        -:  852:      prev_repeatable = true;
+        -:  853:    } else {  // Not an escape sequence.
+        -:  854:      const char ch = regex[i];
+        -:  855:
+        -:  856:      if (ch == '^' && i > 0) {
+        -:  857:        ADD_FAILURE() << FormatRegexSyntaxError(regex, i)
+        -:  858:                      << "'^' can only appear at the beginning.";
+        -:  859:        is_valid = false;
+        -:  860:      } else if (ch == '$' && regex[i + 1] != '\0') {
+        -:  861:        ADD_FAILURE() << FormatRegexSyntaxError(regex, i)
+        -:  862:                      << "'$' can only appear at the end.";
+        -:  863:        is_valid = false;
+        -:  864:      } else if (IsInSet(ch, "()[]{}|")) {
+        -:  865:        ADD_FAILURE() << FormatRegexSyntaxError(regex, i)
+        -:  866:                      << "'" << ch << "' is unsupported.";
+        -:  867:        is_valid = false;
+        -:  868:      } else if (IsRepeat(ch) && !prev_repeatable) {
+        -:  869:        ADD_FAILURE() << FormatRegexSyntaxError(regex, i)
+        -:  870:                      << "'" << ch << "' can only follow a repeatable token.";
+        -:  871:        is_valid = false;
+        -:  872:      }
+        -:  873:
+        -:  874:      prev_repeatable = !IsInSet(ch, "^$?*+");
+        -:  875:    }
+        -:  876:  }
+        -:  877:
+        -:  878:  return is_valid;
+        -:  879:}
+        -:  880:
+        -:  881:// Matches a repeated regex atom followed by a valid simple regular
+        -:  882:// expression.  The regex atom is defined as c if escaped is false,
+        -:  883:// or \c otherwise.  repeat is the repetition meta character (?, *,
+        -:  884:// or +).  The behavior is undefined if str contains too many
+        -:  885:// characters to be indexable by size_t, in which case the test will
+        -:  886:// probably time out anyway.  We are fine with this limitation as
+        -:  887:// std::string has it too.
+        -:  888:bool MatchRepetitionAndRegexAtHead(
+        -:  889:    bool escaped, char c, char repeat, const char* regex,
+        -:  890:    const char* str) {
+        -:  891:  const size_t min_count = (repeat == '+') ? 1 : 0;
+        -:  892:  const size_t max_count = (repeat == '?') ? 1 :
+        -:  893:      static_cast<size_t>(-1) - 1;
+        -:  894:  // We cannot call numeric_limits::max() as it conflicts with the
+        -:  895:  // max() macro on Windows.
+        -:  896:
+        -:  897:  for (size_t i = 0; i <= max_count; ++i) {
+        -:  898:    // We know that the atom matches each of the first i characters in str.
+        -:  899:    if (i >= min_count && MatchRegexAtHead(regex, str + i)) {
+        -:  900:      // We have enough matches at the head, and the tail matches too.
+        -:  901:      // Since we only care about *whether* the pattern matches str
+        -:  902:      // (as opposed to *how* it matches), there is no need to find a
+        -:  903:      // greedy match.
+        -:  904:      return true;
+        -:  905:    }
+        -:  906:    if (str[i] == '\0' || !AtomMatchesChar(escaped, c, str[i]))
+        -:  907:      return false;
+        -:  908:  }
+        -:  909:  return false;
+        -:  910:}
+        -:  911:
+        -:  912:// Returns true if and only if regex matches a prefix of str. regex must
+        -:  913:// be a valid simple regular expression and not start with "^", or the
+        -:  914:// result is undefined.
+        -:  915:bool MatchRegexAtHead(const char* regex, const char* str) {
+        -:  916:  if (*regex == '\0')  // An empty regex matches a prefix of anything.
+        -:  917:    return true;
+        -:  918:
+        -:  919:  // "$" only matches the end of a string.  Note that regex being
+        -:  920:  // valid guarantees that there's nothing after "$" in it.
+        -:  921:  if (*regex == '$')
+        -:  922:    return *str == '\0';
+        -:  923:
+        -:  924:  // Is the first thing in regex an escape sequence?
+        -:  925:  const bool escaped = *regex == '\\';
+        -:  926:  if (escaped)
+        -:  927:    ++regex;
+        -:  928:  if (IsRepeat(regex[1])) {
+        -:  929:    // MatchRepetitionAndRegexAtHead() calls MatchRegexAtHead(), so
+        -:  930:    // here's an indirect recursion.  It terminates as the regex gets
+        -:  931:    // shorter in each recursion.
+        -:  932:    return MatchRepetitionAndRegexAtHead(
+        -:  933:        escaped, regex[0], regex[1], regex + 2, str);
+        -:  934:  } else {
+        -:  935:    // regex isn't empty, isn't "$", and doesn't start with a
+        -:  936:    // repetition.  We match the first atom of regex with the first
+        -:  937:    // character of str and recurse.
+        -:  938:    return (*str != '\0') && AtomMatchesChar(escaped, *regex, *str) &&
+        -:  939:        MatchRegexAtHead(regex + 1, str + 1);
+        -:  940:  }
+        -:  941:}
+        -:  942:
+        -:  943:// Returns true if and only if regex matches any substring of str.  regex must
+        -:  944:// be a valid simple regular expression, or the result is undefined.
+        -:  945://
+        -:  946:// The algorithm is recursive, but the recursion depth doesn't exceed
+        -:  947:// the regex length, so we won't need to worry about running out of
+        -:  948:// stack space normally.  In rare cases the time complexity can be
+        -:  949:// exponential with respect to the regex length + the string length,
+        -:  950:// but usually it's must faster (often close to linear).
+        -:  951:bool MatchRegexAnywhere(const char* regex, const char* str) {
+        -:  952:  if (regex == nullptr || str == nullptr) return false;
+        -:  953:
+        -:  954:  if (*regex == '^')
+        -:  955:    return MatchRegexAtHead(regex + 1, str);
+        -:  956:
+        -:  957:  // A successful match can be anywhere in str.
+        -:  958:  do {
+        -:  959:    if (MatchRegexAtHead(regex, str))
+        -:  960:      return true;
+        -:  961:  } while (*str++ != '\0');
+        -:  962:  return false;
+        -:  963:}
+        -:  964:
+        -:  965:// Implements the RE class.
+        -:  966:
+        -:  967:RE::~RE() {
+        -:  968:  free(const_cast<char*>(pattern_));
+        -:  969:  free(const_cast<char*>(full_pattern_));
+        -:  970:}
+        -:  971:
+        -:  972:// Returns true if and only if regular expression re matches the entire str.
+        -:  973:bool RE::FullMatch(const char* str, const RE& re) {
+        -:  974:  return re.is_valid_ && MatchRegexAnywhere(re.full_pattern_, str);
+        -:  975:}
+        -:  976:
+        -:  977:// Returns true if and only if regular expression re matches a substring of
+        -:  978:// str (including str itself).
+        -:  979:bool RE::PartialMatch(const char* str, const RE& re) {
+        -:  980:  return re.is_valid_ && MatchRegexAnywhere(re.pattern_, str);
+        -:  981:}
+        -:  982:
+        -:  983:// Initializes an RE from its string representation.
+        -:  984:void RE::Init(const char* regex) {
+        -:  985:  pattern_ = full_pattern_ = nullptr;
+        -:  986:  if (regex != nullptr) {
+        -:  987:    pattern_ = posix::StrDup(regex);
+        -:  988:  }
+        -:  989:
+        -:  990:  is_valid_ = ValidateRegex(regex);
+        -:  991:  if (!is_valid_) {
+        -:  992:    // No need to calculate the full pattern when the regex is invalid.
+        -:  993:    return;
+        -:  994:  }
+        -:  995:
+        -:  996:  const size_t len = strlen(regex);
+        -:  997:  // Reserves enough bytes to hold the regular expression used for a
+        -:  998:  // full match: we need space to prepend a '^', append a '$', and
+        -:  999:  // terminate the string with '\0'.
+        -: 1000:  char* buffer = static_cast<char*>(malloc(len + 3));
+        -: 1001:  full_pattern_ = buffer;
+        -: 1002:
+        -: 1003:  if (*regex != '^')
+        -: 1004:    *buffer++ = '^';  // Makes sure full_pattern_ starts with '^'.
+        -: 1005:
+        -: 1006:  // We don't use snprintf or strncpy, as they trigger a warning when
+        -: 1007:  // compiled with VC++ 8.0.
+        -: 1008:  memcpy(buffer, regex, len);
+        -: 1009:  buffer += len;
+        -: 1010:
+        -: 1011:  if (len == 0 || regex[len - 1] != '$')
+        -: 1012:    *buffer++ = '$';  // Makes sure full_pattern_ ends with '$'.
+        -: 1013:
+        -: 1014:  *buffer = '\0';
+        -: 1015:}
+        -: 1016:
+        -: 1017:#endif  // GTEST_USES_POSIX_RE
+        -: 1018:
+        -: 1019:const char kUnknownFile[] = "unknown file";
+        -: 1020:
+        -: 1021:// Formats a source file path and a line number as they would appear
+        -: 1022:// in an error message from the compiler used to compile this code.
+function _ZN7testing8internal18FormatFileLocationB5cxx11EPKci called 0 returned 0% blocks executed 0%
+    #####: 1023:GTEST_API_ ::std::string FormatFileLocation(const char* file, int line) {
+    #####: 1024:  const std::string file_name(file == nullptr ? kUnknownFile : file);
+    %%%%%: 1024-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+    %%%%%: 1024-block  1
+    %%%%%: 1024-block  2
+    %%%%%: 1024-block  3
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+call    8 never executed
+    %%%%%: 1024-block  4
+call    9 never executed
+    $$$$$: 1024-block  5
+call   10 never executed
+    $$$$$: 1024-block  6
+call   11 never executed
+        -: 1025:
+    #####: 1026:  if (line < 0) {
+branch  0 never executed
+branch  1 never executed
+    #####: 1027:    return file_name + ":";
+    %%%%%: 1027-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+        -: 1028:  }
+        -: 1029:#ifdef _MSC_VER
+        -: 1030:  return file_name + "(" + StreamableToString(line) + "):";
+        -: 1031:#else
+    #####: 1032:  return file_name + ":" + StreamableToString(line) + ":";
+    %%%%%: 1032-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+    %%%%%: 1032-block  1
+call    5 never executed
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+    %%%%%: 1032-block  2
+call   10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+    %%%%%: 1032-block  3
+call   14 never executed
+call   15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+    %%%%%: 1032-block  4
+call   19 never executed
+call   20 never executed
+call   21 never executed
+call   22 never executed
+call   23 never executed
+call   24 never executed
+    $$$$$: 1032-block  5
+call   25 never executed
+    $$$$$: 1032-block  6
+call   26 never executed
+    $$$$$: 1032-block  7
+call   27 never executed
+    $$$$$: 1032-block  8
+call   28 never executed
+    $$$$$: 1032-block  9
+call   29 never executed
+    $$$$$: 1032-block 10
+call   30 never executed
+        -: 1033:#endif  // _MSC_VER
+        -: 1034:}
+        -: 1035:
+        -: 1036:// Formats a file location for compiler-independent XML output.
+        -: 1037:// Although this function is not platform dependent, we put it next to
+        -: 1038:// FormatFileLocation in order to contrast the two functions.
+        -: 1039:// Note that FormatCompilerIndependentFileLocation() does NOT append colon
+        -: 1040:// to the file location it produces, unlike FormatFileLocation().
+function _ZN7testing8internal37FormatCompilerIndependentFileLocationB5cxx11EPKci called 0 returned 0% blocks executed 0%
+    #####: 1041:GTEST_API_ ::std::string FormatCompilerIndependentFileLocation(
+        -: 1042:    const char* file, int line) {
+    #####: 1043:  const std::string file_name(file == nullptr ? kUnknownFile : file);
+    %%%%%: 1043-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+    %%%%%: 1043-block  1
+    %%%%%: 1043-block  2
+    %%%%%: 1043-block  3
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+call    8 never executed
+    %%%%%: 1043-block  4
+call    9 never executed
+    $$$$$: 1043-block  5
+call   10 never executed
+    $$$$$: 1043-block  6
+call   11 never executed
+        -: 1044:
+    #####: 1045:  if (line < 0)
+branch  0 never executed
+branch  1 never executed
+    #####: 1046:    return file_name;
+    %%%%%: 1046-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -: 1047:  else
+    #####: 1048:    return file_name + ":" + StreamableToString(line);
+    %%%%%: 1048-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    %%%%%: 1048-block  1
+call    4 never executed
+call    5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+    %%%%%: 1048-block  2
+call    9 never executed
+call   10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+    %%%%%: 1048-block  3
+call   14 never executed
+call   15 never executed
+call   16 never executed
+call   17 never executed
+    $$$$$: 1048-block  4
+call   18 never executed
+    $$$$$: 1048-block  5
+call   19 never executed
+    $$$$$: 1048-block  6
+call   20 never executed
+    $$$$$: 1048-block  7
+call   21 never executed
+        -: 1049:}
+        -: 1050:
+function _ZN7testing8internal8GTestLogC2ENS0_16GTestLogSeverityEPKci called 0 returned 0% blocks executed 0%
+    #####: 1051:GTestLog::GTestLog(GTestLogSeverity severity, const char* file, int line)
+    %%%%%: 1051-block  0
+call    0 never executed
+    #####: 1052:    : severity_(severity) {
+call    0 never executed
+    #####: 1053:  const char* const marker =
+branch  0 never executed
+branch  1 never executed
+    %%%%%: 1053-block  0
+branch  2 never executed
+branch  3 never executed
+    %%%%%: 1053-block  1
+branch  4 never executed
+branch  5 never executed
+    %%%%%: 1053-block  2
+    %%%%%: 1053-block  3
+    %%%%%: 1053-block  4
+    %%%%%: 1053-block  5
+    %%%%%: 1053-block  6
+    %%%%%: 1053-block  7
+        -: 1054:      severity == GTEST_INFO ?    "[  INFO ]" :
+        -: 1055:      severity == GTEST_WARNING ? "[WARNING]" :
+        -: 1056:      severity == GTEST_ERROR ?   "[ ERROR ]" : "[ FATAL ]";
+    #####: 1057:  GetStream() << ::std::endl << marker << " "
+    %%%%%: 1057-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+    #####: 1058:              << FormatFileLocation(file, line).c_str() << ": ";
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+    %%%%%: 1058-block  0
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+    %%%%%: 1058-block  1
+call   13 never executed
+call   14 never executed
+    $$$$$: 1058-block  2
+call   15 never executed
+    $$$$$: 1058-block  3
+call   16 never executed
+    #####: 1059:}
+        -: 1060:
+        -: 1061:// Flushes the buffers and, if severity is GTEST_FATAL, aborts the program.
+function _ZN7testing8internal8GTestLogD2Ev called 0 returned 0% blocks executed 0%
+    #####: 1062:GTestLog::~GTestLog() {
+    %%%%%: 1062-block  0
+call    0 never executed
+    #####: 1063:  GetStream() << ::std::endl;
+    %%%%%: 1063-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+    #####: 1064:  if (severity_ == GTEST_FATAL) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    %%%%%: 1064-block  0
+    %%%%%: 1064-block  1
+branch  3 never executed
+branch  4 never executed
+    #####: 1065:    fflush(stderr);
+    %%%%%: 1065-block  0
+call    0 never executed
+    #####: 1066:    posix::Abort();
+call    0 never executed
+        -: 1067:  }
+    #####: 1068:}
+        -: 1069:
+        -: 1070:// Disable Microsoft deprecation warnings for POSIX functions called from
+        -: 1071:// this class (creat, dup, dup2, and close)
+        -: 1072:GTEST_DISABLE_MSC_DEPRECATED_PUSH_()
+        -: 1073:
+        -: 1074:#if GTEST_HAS_STREAM_REDIRECTION
+        -: 1075:
+        -: 1076:// Object that captures an output stream (stdout/stderr).
+        -: 1077:class CapturedStream {
+        -: 1078: public:
+        -: 1079:  // The ctor redirects the stream to a temporary file.
+function _ZN7testing8internal14CapturedStreamC2Ei called 0 returned 0% blocks executed 0%
+    #####: 1080:  explicit CapturedStream(int fd) : fd_(fd), uncaptured_fd_(dup(fd)) {
+    %%%%%: 1080-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+call    8 never executed
+    $$$$$: 1080-block  1
+call    9 never executed
+call   10 never executed
+call   11 never executed
+call   12 never executed
+        -: 1081:# if GTEST_OS_WINDOWS
+        -: 1082:    char temp_dir_path[MAX_PATH + 1] = { '\0' };  // NOLINT
+        -: 1083:    char temp_file_path[MAX_PATH + 1] = { '\0' };  // NOLINT
+        -: 1084:
+        -: 1085:    ::GetTempPathA(sizeof(temp_dir_path), temp_dir_path);
+        -: 1086:    const UINT success = ::GetTempFileNameA(temp_dir_path,
+        -: 1087:                                            "gtest_redir",
+        -: 1088:                                            0,  // Generate unique file name.
+        -: 1089:                                            temp_file_path);
+        -: 1090:    GTEST_CHECK_(success != 0)
+        -: 1091:        << "Unable to create a temporary file in " << temp_dir_path;
+        -: 1092:    const int captured_fd = creat(temp_file_path, _S_IREAD | _S_IWRITE);
+        -: 1093:    GTEST_CHECK_(captured_fd != -1) << "Unable to open temporary file "
+        -: 1094:                                    << temp_file_path;
+        -: 1095:    filename_ = temp_file_path;
+        -: 1096:# else
+        -: 1097:    // There's no guarantee that a test has write access to the current
+        -: 1098:    // directory, so we create the temporary file in a temporary directory.
+    #####: 1099:    std::string name_template;
+call    0 never executed
+call    1 never executed
+    %%%%%: 1099-block  0
+call    2 never executed
+    $$$$$: 1099-block  1
+call    3 never executed
+        -: 1100:
+        -: 1101:#  if GTEST_OS_LINUX_ANDROID
+        -: 1102:    // Note: Android applications are expected to call the framework's
+        -: 1103:    // Context.getExternalStorageDirectory() method through JNI to get
+        -: 1104:    // the location of the world-writable SD Card directory. However,
+        -: 1105:    // this requires a Context handle, which cannot be retrieved
+        -: 1106:    // globally from native code. Doing so also precludes running the
+        -: 1107:    // code as part of a regular standalone executable, which doesn't
+        -: 1108:    // run in a Dalvik process (e.g. when running it through 'adb shell').
+        -: 1109:    //
+        -: 1110:    // The location /data/local/tmp is directly accessible from native code.
+        -: 1111:    // '/sdcard' and other variants cannot be relied on, as they are not
+        -: 1112:    // guaranteed to be mounted, or may have a delay in mounting.
+        -: 1113:    name_template = "/data/local/tmp/";
+        -: 1114:#  elif GTEST_OS_IOS
+        -: 1115:    char user_temp_dir[PATH_MAX + 1];
+        -: 1116:
+        -: 1117:    // Documented alternative to NSTemporaryDirectory() (for obtaining creating
+        -: 1118:    // a temporary directory) at
+        -: 1119:    // https://developer.apple.com/library/archive/documentation/Security/Conceptual/SecureCodingGuide/Articles/RaceConditions.html#//apple_ref/doc/uid/TP40002585-SW10
+        -: 1120:    //
+        -: 1121:    // _CS_DARWIN_USER_TEMP_DIR (as well as _CS_DARWIN_USER_CACHE_DIR) is not
+        -: 1122:    // documented in the confstr() man page at
+        -: 1123:    // https://developer.apple.com/library/archive/documentation/System/Conceptual/ManPages_iPhoneOS/man3/confstr.3.html#//apple_ref/doc/man/3/confstr
+        -: 1124:    // but are still available, according to the WebKit patches at
+        -: 1125:    // https://trac.webkit.org/changeset/262004/webkit
+        -: 1126:    // https://trac.webkit.org/changeset/263705/webkit
+        -: 1127:    //
+        -: 1128:    // The confstr() implementation falls back to getenv("TMPDIR"). See
+        -: 1129:    // https://opensource.apple.com/source/Libc/Libc-1439.100.3/gen/confstr.c.auto.html
+        -: 1130:    ::confstr(_CS_DARWIN_USER_TEMP_DIR, user_temp_dir, sizeof(user_temp_dir));
+        -: 1131:
+        -: 1132:    name_template = user_temp_dir;
+        -: 1133:    if (name_template.back() != GTEST_PATH_SEP_[0])
+        -: 1134:      name_template.push_back(GTEST_PATH_SEP_[0]);
+        -: 1135:#  else
+    #####: 1136:    name_template = "/tmp/";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -: 1137:#  endif
+    #####: 1138:    name_template.append("gtest_captured_stream.XXXXXX");
+    %%%%%: 1138-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -: 1139:
+        -: 1140:    // mkstemp() modifies the string bytes in place, and does not go beyond the
+        -: 1141:    // string's length. This results in well-defined behavior in C++17.
+        -: 1142:    //
+        -: 1143:    // The const_cast is needed below C++17. The constraints on std::string
+        -: 1144:    // implementations in C++11 and above make assumption behind the const_cast
+        -: 1145:    // fairly safe.
+    #####: 1146:    const int captured_fd = ::mkstemp(const_cast<char*>(name_template.data()));
+    %%%%%: 1146-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    %%%%%: 1146-block  1
+    %%%%%: 1146-block  2
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    #####: 1147:    if (captured_fd == -1) {
+    %%%%%: 1147-block  0
+branch  0 never executed
+branch  1 never executed
+    #####: 1148:      GTEST_LOG_(WARNING)
+    %%%%%: 1148-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    %%%%%: 1148-block  1
+call    4 never executed
+call    5 never executed
+    %%%%%: 1148-block  2
+call    6 never executed
+call    7 never executed
+    $$$$$: 1148-block  3
+call    8 never executed
+    $$$$$: 1148-block  4
+call    9 never executed
+        -: 1149:          << "Failed to create tmp file " << name_template
+    #####: 1150:          << " for test; does the test have access to the /tmp directory?";
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    %%%%%: 1150-block  0
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+    %%%%%: 1150-block  1
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+        -: 1151:    }
+    #####: 1152:    filename_ = std::move(name_template);
+    %%%%%: 1152-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+        -: 1153:# endif  // GTEST_OS_WINDOWS
+    #####: 1154:    fflush(nullptr);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####: 1155:    dup2(captured_fd, fd_);
+    %%%%%: 1155-block  0
+call    0 never executed
+call    1 never executed
+    #####: 1156:    close(captured_fd);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####: 1157:  }
+        -: 1158:
+function _ZN7testing8internal14CapturedStreamD2Ev called 0 returned 0% blocks executed 0%
+    #####: 1159:  ~CapturedStream() {
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+    #####: 1160:    remove(filename_.c_str());
+    %%%%%: 1160-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+    #####: 1161:  }
+        -: 1162:
+function _ZN7testing8internal14CapturedStream17GetCapturedStringB5cxx11Ev called 0 returned 0% blocks executed 0%
+    #####: 1163:  std::string GetCapturedString() {
+    #####: 1164:    if (uncaptured_fd_ != -1) {
+    %%%%%: 1164-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+        -: 1165:      // Restores the original stream.
+    #####: 1166:      fflush(nullptr);
+    %%%%%: 1166-block  0
+call    0 never executed
+    #####: 1167:      dup2(uncaptured_fd_, fd_);
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+    #####: 1168:      close(uncaptured_fd_);
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    #####: 1169:      uncaptured_fd_ = -1;
+call    0 never executed
+call    1 never executed
+        -: 1170:    }
+        -: 1171:
+    #####: 1172:    FILE* const file = posix::FOpen(filename_.c_str(), "r");
+    %%%%%: 1172-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+    #####: 1173:    if (file == nullptr) {
+branch  0 never executed
+branch  1 never executed
+    #####: 1174:      GTEST_LOG_(FATAL) << "Failed to open tmp file " << filename_
+    %%%%%: 1174-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+    %%%%%: 1174-block  1
+call    6 never executed
+call    7 never executed
+    $$$$$: 1174-block  2
+call    8 never executed
+    $$$$$: 1174-block  3
+call    9 never executed
+    #####: 1175:                        << " for capturing stream.";
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    %%%%%: 1175-block  0
+call    4 never executed
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+    %%%%%: 1175-block  1
+call    8 never executed
+branch  9 never executed
+branch 10 never executed
+        -: 1176:    }
+    #####: 1177:    const std::string content = ReadEntireFile(file);
+    %%%%%: 1177-block  0
+call    0 never executed
+call    1 never executed
+    #####: 1178:    posix::FClose(file);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####: 1179:    return content;
+    %%%%%: 1179-block  0
+    %%%%%: 1179-block  1
+        -: 1180:  }
+        -: 1181:
+        -: 1182: private:
+        -: 1183:  const int fd_;  // A stream to capture.
+        -: 1184:  int uncaptured_fd_;
+        -: 1185:  // Name of the temporary file holding the stderr output.
+        -: 1186:  ::std::string filename_;
+        -: 1187:
+        -: 1188:  GTEST_DISALLOW_COPY_AND_ASSIGN_(CapturedStream);
+        -: 1189:};
+        -: 1190:
+        -: 1191:GTEST_DISABLE_MSC_DEPRECATED_POP_()
+        -: 1192:
+        -: 1193:static CapturedStream* g_captured_stderr = nullptr;
+        -: 1194:static CapturedStream* g_captured_stdout = nullptr;
+        -: 1195:
+        -: 1196:// Starts capturing an output stream (stdout/stderr).
+function _ZN7testing8internalL13CaptureStreamEiPKcPPNS0_14CapturedStreamE called 0 returned 0% blocks executed 0%
+    #####: 1197:static void CaptureStream(int fd, const char* stream_name,
+        -: 1198:                          CapturedStream** stream) {
+    #####: 1199:  if (*stream != nullptr) {
+    %%%%%: 1199-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####: 1200:    GTEST_LOG_(FATAL) << "Only one " << stream_name
+    %%%%%: 1200-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+    %%%%%: 1200-block  1
+call    4 never executed
+call    5 never executed
+    $$$$$: 1200-block  2
+call    6 never executed
+    $$$$$: 1200-block  3
+call    7 never executed
+    #####: 1201:                      << " capturer can exist at a time.";
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    %%%%%: 1201-block  0
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+    %%%%%: 1201-block  1
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+        -: 1202:  }
+    #####: 1203:  *stream = new CapturedStream(fd);
+    %%%%%: 1203-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+    %%%%%: 1203-block  1
+call    5 never executed
+    $$$$$: 1203-block  2
+call    6 never executed
+    #####: 1204:}
+        -: 1205:
+        -: 1206:// Stops capturing the output stream and returns the captured string.
+function _ZN7testing8internalL17GetCapturedStreamEPPNS0_14CapturedStreamE called 0 returned 0% blocks executed 0%
+    #####: 1207:static std::string GetCapturedStream(CapturedStream** captured_stream) {
+    #####: 1208:  const std::string content = (*captured_stream)->GetCapturedString();
+    %%%%%: 1208-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+        -: 1209:
+    #####: 1210:  delete *captured_stream;
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    %%%%%: 1210-block  0
+call    3 never executed
+call    4 never executed
+call    5 never executed
+    #####: 1211:  *captured_stream = nullptr;
+    %%%%%: 1211-block  0
+call    0 never executed
+        -: 1212:
+    #####: 1213:  return content;
+        -: 1214:}
+        -: 1215:
+        -: 1216:// Starts capturing stdout.
+function _ZN7testing8internal13CaptureStdoutEv called 0 returned 0% blocks executed 0%
+    #####: 1217:void CaptureStdout() {
+    #####: 1218:  CaptureStream(kStdOutFileno, "stdout", &g_captured_stdout);
+    %%%%%: 1218-block  0
+call    0 never executed
+    #####: 1219:}
+        -: 1220:
+        -: 1221:// Starts capturing stderr.
+function _ZN7testing8internal13CaptureStderrEv called 0 returned 0% blocks executed 0%
+    #####: 1222:void CaptureStderr() {
+    #####: 1223:  CaptureStream(kStdErrFileno, "stderr", &g_captured_stderr);
+    %%%%%: 1223-block  0
+call    0 never executed
+    #####: 1224:}
+        -: 1225:
+        -: 1226:// Stops capturing stdout and returns the captured string.
+function _ZN7testing8internal17GetCapturedStdoutB5cxx11Ev called 0 returned 0% blocks executed 0%
+    #####: 1227:std::string GetCapturedStdout() {
+    #####: 1228:  return GetCapturedStream(&g_captured_stdout);
+    %%%%%: 1228-block  0
+call    0 never executed
+call    1 never executed
+        -: 1229:}
+        -: 1230:
+        -: 1231:// Stops capturing stderr and returns the captured string.
+function _ZN7testing8internal17GetCapturedStderrB5cxx11Ev called 0 returned 0% blocks executed 0%
+    #####: 1232:std::string GetCapturedStderr() {
+    #####: 1233:  return GetCapturedStream(&g_captured_stderr);
+    %%%%%: 1233-block  0
+call    0 never executed
+call    1 never executed
+        -: 1234:}
+        -: 1235:
+        -: 1236:#endif  // GTEST_HAS_STREAM_REDIRECTION
+        -: 1237:
+        -: 1238:
+        -: 1239:
+        -: 1240:
+        -: 1241:
+function _ZN7testing8internal11GetFileSizeEP8_IO_FILE called 0 returned 0% blocks executed 0%
+    #####: 1242:size_t GetFileSize(FILE* file) {
+    #####: 1243:  fseek(file, 0, SEEK_END);
+    %%%%%: 1243-block  0
+call    0 never executed
+    #####: 1244:  return static_cast<size_t>(ftell(file));
+call    0 never executed
+        -: 1245:}
+        -: 1246:
+function _ZN7testing8internal14ReadEntireFileB5cxx11EP8_IO_FILE called 0 returned 0% blocks executed 0%
+    #####: 1247:std::string ReadEntireFile(FILE* file) {
+    #####: 1248:  const size_t file_size = GetFileSize(file);
+    %%%%%: 1248-block  0
+call    0 never executed
+    #####: 1249:  char* const buffer = new char[file_size];
+call    0 never executed
+        -: 1250:
+    #####: 1251:  size_t bytes_last_read = 0;  // # of bytes read in the last fread()
+    #####: 1252:  size_t bytes_read = 0;       // # of bytes read so far
+        -: 1253:
+    #####: 1254:  fseek(file, 0, SEEK_SET);
+call    0 never executed
+        -: 1255:
+        -: 1256:  // Keeps reading the file until we cannot read further or the
+        -: 1257:  // pre-determined file size is reached.
+    #####: 1258:  do {
+    %%%%%: 1258-block  0
+    #####: 1259:    bytes_last_read = fread(buffer+bytes_read, 1, file_size-bytes_read, file);
+    %%%%%: 1259-block  0
+call    0 never executed
+call    1 never executed
+    #####: 1260:    bytes_read += bytes_last_read;
+    #####: 1261:  } while (bytes_last_read > 0 && bytes_read < file_size);
+branch  0 never executed
+branch  1 never executed
+    %%%%%: 1261-block  0
+branch  2 never executed
+branch  3 never executed
+        -: 1262:
+    #####: 1263:  const std::string content(buffer, bytes_read);
+    %%%%%: 1263-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+call    5 never executed
+    $$$$$: 1263-block  1
+call    6 never executed
+    #####: 1264:  delete[] buffer;
+branch  0 never executed
+branch  1 never executed
+    %%%%%: 1264-block  0
+call    2 never executed
+        -: 1265:
+    #####: 1266:  return content;
+    %%%%%: 1266-block  0
+    %%%%%: 1266-block  1
+        -: 1267:}
+        -: 1268:
+        -: 1269:#if GTEST_HAS_DEATH_TEST
+        -: 1270:static const std::vector<std::string>* g_injected_test_argvs =
+        -: 1271:    nullptr;  // Owned.
+        -: 1272:
+function _ZN7testing8internal18GetInjectableArgvsB5cxx11Ev called 0 returned 0% blocks executed 0%
+    #####: 1273:std::vector<std::string> GetInjectableArgvs() {
+    #####: 1274:  if (g_injected_test_argvs != nullptr) {
+    %%%%%: 1274-block  0
+branch  0 never executed
+branch  1 never executed
+    #####: 1275:    return *g_injected_test_argvs;
+    %%%%%: 1275-block  0
+call    0 never executed
+call    1 never executed
+        -: 1276:  }
+    #####: 1277:  return GetArgvs();
+    %%%%%: 1277-block  0
+call    0 never executed
+call    1 never executed
+        -: 1278:}
+        -: 1279:
+function _ZN7testing8internal18SetInjectableArgvsEPKSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS7_EE called 0 returned 0% blocks executed 0%
+    #####: 1280:void SetInjectableArgvs(const std::vector<std::string>* new_argvs) {
+    #####: 1281:  if (g_injected_test_argvs != new_argvs) delete g_injected_test_argvs;
+    %%%%%: 1281-block  0
+branch  0 never executed
+branch  1 never executed
+    %%%%%: 1281-block  1
+branch  2 never executed
+branch  3 never executed
+    %%%%%: 1281-block  2
+call    4 never executed
+call    5 never executed
+call    6 never executed
+    #####: 1282:  g_injected_test_argvs = new_argvs;
+    #####: 1283:}
+        -: 1284:
+function _ZN7testing8internal18SetInjectableArgvsERKSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS7_EE called 0 returned 0% blocks executed 0%
+    #####: 1285:void SetInjectableArgvs(const std::vector<std::string>& new_argvs) {
+    #####: 1286:  SetInjectableArgvs(
+call    0 never executed
+call    1 never executed
+    %%%%%: 1286-block  0
+call    2 never executed
+call    3 never executed
+call    4 never executed
+    $$$$$: 1286-block  1
+call    5 never executed
+    $$$$$: 1286-block  2
+call    6 never executed
+    #####: 1287:      new std::vector<std::string>(new_argvs.begin(), new_argvs.end()));
+    %%%%%: 1287-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+    %%%%%: 1287-block  1
+call    9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+call   14 never executed
+    $$$$$: 1287-block  2
+call   15 never executed
+    $$$$$: 1287-block  3
+call   16 never executed
+    $$$$$: 1287-block  4
+call   17 never executed
+    #####: 1288:}
+        -: 1289:
+function _ZN7testing8internal20ClearInjectableArgvsEv called 0 returned 0% blocks executed 0%
+    #####: 1290:void ClearInjectableArgvs() {
+    #####: 1291:  delete g_injected_test_argvs;
+    %%%%%: 1291-block  0
+branch  0 never executed
+branch  1 never executed
+    %%%%%: 1291-block  1
+call    2 never executed
+call    3 never executed
+call    4 never executed
+    #####: 1292:  g_injected_test_argvs = nullptr;
+    #####: 1293:}
+        -: 1294:#endif  // GTEST_HAS_DEATH_TEST
+        -: 1295:
+        -: 1296:#if GTEST_OS_WINDOWS_MOBILE
+        -: 1297:namespace posix {
+        -: 1298:void Abort() {
+        -: 1299:  DebugBreak();
+        -: 1300:  TerminateProcess(GetCurrentProcess(), 1);
+        -: 1301:}
+        -: 1302:}  // namespace posix
+        -: 1303:#endif  // GTEST_OS_WINDOWS_MOBILE
+        -: 1304:
+        -: 1305:// Returns the name of the environment variable corresponding to the
+        -: 1306:// given flag.  For example, FlagToEnvVar("foo") will return
+        -: 1307:// "GTEST_FOO" in the open-source version.
+function _ZN7testing8internalL12FlagToEnvVarEPKc called 21 returned 100% blocks executed 73%
+       21: 1308:static std::string FlagToEnvVar(const char* flag) {
+       21: 1309:  const std::string full_flag =
+       21: 1309-block  0
+call    0 returned 21
+       63: 1310:      (Message() << GTEST_FLAG_PREFIX_ << flag).GetString();
+call    0 returned 21
+call    1 returned 21
+branch  2 taken 21 (fallthrough)
+branch  3 taken 0 (throw)
+       21: 1310-block  0
+call    4 returned 21
+call    5 returned 21
+branch  6 taken 21 (fallthrough)
+branch  7 taken 0 (throw)
+       21: 1310-block  1
+call    8 returned 21
+call    9 returned 21
+branch 10 taken 21 (fallthrough)
+branch 11 taken 0 (throw)
+       21: 1310-block  2
+call   12 returned 21
+branch 13 taken 21 (fallthrough)
+branch 14 taken 0 (throw)
+call   15 returned 21
+call   16 returned 21
+    $$$$$: 1310-block  3
+call   17 never executed
+    $$$$$: 1310-block  4
+call   18 never executed
+        -: 1311:
+       42: 1312:  Message env_var;
+call    0 returned 21
+call    1 returned 21
+branch  2 taken 21 (fallthrough)
+branch  3 taken 0 (throw)
+       21: 1312-block  0
+call    4 returned 21
+    $$$$$: 1312-block  1
+call    5 never executed
+      435: 1313:  for (size_t i = 0; i != full_flag.length(); i++) {
+       21: 1313-block  0
+      435: 1313-block  1
+call    0 returned 435
+branch  1 taken 414 (fallthrough)
+branch  2 taken 21
+      414: 1314:    env_var << ToUpper(full_flag.c_str()[i]);
+      414: 1314-block  0
+call    0 returned 414
+call    1 returned 414
+call    2 returned 414
+call    3 returned 414
+call    4 returned 414
+call    5 returned 414
+branch  6 taken 414 (fallthrough)
+branch  7 taken 0 (throw)
+      414: 1314-block  1
+call    8 returned 414
+    $$$$$: 1314-block  2
+call    9 never executed
+        -: 1315:  }
+        -: 1316:
+       42: 1317:  return env_var.GetString();
+       21: 1317-block  0
+call    0 returned 21
+call    1 returned 21
+branch  2 taken 21 (fallthrough)
+branch  3 taken 0 (throw)
+        -: 1318:}
+        -: 1319:
+        -: 1320:// Parses 'str' for a 32-bit signed integer.  If successful, writes
+        -: 1321:// the result to *value and returns true; otherwise leaves *value
+        -: 1322:// unchanged and returns false.
+function _ZN7testing8internal10ParseInt32ERKNS_7MessageEPKcPi called 0 returned 0% blocks executed 0%
+    #####: 1323:bool ParseInt32(const Message& src_text, const char* str, int32_t* value) {
+        -: 1324:  // Parses the environment variable as a decimal integer.
+    #####: 1325:  char* end = nullptr;
+    %%%%%: 1325-block  0
+call    0 never executed
+    #####: 1326:  const long long_value = strtol(str, &end, 10);  // NOLINT
+branch  0 never executed
+branch  1 never executed
+    %%%%%: 1326-block  0
+    %%%%%: 1326-block  1
+call    2 never executed
+        -: 1327:
+        -: 1328:  // Has strtol() consumed all characters in the string?
+    #####: 1329:  if (*end != '\0') {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -: 1330:    // No - an invalid character was encountered.
+    #####: 1331:    Message msg;
+    %%%%%: 1331-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    $$$$$: 1331-block  1
+call    4 never executed
+    #####: 1332:    msg << "WARNING: " << src_text
+    %%%%%: 1332-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    %%%%%: 1332-block  1
+call    3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+    #####: 1333:        << " is expected to be a 32-bit integer, but actually"
+    %%%%%: 1333-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    #####: 1334:        << " has value \"" << str << "\".\n";
+    %%%%%: 1334-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    %%%%%: 1334-block  1
+call    4 never executed
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+    %%%%%: 1334-block  2
+call    8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+    #####: 1335:    printf("%s", msg.GetString().c_str());
+    %%%%%: 1335-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    %%%%%: 1335-block  1
+call    4 never executed
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+    %%%%%: 1335-block  2
+    %%%%%: 1335-block  3
+call    8 never executed
+branch  9 never executed
+branch 10 never executed
+    %%%%%: 1335-block  4
+call   11 never executed
+call   12 never executed
+    $$$$$: 1335-block  5
+call   13 never executed
+    $$$$$: 1335-block  6
+call   14 never executed
+    #####: 1336:    fflush(stdout);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####: 1337:    return false;
+    %%%%%: 1337-block  0
+call    0 never executed
+        -: 1338:  }
+        -: 1339:
+        -: 1340:  // Is the parsed value in the range of an int32_t?
+    #####: 1341:  const auto result = static_cast<int32_t>(long_value);
+    #####: 1342:  if (long_value == LONG_MAX || long_value == LONG_MIN ||
+    %%%%%: 1342-block  0
+branch  0 never executed
+branch  1 never executed
+    %%%%%: 1342-block  1
+branch  2 never executed
+branch  3 never executed
+        -: 1343:      // The parsed value overflows as a long.  (strtol() returns
+        -: 1344:      // LONG_MAX or LONG_MIN when the input overflows.)
+    #####: 1345:      result != long_value
+    %%%%%: 1345-block  0
+branch  0 never executed
+branch  1 never executed
+        -: 1346:      // The parsed value overflows as an int32_t.
+        -: 1347:      ) {
+    #####: 1348:    Message msg;
+    %%%%%: 1348-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    $$$$$: 1348-block  1
+call    4 never executed
+    #####: 1349:    msg << "WARNING: " << src_text
+    %%%%%: 1349-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    %%%%%: 1349-block  1
+call    3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+    #####: 1350:        << " is expected to be a 32-bit integer, but actually"
+    %%%%%: 1350-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    #####: 1351:        << " has value " << str << ", which overflows.\n";
+    %%%%%: 1351-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    %%%%%: 1351-block  1
+call    4 never executed
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+    %%%%%: 1351-block  2
+call    8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+    #####: 1352:    printf("%s", msg.GetString().c_str());
+    %%%%%: 1352-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    %%%%%: 1352-block  1
+call    4 never executed
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+    %%%%%: 1352-block  2
+    %%%%%: 1352-block  3
+call    8 never executed
+branch  9 never executed
+branch 10 never executed
+    %%%%%: 1352-block  4
+call   11 never executed
+call   12 never executed
+    $$$$$: 1352-block  5
+call   13 never executed
+    $$$$$: 1352-block  6
+call   14 never executed
+    #####: 1353:    fflush(stdout);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####: 1354:    return false;
+    %%%%%: 1354-block  0
+call    0 never executed
+        -: 1355:  }
+        -: 1356:
+    #####: 1357:  *value = result;
+    %%%%%: 1357-block  0
+call    0 never executed
+    #####: 1358:  return true;
+        -: 1359:}
+        -: 1360:
+        -: 1361:// Reads and returns the Boolean environment variable corresponding to
+        -: 1362:// the given flag; if it's not set, returns default_value.
+        -: 1363://
+        -: 1364:// The value is considered true if and only if it's not "0".
+function _ZN7testing8internal16BoolFromGTestEnvEPKcb called 12 returned 100% blocks executed 71%
+       12: 1365:bool BoolFromGTestEnv(const char* flag, bool default_value) {
+        -: 1366:#if defined(GTEST_GET_BOOL_FROM_ENV_)
+        -: 1367:  return GTEST_GET_BOOL_FROM_ENV_(flag, default_value);
+        -: 1368:#else
+       12: 1369:  const std::string env_var = FlagToEnvVar(flag);
+       12: 1369-block  0
+call    0 returned 12
+call    1 returned 12
+branch  2 taken 12 (fallthrough)
+branch  3 taken 0 (throw)
+       12: 1370:  const char* const string_value = posix::GetEnv(env_var.c_str());
+       12: 1370-block  0
+call    0 returned 12
+call    1 returned 12
+      12*: 1371:  return string_value == nullptr ? default_value
+branch  0 taken 12 (fallthrough)
+branch  1 taken 0
+      24*: 1372:                                 : strcmp(string_value, "0") != 0;
+       12: 1372-block  0
+    %%%%%: 1372-block  1
+branch  0 never executed
+branch  1 never executed
+    %%%%%: 1372-block  2
+    %%%%%: 1372-block  3
+       12: 1372-block  4
+call    2 returned 12
+        -: 1373:#endif  // defined(GTEST_GET_BOOL_FROM_ENV_)
+        -: 1374:}
+        -: 1375:
+        -: 1376:// Reads and returns a 32-bit integer stored in the environment
+        -: 1377:// variable corresponding to the given flag; if it isn't set or
+        -: 1378:// doesn't represent a valid 32-bit integer, returns default_value.
+function _ZN7testing8internal17Int32FromGTestEnvEPKci called 3 returned 100% blocks executed 19%
+        3: 1379:int32_t Int32FromGTestEnv(const char* flag, int32_t default_value) {
+        -: 1380:#if defined(GTEST_GET_INT32_FROM_ENV_)
+        -: 1381:  return GTEST_GET_INT32_FROM_ENV_(flag, default_value);
+        -: 1382:#else
+        6: 1383:  const std::string env_var = FlagToEnvVar(flag);
+        3: 1383-block  0
+call    0 returned 3
+call    1 returned 3
+branch  2 taken 3 (fallthrough)
+branch  3 taken 0 (throw)
+        3: 1383-block  1
+call    4 returned 3
+    $$$$$: 1383-block  2
+call    5 never executed
+        3: 1384:  const char* const string_value = posix::GetEnv(env_var.c_str());
+        3: 1384-block  0
+call    0 returned 3
+call    1 returned 3
+        3: 1385:  if (string_value == nullptr) {
+branch  0 taken 3 (fallthrough)
+branch  1 taken 0
+        -: 1386:    // The environment variable is not set.
+        3: 1387:    return default_value;
+        3: 1387-block  0
+        -: 1388:  }
+        -: 1389:
+    #####: 1390:  int32_t result = default_value;
+    %%%%%: 1390-block  0
+call    0 never executed
+    #####: 1391:  if (!ParseInt32(Message() << "Environment variable " << env_var,
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    %%%%%: 1391-block  0
+call    4 never executed
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+    %%%%%: 1391-block  1
+call    8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+    %%%%%: 1391-block  2
+call   12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+    %%%%%: 1391-block  3
+call   16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+    $$$$$: 1391-block  4
+call   20 never executed
+    $$$$$: 1391-block  5
+call   21 never executed
+        -: 1392:                  string_value, &result)) {
+    #####: 1393:    printf("The default value %s is used.\n",
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    %%%%%: 1393-block  0
+    %%%%%: 1393-block  1
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    #####: 1394:           (Message() << default_value).GetString().c_str());
+    %%%%%: 1394-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+    %%%%%: 1394-block  1
+call    5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+    %%%%%: 1394-block  2
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+    %%%%%: 1394-block  3
+call   12 never executed
+    %%%%%: 1394-block  4
+call   13 never executed
+call   14 never executed
+call   15 never executed
+call   16 never executed
+    $$$$$: 1394-block  5
+call   17 never executed
+    $$$$$: 1394-block  6
+call   18 never executed
+    $$$$$: 1394-block  7
+call   19 never executed
+    $$$$$: 1394-block  8
+call   20 never executed
+    #####: 1395:    fflush(stdout);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####: 1396:    return default_value;
+    %%%%%: 1396-block  0
+        -: 1397:  }
+        -: 1398:
+    #####: 1399:  return result;
+    %%%%%: 1399-block  0
+        -: 1400:#endif  // defined(GTEST_GET_INT32_FROM_ENV_)
+        -: 1401:}
+        -: 1402:
+        -: 1403:// As a special case for the 'output' flag, if GTEST_OUTPUT is not
+        -: 1404:// set, we look for XML_OUTPUT_FILE, which is set by the Bazel build
+        -: 1405:// system.  The value of XML_OUTPUT_FILE is a filename without the
+        -: 1406:// "xml:" prefix of GTEST_OUTPUT.
+        -: 1407:// Note that this is meant to be called at the call site so it does
+        -: 1408:// not check that the flag is 'output'
+        -: 1409:// In essence this checks an env variable called XML_OUTPUT_FILE
+        -: 1410:// and if it is set we prepend "xml:" to its value, if it not set we return ""
+function _ZN7testing8internal25OutputFlagAlsoCheckEnvVarB5cxx11Ev called 1 returned 100% blocks executed 26%
+        1: 1411:std::string OutputFlagAlsoCheckEnvVar(){
+        2: 1412:  std::string default_value_for_output_flag = "";
+        1: 1412-block  0
+call    0 returned 1
+call    1 returned 1
+call    2 returned 1
+branch  3 taken 1 (fallthrough)
+branch  4 taken 0 (throw)
+call    5 returned 1
+    $$$$$: 1412-block  1
+call    6 never executed
+        1: 1413:  const char* xml_output_file_env = posix::GetEnv("XML_OUTPUT_FILE");
+call    0 returned 1
+        1: 1414:  if (nullptr != xml_output_file_env) {
+branch  0 taken 0 (fallthrough)
+branch  1 taken 1
+    #####: 1415:    default_value_for_output_flag = std::string("xml:") + xml_output_file_env;
+    %%%%%: 1415-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+    %%%%%: 1415-block  1
+call    7 never executed
+call    8 never executed
+branch  9 never executed
+branch 10 never executed
+    %%%%%: 1415-block  2
+call   11 never executed
+call   12 never executed
+call   13 never executed
+call   14 never executed
+call   15 never executed
+call   16 never executed
+call   17 never executed
+call   18 never executed
+    $$$$$: 1415-block  3
+call   19 never executed
+    $$$$$: 1415-block  4
+call   20 never executed
+    $$$$$: 1415-block  5
+call   21 never executed
+    $$$$$: 1415-block  6
+call   22 never executed
+        -: 1416:  }
+        1: 1417:  return default_value_for_output_flag;
+        1: 1417-block  0
+        1: 1417-block  1
+        -: 1418:}
+        -: 1419:
+        -: 1420:// Reads and returns the string environment variable corresponding to
+        -: 1421:// the given flag; if it's not set, returns default_value.
+function _ZN7testing8internal18StringFromGTestEnvEPKcS2_ called 6 returned 100% blocks executed 83%
+        6: 1422:const char* StringFromGTestEnv(const char* flag, const char* default_value) {
+        -: 1423:#if defined(GTEST_GET_STRING_FROM_ENV_)
+        -: 1424:  return GTEST_GET_STRING_FROM_ENV_(flag, default_value);
+        -: 1425:#else
+        6: 1426:  const std::string env_var = FlagToEnvVar(flag);
+        6: 1426-block  0
+call    0 returned 6
+call    1 returned 6
+branch  2 taken 6 (fallthrough)
+branch  3 taken 0 (throw)
+        6: 1427:  const char* const value = posix::GetEnv(env_var.c_str());
+        6: 1427-block  0
+call    0 returned 6
+call    1 returned 6
+      12*: 1428:  return value == nullptr ? default_value : value;
+branch  0 taken 6 (fallthrough)
+branch  1 taken 0
+        6: 1428-block  0
+    %%%%%: 1428-block  1
+        6: 1428-block  2
+call    2 returned 6
+        -: 1429:#endif  // defined(GTEST_GET_STRING_FROM_ENV_)
+        -: 1430:}
+        -: 1431:
+        -: 1432:}  // namespace internal
+        -: 1433:}  // namespace testing

@@ -1,0 +1,112 @@
+1.
+a) lw $t2, 100($t1)
+
+IF:
+PC <= PC + 4
+IR <= Memory[PC] = 35 $t1 $t2 100
+
+ID:
+A <= Reg[IR[25:21]] = Reg[$t1]
+B <= Reg[IR[20:16]] = Reg[$t2]
+
+EX:
+ALUOut <= A + sign-extend(IR[15:0]) = Reg[$t1] + 100
+
+MEM:
+MDR <= Memory[ALUOut] = Memory[Reg[$t1] + 100]
+
+WB:
+(Reg[IR[20:16]] = Reg[$t2]) <= (MDR = Memory[Reg[$t1] + 100])
+
+b) sw $s2, -12($t1)
+
+IF:
+PC <= PC + 4
+IR <= Memory[PC] = 43 $t1 $t2 100
+
+ID:
+A <= Reg[IR[25:21]] = Reg[$t1]
+B <= Reg[IR[20:16]] = Reg[$t2]
+
+EX:
+ALUOut <= (A + sign-extend(IR[15:0]) = Reg[$t1] + 100)
+
+MEM:
+(Memory[ALUOut] = Memory[Reg[$t1] + 100]) <= (B = Reg[$t2])
+
+
+c) add $s1, $t1, $s2
+
+IF:
+PC <= PC + 4
+IR <= Memory[PC] = 0 $t1 $s2 $s1 0 32
+
+ID:
+A <= Reg[IR[25:21]] = Reg[$t1]
+B <= Reg[IR[20:16]] = Reg[$s2]
+
+EX:
+ALUOut <= A op B = Reg[$t1] + Reg[$s2]
+
+MEM:
+(Reg(IR[15:11]) = Reg[$s1]) <= (ALUOut = Reg[$t1] + Reg[$s2])
+
+d) beq $t1, $s5, 64
+
+IF:
+PC <= PC + 4
+IR <= Memory[PC] = 8 $t1 $s5 64
+
+ID:
+A <= Reg[IR[25:21]] = Reg[$t1]
+B <= Reg[IR[20:16]] = Reg[$s5]
+ALUOut <= PC + ((sign-extend (IR[15:0]) << 2) = 100 * 4)
+
+EX:
+if(A == B) = if(Reg[$t1] == Reg[$s5])
+  PC <= (ALUOut = 400)
+
+e) j 5164
+
+IF:
+PC <= PC + 4
+IR <= Memory[PC] = 2 5164
+
+ID:
+ALUOut <= PC + ((sign-extend (IR[15:0]) << 2) = 5164 * 4)
+
+EX:
+PC <= {PC[31:28],(IR[25:0],2'b00)}
+
+2.
+Tempo mínimo:
+ Ciclo único: 250 + 200 + 150 + 300 + 200 = 1100ps
+ Multi-ciclo: 300ps (tempo maior)
+ Pipelining: 300ps
+
+Tempo execução:
+/* --desnecessário--
+ Tempo total:
+  a) 1100ps
+  b) 900ps
+  c) 800ps
+  d) 600ps
+  e) 600ps
+*/
+ Ciclo único: 1100ps
+ Multi-ciclo: 1500, 1200, 1200, 900, 900
+ Pipelining: 300ps
+
+3.
+Ciclo único: 1100ps
+Multi-ciclo: 0.2*1500 + 0.15*1200 + 0.45*1200 + 0.15*900 + 0.05*900 = 1200ps
+Pipelining: 300ps
+
+1100/300 = 3.666
+pipelining é 3.666 vezes mais rápido que o ciclo único
+
+1200/1100 = 1.0909
+ciclo único é 1.0909 vezes mais rápido que o multi-ciclo
+
+1200/300 = 4.0
+pipelining é 4.0 vezes mais rápido que o multi-ciclo

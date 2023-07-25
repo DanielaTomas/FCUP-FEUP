@@ -1,0 +1,10 @@
+<svg width="600" height="660" xmlns="http://www.w3.org/2000/svg">
+    <polyline points="120,120 140,125 160,140 180,220 220,240 300,280"
+              fill="none" stroke="red"  />
+    <polyline points="120,120 140,125 160,140 180,220 220,240 300,280"
+              fill="none" stroke="blue"
+              transform="scale(2)" transform-origin="170 100"/>
+    <polyline points="120,120 140,125 160,140 180,220 220,240 300,280"
+              fill="none" stroke="green"
+              transform="scale(3)" transform-origin="170 100" />
+</svg>

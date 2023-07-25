@@ -1,0 +1,1081 @@
+        -:    0:Source:/home/daniela/2ºano/Programação/prog_p4/gtest/googletest/src/gtest-filepath.cc
+        -:    0:Graph:/home/daniela/2ºano/Programação/prog_p4/cmake-build-debug-coverage/gtest/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.gcno
+        -:    0:Data:/home/daniela/2ºano/Programação/prog_p4/cmake-build-debug-coverage/gtest/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.gcda
+        -:    0:Runs:1
+        -:    1:// Copyright 2008, Google Inc.
+        -:    2:// All rights reserved.
+        -:    3://
+        -:    4:// Redistribution and use in source and binary forms, with or without
+        -:    5:// modification, are permitted provided that the following conditions are
+        -:    6:// met:
+        -:    7://
+        -:    8://     * Redistributions of source code must retain the above copyright
+        -:    9:// notice, this list of conditions and the following disclaimer.
+        -:   10://     * Redistributions in binary form must reproduce the above
+        -:   11:// copyright notice, this list of conditions and the following disclaimer
+        -:   12:// in the documentation and/or other materials provided with the
+        -:   13:// distribution.
+        -:   14://     * Neither the name of Google Inc. nor the names of its
+        -:   15:// contributors may be used to endorse or promote products derived from
+        -:   16:// this software without specific prior written permission.
+        -:   17://
+        -:   18:// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+        -:   19:// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+        -:   20:// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+        -:   21:// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+        -:   22:// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+        -:   23:// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+        -:   24:// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+        -:   25:// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+        -:   26:// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+        -:   27:// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+        -:   28:// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+        -:   29:
+        -:   30:#include "gtest/internal/gtest-filepath.h"
+        -:   31:
+        -:   32:#include <stdlib.h>
+        -:   33:#include "gtest/internal/gtest-port.h"
+        -:   34:#include "gtest/gtest-message.h"
+        -:   35:
+        -:   36:#if GTEST_OS_WINDOWS_MOBILE
+        -:   37:# include <windows.h>
+        -:   38:#elif GTEST_OS_WINDOWS
+        -:   39:# include <direct.h>
+        -:   40:# include <io.h>
+        -:   41:#else
+        -:   42:# include <limits.h>
+        -:   43:# include <climits>  // Some Linux distributions define PATH_MAX here.
+        -:   44:#endif  // GTEST_OS_WINDOWS_MOBILE
+        -:   45:
+        -:   46:#include "gtest/internal/gtest-string.h"
+        -:   47:
+        -:   48:#if GTEST_OS_WINDOWS
+        -:   49:# define GTEST_PATH_MAX_ _MAX_PATH
+        -:   50:#elif defined(PATH_MAX)
+        -:   51:# define GTEST_PATH_MAX_ PATH_MAX
+        -:   52:#elif defined(_XOPEN_PATH_MAX)
+        -:   53:# define GTEST_PATH_MAX_ _XOPEN_PATH_MAX
+        -:   54:#else
+        -:   55:# define GTEST_PATH_MAX_ _POSIX_PATH_MAX
+        -:   56:#endif  // GTEST_OS_WINDOWS
+        -:   57:
+        -:   58:namespace testing {
+        -:   59:namespace internal {
+        -:   60:
+        -:   61:#if GTEST_OS_WINDOWS
+        -:   62:// On Windows, '\\' is the standard path separator, but many tools and the
+        -:   63:// Windows API also accept '/' as an alternate path separator. Unless otherwise
+        -:   64:// noted, a file path can contain either kind of path separators, or a mixture
+        -:   65:// of them.
+        -:   66:const char kPathSeparator = '\\';
+        -:   67:const char kAlternatePathSeparator = '/';
+        -:   68:const char kAlternatePathSeparatorString[] = "/";
+        -:   69:# if GTEST_OS_WINDOWS_MOBILE
+        -:   70:// Windows CE doesn't have a current directory. You should not use
+        -:   71:// the current directory in tests on Windows CE, but this at least
+        -:   72:// provides a reasonable fallback.
+        -:   73:const char kCurrentDirectoryString[] = "\\";
+        -:   74:// Windows CE doesn't define INVALID_FILE_ATTRIBUTES
+        -:   75:const DWORD kInvalidFileAttributes = 0xffffffff;
+        -:   76:# else
+        -:   77:const char kCurrentDirectoryString[] = ".\\";
+        -:   78:# endif  // GTEST_OS_WINDOWS_MOBILE
+        -:   79:#else
+        -:   80:const char kPathSeparator = '/';
+        -:   81:const char kCurrentDirectoryString[] = "./";
+        -:   82:#endif  // GTEST_OS_WINDOWS
+        -:   83:
+        -:   84:// Returns whether the given character is a valid path separator.
+function _ZN7testing8internalL15IsPathSeparatorEc called 69 returned 100% blocks executed 100%
+       69:   85:static bool IsPathSeparator(char c) {
+        -:   86:#if GTEST_HAS_ALT_PATH_SEP_
+        -:   87:  return (c == kPathSeparator) || (c == kAlternatePathSeparator);
+        -:   88:#else
+       69:   89:  return c == kPathSeparator;
+       69:   89-block  0
+        -:   90:#endif
+        -:   91:}
+        -:   92:
+        -:   93:// Returns the current working directory, or "" if unsuccessful.
+function _ZN7testing8internal8FilePath13GetCurrentDirEv called 1 returned 100% blocks executed 63%
+        1:   94:FilePath FilePath::GetCurrentDir() {
+        -:   95:#if GTEST_OS_WINDOWS_MOBILE || GTEST_OS_WINDOWS_PHONE ||         \
+        -:   96:    GTEST_OS_WINDOWS_RT || GTEST_OS_ESP8266 || GTEST_OS_ESP32 || \
+        -:   97:    GTEST_OS_XTENSA
+        -:   98:  // These platforms do not have a current directory, so we just return
+        -:   99:  // something reasonable.
+        -:  100:  return FilePath(kCurrentDirectoryString);
+        -:  101:#elif GTEST_OS_WINDOWS
+        -:  102:  char cwd[GTEST_PATH_MAX_ + 1] = { '\0' };
+        -:  103:  return FilePath(_getcwd(cwd, sizeof(cwd)) == nullptr ? "" : cwd);
+        -:  104:#else
+        1:  105:  char cwd[GTEST_PATH_MAX_ + 1] = { '\0' };
+        1:  105-block  0
+call    0 returned 1
+        1:  106:  char* result = getcwd(cwd, sizeof(cwd));
+call    0 returned 1
+        -:  107:# if GTEST_OS_NACL
+        -:  108:  // getcwd will likely fail in NaCl due to the sandbox, so return something
+        -:  109:  // reasonable. The user may have provided a shim implementation for getcwd,
+        -:  110:  // however, so fallback only when failure is detected.
+        -:  111:  return FilePath(result == nullptr ? kCurrentDirectoryString : cwd);
+        -:  112:# endif  // GTEST_OS_NACL
+       2*:  113:  return FilePath(result == nullptr ? "" : cwd);
+call    0 returned 1
+call    1 returned 1
+call    2 returned 1
+branch  3 taken 1 (fallthrough)
+branch  4 taken 0
+        1:  113-block  0
+    %%%%%:  113-block  1
+        1:  113-block  2
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+        1:  113-block  3
+call    8 returned 1
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+        1:  113-block  4
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 returned 1
+    $$$$$:  113-block  5
+call   16 never executed
+    $$$$$:  113-block  6
+call   17 never executed
+    $$$$$:  113-block  7
+call   18 never executed
+    $$$$$:  113-block  8
+call   19 never executed
+        -:  114:#endif  // GTEST_OS_WINDOWS_MOBILE
+        -:  115:}
+        -:  116:
+        -:  117:// Returns a copy of the FilePath with the case-insensitive extension removed.
+        -:  118:// Example: FilePath("dir/file.exe").RemoveExtension("EXE") returns
+        -:  119:// FilePath("dir/file"). If a case-insensitive extension is not
+        -:  120:// found, returns a copy of the original FilePath.
+function _ZNK7testing8internal8FilePath15RemoveExtensionEPKc called 0 returned 0% blocks executed 0%
+    #####:  121:FilePath FilePath::RemoveExtension(const char* extension) const {
+    #####:  122:  const std::string dot_extension = std::string(".") + extension;
+    %%%%%:  122-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+    %%%%%:  122-block  1
+call    7 never executed
+call    8 never executed
+branch  9 never executed
+branch 10 never executed
+call   11 never executed
+call   12 never executed
+    %%%%%:  122-block  2
+call   13 never executed
+    $$$$$:  122-block  3
+call   14 never executed
+    $$$$$:  122-block  4
+call   15 never executed
+    $$$$$:  122-block  5
+call   16 never executed
+    #####:  123:  if (String::EndsWithCaseInsensitive(pathname_, dot_extension)) {
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    #####:  124:    return FilePath(pathname_.substr(
+    %%%%%:  124-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+    %%%%%:  124-block  1
+call    5 never executed
+    %%%%%:  124-block  2
+call    6 never executed
+call    7 never executed
+    $$$$$:  124-block  3
+call    8 never executed
+    $$$$$:  124-block  4
+call    9 never executed
+    #####:  125:        0, pathname_.length() - dot_extension.length()));
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+        -:  126:  }
+    #####:  127:  return *this;
+    %%%%%:  127-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+        -:  128:}
+        -:  129:
+        -:  130:// Returns a pointer to the last occurrence of a valid path separator in
+        -:  131:// the FilePath. On Windows, for example, both '/' and '\' are valid path
+        -:  132:// separators. Returns NULL if no path separator was found.
+function _ZNK7testing8internal8FilePath21FindLastPathSeparatorEv called 0 returned 0% blocks executed 0%
+    #####:  133:const char* FilePath::FindLastPathSeparator() const {
+    #####:  134:  const char* const last_sep = strrchr(c_str(), kPathSeparator);
+    %%%%%:  134-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    %%%%%:  134-block  1
+        -:  135:#if GTEST_HAS_ALT_PATH_SEP_
+        -:  136:  const char* const last_alt_sep = strrchr(c_str(), kAlternatePathSeparator);
+        -:  137:  // Comparing two pointers of which only one is NULL is undefined.
+        -:  138:  if (last_alt_sep != nullptr &&
+        -:  139:      (last_sep == nullptr || last_alt_sep > last_sep)) {
+        -:  140:    return last_alt_sep;
+        -:  141:  }
+        -:  142:#endif
+    #####:  143:  return last_sep;
+    %%%%%:  143-block  0
+        -:  144:}
+        -:  145:
+        -:  146:// Returns a copy of the FilePath with the directory part removed.
+        -:  147:// Example: FilePath("path/to/file").RemoveDirectoryName() returns
+        -:  148:// FilePath("file"). If there is no directory part ("just_a_file"), it returns
+        -:  149:// the FilePath unmodified. If there is no file part ("just_a_dir/") it
+        -:  150:// returns an empty FilePath ("").
+        -:  151:// On Windows platform, '\' is the path separator, otherwise it is '/'.
+function _ZNK7testing8internal8FilePath19RemoveDirectoryNameEv called 0 returned 0% blocks executed 0%
+    #####:  152:FilePath FilePath::RemoveDirectoryName() const {
+    #####:  153:  const char* const last_sep = FindLastPathSeparator();
+    %%%%%:  153-block  0
+call    0 never executed
+call    1 never executed
+    #####:  154:  return last_sep ? FilePath(last_sep + 1) : *this;
+branch  0 never executed
+branch  1 never executed
+    %%%%%:  154-block  0
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+    %%%%%:  154-block  1
+call    9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+    %%%%%:  154-block  2
+call   13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+    %%%%%:  154-block  3
+branch 17 never executed
+branch 18 never executed
+    %%%%%:  154-block  4
+call   19 never executed
+    %%%%%:  154-block  5
+branch 20 never executed
+branch 21 never executed
+    %%%%%:  154-block  6
+call   22 never executed
+    %%%%%:  154-block  7
+branch 23 never executed
+branch 24 never executed
+    %%%%%:  154-block  8
+call   25 never executed
+    %%%%%:  154-block  9
+branch 26 never executed
+branch 27 never executed
+    %%%%%:  154-block 10
+call   28 never executed
+    %%%%%:  154-block 11
+    $$$$$:  154-block 12
+branch 29 never executed
+branch 30 never executed
+    $$$$$:  154-block 13
+call   31 never executed
+    $$$$$:  154-block 14
+branch 32 never executed
+branch 33 never executed
+    $$$$$:  154-block 15
+call   34 never executed
+    $$$$$:  154-block 16
+branch 35 never executed
+branch 36 never executed
+    $$$$$:  154-block 17
+call   37 never executed
+    $$$$$:  154-block 18
+branch 38 never executed
+branch 39 never executed
+    $$$$$:  154-block 19
+call   40 never executed
+        -:  155:}
+        -:  156:
+        -:  157:// RemoveFileName returns the directory path with the filename removed.
+        -:  158:// Example: FilePath("path/to/file").RemoveFileName() returns "path/to/".
+        -:  159:// If the FilePath is "a_file" or "/a_file", RemoveFileName returns
+        -:  160:// FilePath("./") or, on Windows, FilePath(".\\"). If the filepath does
+        -:  161:// not have a file, like "just/a/dir/", it returns the FilePath unmodified.
+        -:  162:// On Windows platform, '\' is the path separator, otherwise it is '/'.
+function _ZNK7testing8internal8FilePath14RemoveFileNameEv called 0 returned 0% blocks executed 0%
+    #####:  163:FilePath FilePath::RemoveFileName() const {
+    #####:  164:  const char* const last_sep = FindLastPathSeparator();
+    %%%%%:  164-block  0
+call    0 never executed
+call    1 never executed
+    #####:  165:  std::string dir;
+call    0 never executed
+call    1 never executed
+    %%%%%:  165-block  0
+call    2 never executed
+    $$$$$:  165-block  1
+call    3 never executed
+    #####:  166:  if (last_sep) {
+branch  0 never executed
+branch  1 never executed
+    #####:  167:    dir = std::string(c_str(), static_cast<size_t>(last_sep + 1 - c_str()));
+    %%%%%:  167-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+call    8 never executed
+branch  9 never executed
+branch 10 never executed
+    %%%%%:  167-block  1
+call   11 never executed
+call   12 never executed
+call   13 never executed
+call   14 never executed
+call   15 never executed
+call   16 never executed
+    $$$$$:  167-block  2
+call   17 never executed
+    $$$$$:  167-block  3
+call   18 never executed
+        -:  168:  } else {
+    #####:  169:    dir = kCurrentDirectoryString;
+    %%%%%:  169-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  170:  }
+    #####:  171:  return FilePath(dir);
+    %%%%%:  171-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  172:}
+        -:  173:
+        -:  174:// Helper functions for naming files in a directory for xml output.
+        -:  175:
+        -:  176:// Given directory = "dir", base_name = "test", number = 0,
+        -:  177:// extension = "xml", returns "dir/test.xml". If number is greater
+        -:  178:// than zero (e.g., 12), returns "dir/test_12.xml".
+        -:  179:// On Windows platform, uses \ as the separator rather than /.
+function _ZN7testing8internal8FilePath12MakeFileNameERKS1_S3_iPKc called 0 returned 0% blocks executed 0%
+    #####:  180:FilePath FilePath::MakeFileName(const FilePath& directory,
+        -:  181:                                const FilePath& base_name,
+        -:  182:                                int number,
+        -:  183:                                const char* extension) {
+    #####:  184:  std::string file;
+    %%%%%:  184-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    $$$$$:  184-block  1
+call    3 never executed
+    #####:  185:  if (number == 0) {
+branch  0 never executed
+branch  1 never executed
+    #####:  186:    file = base_name.string() + "." + extension;
+    %%%%%:  186-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+    %%%%%:  186-block  1
+call    8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+    %%%%%:  186-block  2
+call   12 never executed
+call   13 never executed
+call   14 never executed
+call   15 never executed
+call   16 never executed
+call   17 never executed
+    $$$$$:  186-block  3
+call   18 never executed
+    $$$$$:  186-block  4
+call   19 never executed
+        -:  187:  } else {
+    #####:  188:    file = base_name.string() + "_" + StreamableToString(number)
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+    %%%%%:  188-block  0
+call    5 never executed
+call    6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+    %%%%%:  188-block  1
+call   13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+    %%%%%:  188-block  2
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+call   22 never executed
+call   23 never executed
+    $$$$$:  188-block  3
+call   24 never executed
+    $$$$$:  188-block  4
+call   25 never executed
+    $$$$$:  188-block  5
+call   26 never executed
+    $$$$$:  188-block  6
+call   27 never executed
+    $$$$$:  188-block  7
+call   28 never executed
+    $$$$$:  188-block  8
+call   29 never executed
+    #####:  189:        + "." + extension;
+    %%%%%:  189-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+    %%%%%:  189-block  1
+call    5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+    %%%%%:  189-block  2
+call    9 never executed
+call   10 never executed
+call   11 never executed
+call   12 never executed
+call   13 never executed
+call   14 never executed
+    $$$$$:  189-block  3
+call   15 never executed
+    $$$$$:  189-block  4
+call   16 never executed
+        -:  190:  }
+    #####:  191:  return ConcatPaths(directory, FilePath(file));
+    %%%%%:  191-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    %%%%%:  191-block  1
+call    4 never executed
+call    5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+    %%%%%:  191-block  2
+call    9 never executed
+call   10 never executed
+    $$$$$:  191-block  3
+call   11 never executed
+    $$$$$:  191-block  4
+call   12 never executed
+        -:  192:}
+        -:  193:
+        -:  194:// Given directory = "dir", relative_path = "test.xml", returns "dir/test.xml".
+        -:  195:// On Windows, uses \ as the separator rather than /.
+function _ZN7testing8internal8FilePath11ConcatPathsERKS1_S3_ called 0 returned 0% blocks executed 0%
+    #####:  196:FilePath FilePath::ConcatPaths(const FilePath& directory,
+        -:  197:                               const FilePath& relative_path) {
+    #####:  198:  if (directory.IsEmpty())
+    %%%%%:  198-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    #####:  199:    return relative_path;
+    %%%%%:  199-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  200:  const FilePath dir(directory.RemoveTrailingPathSeparator());
+    %%%%%:  200-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+    $$$$$:  200-block  1
+call    5 never executed
+    #####:  201:  return FilePath(dir.string() + kPathSeparator + relative_path.string());
+    %%%%%:  201-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+    %%%%%:  201-block  1
+call   10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+    %%%%%:  201-block  2
+call   14 never executed
+call   15 never executed
+branch 16 never executed
+branch 17 never executed
+    %%%%%:  201-block  3
+call   18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+    $$$$$:  201-block  4
+call   22 never executed
+    $$$$$:  201-block  5
+call   23 never executed
+    $$$$$:  201-block  6
+call   24 never executed
+    $$$$$:  201-block  7
+call   25 never executed
+        -:  202:}
+        -:  203:
+        -:  204:// Returns true if pathname describes something findable in the file-system,
+        -:  205:// either a file, directory, or whatever.
+function _ZNK7testing8internal8FilePath21FileOrDirectoryExistsEv called 0 returned 0% blocks executed 0%
+    #####:  206:bool FilePath::FileOrDirectoryExists() const {
+        -:  207:#if GTEST_OS_WINDOWS_MOBILE
+        -:  208:  LPCWSTR unicode = String::AnsiToUtf16(pathname_.c_str());
+        -:  209:  const DWORD attributes = GetFileAttributes(unicode);
+        -:  210:  delete [] unicode;
+        -:  211:  return attributes != kInvalidFileAttributes;
+        -:  212:#else
+    #####:  213:  posix::StatStruct file_stat{};
+    %%%%%:  213-block  0
+call    0 never executed
+    #####:  214:  return posix::Stat(pathname_.c_str(), &file_stat) == 0;
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+        -:  215:#endif  // GTEST_OS_WINDOWS_MOBILE
+        -:  216:}
+        -:  217:
+        -:  218:// Returns true if pathname describes a directory in the file-system
+        -:  219:// that exists.
+function _ZNK7testing8internal8FilePath15DirectoryExistsEv called 0 returned 0% blocks executed 0%
+    #####:  220:bool FilePath::DirectoryExists() const {
+    #####:  221:  bool result = false;
+        -:  222:#if GTEST_OS_WINDOWS
+        -:  223:  // Don't strip off trailing separator if path is a root directory on
+        -:  224:  // Windows (like "C:\\").
+        -:  225:  const FilePath& path(IsRootDirectory() ? *this :
+        -:  226:                                           RemoveTrailingPathSeparator());
+        -:  227:#else
+    #####:  228:  const FilePath& path(*this);
+    %%%%%:  228-block  0
+call    0 never executed
+        -:  229:#endif
+        -:  230:
+        -:  231:#if GTEST_OS_WINDOWS_MOBILE
+        -:  232:  LPCWSTR unicode = String::AnsiToUtf16(path.c_str());
+        -:  233:  const DWORD attributes = GetFileAttributes(unicode);
+        -:  234:  delete [] unicode;
+        -:  235:  if ((attributes != kInvalidFileAttributes) &&
+        -:  236:      (attributes & FILE_ATTRIBUTE_DIRECTORY)) {
+        -:  237:    result = true;
+        -:  238:  }
+        -:  239:#else
+    #####:  240:  posix::StatStruct file_stat{};
+call    0 never executed
+    #####:  241:  result = posix::Stat(path.c_str(), &file_stat) == 0 &&
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+branch  5 never executed
+branch  6 never executed
+    %%%%%:  241-block  0
+    %%%%%:  241-block  1
+    #####:  242:      posix::IsDir(file_stat);
+    %%%%%:  242-block  0
+call    0 never executed
+        -:  243:#endif  // GTEST_OS_WINDOWS_MOBILE
+        -:  244:
+    #####:  245:  return result;
+    %%%%%:  245-block  0
+call    0 never executed
+        -:  246:}
+        -:  247:
+        -:  248:// Returns true if pathname describes a root directory. (Windows has one
+        -:  249:// root directory per disk drive.)
+function _ZNK7testing8internal8FilePath15IsRootDirectoryEv called 0 returned 0% blocks executed 0%
+    #####:  250:bool FilePath::IsRootDirectory() const {
+        -:  251:#if GTEST_OS_WINDOWS
+        -:  252:  return pathname_.length() == 3 && IsAbsolutePath();
+        -:  253:#else
+    #####:  254:  return pathname_.length() == 1 && IsPathSeparator(pathname_.c_str()[0]);
+    %%%%%:  254-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    %%%%%:  254-block  1
+call    6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+    %%%%%:  254-block  2
+    %%%%%:  254-block  3
+    %%%%%:  254-block  4
+        -:  255:#endif
+        -:  256:}
+        -:  257:
+        -:  258:// Returns true if pathname describes an absolute path.
+function _ZNK7testing8internal8FilePath14IsAbsolutePathEv called 0 returned 0% blocks executed 0%
+    #####:  259:bool FilePath::IsAbsolutePath() const {
+    #####:  260:  const char* const name = pathname_.c_str();
+    %%%%%:  260-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+        -:  261:#if GTEST_OS_WINDOWS
+        -:  262:  return pathname_.length() >= 3 &&
+        -:  263:     ((name[0] >= 'a' && name[0] <= 'z') ||
+        -:  264:      (name[0] >= 'A' && name[0] <= 'Z')) &&
+        -:  265:     name[1] == ':' &&
+        -:  266:     IsPathSeparator(name[2]);
+        -:  267:#else
+    #####:  268:  return IsPathSeparator(name[0]);
+call    0 never executed
+call    1 never executed
+        -:  269:#endif
+        -:  270:}
+        -:  271:
+        -:  272:// Returns a pathname for a file that does not currently exist. The pathname
+        -:  273:// will be directory/base_name.extension or
+        -:  274:// directory/base_name_<number>.extension if directory/base_name.extension
+        -:  275:// already exists. The number will be incremented until a pathname is found
+        -:  276:// that does not already exist.
+        -:  277:// Examples: 'dir/foo_test.xml' or 'dir/foo_test_1.xml'.
+        -:  278:// There could be a race condition if two or more processes are calling this
+        -:  279:// function at the same time -- they could both pick the same filename.
+function _ZN7testing8internal8FilePath22GenerateUniqueFileNameERKS1_S3_PKc called 0 returned 0% blocks executed 0%
+    #####:  280:FilePath FilePath::GenerateUniqueFileName(const FilePath& directory,
+        -:  281:                                          const FilePath& base_name,
+        -:  282:                                          const char* extension) {
+    #####:  283:  FilePath full_pathname;
+    %%%%%:  283-block  0
+call    0 never executed
+    #####:  284:  int number = 0;
+    #####:  285:  do {
+    %%%%%:  285-block  0
+    #####:  286:    full_pathname.Set(MakeFileName(directory, base_name, number++, extension));
+    %%%%%:  286-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    %%%%%:  286-block  1
+call    4 never executed
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+    %%%%%:  286-block  2
+call    8 never executed
+call    9 never executed
+    $$$$$:  286-block  3
+call   10 never executed
+    $$$$$:  286-block  4
+call   11 never executed
+    #####:  287:  } while (full_pathname.FileOrDirectoryExists());
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  288:  return full_pathname;
+    %%%%%:  288-block  0
+    %%%%%:  288-block  1
+        -:  289:}
+        -:  290:
+        -:  291:// Returns true if FilePath ends with a path separator, which indicates that
+        -:  292:// it is intended to represent a directory. Returns false otherwise.
+        -:  293:// This does NOT check that a directory (or file) actually exists.
+function _ZNK7testing8internal8FilePath11IsDirectoryEv called 0 returned 0% blocks executed 0%
+    #####:  294:bool FilePath::IsDirectory() const {
+    #####:  295:  return !pathname_.empty() &&
+    %%%%%:  295-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+branch  6 never executed
+branch  7 never executed
+    %%%%%:  295-block  1
+    %%%%%:  295-block  2
+    #####:  296:         IsPathSeparator(pathname_.c_str()[pathname_.length() - 1]);
+    %%%%%:  296-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+    %%%%%:  296-block  1
+        -:  297:}
+        -:  298:
+        -:  299:// Create directories so that path exists. Returns true if successful or if
+        -:  300:// the directories already exist; returns false if unable to create directories
+        -:  301:// for any reason.
+function _ZNK7testing8internal8FilePath28CreateDirectoriesRecursivelyEv called 0 returned 0% blocks executed 0%
+    #####:  302:bool FilePath::CreateDirectoriesRecursively() const {
+    #####:  303:  if (!this->IsDirectory()) {
+    %%%%%:  303-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    #####:  304:    return false;
+    %%%%%:  304-block  0
+        -:  305:  }
+        -:  306:
+    #####:  307:  if (pathname_.length() == 0 || this->DirectoryExists()) {
+    %%%%%:  307-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    %%%%%:  307-block  1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+    %%%%%:  307-block  2
+    %%%%%:  307-block  3
+    %%%%%:  307-block  4
+branch 10 never executed
+branch 11 never executed
+    #####:  308:    return true;
+    %%%%%:  308-block  0
+        -:  309:  }
+        -:  310:
+    #####:  311:  const FilePath parent(this->RemoveTrailingPathSeparator().RemoveFileName());
+    %%%%%:  311-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+    %%%%%:  311-block  1
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+call    8 never executed
+    $$$$$:  311-block  2
+call    9 never executed
+    $$$$$:  311-block  3
+call   10 never executed
+    #####:  312:  return parent.CreateDirectoriesRecursively() && this->CreateFolder();
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    %%%%%:  312-block  0
+branch  3 never executed
+branch  4 never executed
+    %%%%%:  312-block  1
+call    5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+    %%%%%:  312-block  2
+    %%%%%:  312-block  3
+    %%%%%:  312-block  4
+call    9 never executed
+        -:  313:}
+        -:  314:
+        -:  315:// Create the directory so that path exists. Returns true if successful or
+        -:  316:// if the directory already exists; returns false if unable to create the
+        -:  317:// directory for any reason, including if the parent directory does not
+        -:  318:// exist. Not named "CreateDirectory" because that's a macro on Windows.
+function _ZNK7testing8internal8FilePath12CreateFolderEv called 0 returned 0% blocks executed 0%
+    #####:  319:bool FilePath::CreateFolder() const {
+        -:  320:#if GTEST_OS_WINDOWS_MOBILE
+        -:  321:  FilePath removed_sep(this->RemoveTrailingPathSeparator());
+        -:  322:  LPCWSTR unicode = String::AnsiToUtf16(removed_sep.c_str());
+        -:  323:  int result = CreateDirectory(unicode, nullptr) ? 0 : -1;
+        -:  324:  delete [] unicode;
+        -:  325:#elif GTEST_OS_WINDOWS
+        -:  326:  int result = _mkdir(pathname_.c_str());
+        -:  327:#elif GTEST_OS_ESP8266 || GTEST_OS_XTENSA
+        -:  328:  // do nothing
+        -:  329:  int result = 0;
+        -:  330:#else
+    #####:  331:  int result = mkdir(pathname_.c_str(), 0777);
+    %%%%%:  331-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    %%%%%:  331-block  1
+    %%%%%:  331-block  2
+call    6 never executed
+        -:  332:#endif  // GTEST_OS_WINDOWS_MOBILE
+        -:  333:
+    #####:  334:  if (result == -1) {
+branch  0 never executed
+branch  1 never executed
+    #####:  335:    return this->DirectoryExists();  // An error is OK if the directory exists.
+    %%%%%:  335-block  0
+call    0 never executed
+call    1 never executed
+        -:  336:  }
+    #####:  337:  return true;  // No error.
+    %%%%%:  337-block  0
+        -:  338:}
+        -:  339:
+        -:  340:// If input name has a trailing separator character, remove it and return the
+        -:  341:// name, otherwise return the name string unmodified.
+        -:  342:// On Windows platform, uses \ as the separator, other platforms use /.
+function _ZNK7testing8internal8FilePath27RemoveTrailingPathSeparatorEv called 0 returned 0% blocks executed 0%
+    #####:  343:FilePath FilePath::RemoveTrailingPathSeparator() const {
+    #####:  344:  return IsDirectory()
+    %%%%%:  344-block  0
+call    0 never executed
+call    1 never executed
+    #####:  345:      ? FilePath(pathname_.substr(0, pathname_.length() - 1))
+    %%%%%:  345-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+    %%%%%:  345-block  1
+call    9 never executed
+    %%%%%:  345-block  2
+branch 10 never executed
+branch 11 never executed
+    %%%%%:  345-block  3
+call   12 never executed
+    %%%%%:  345-block  4
+branch 13 never executed
+branch 14 never executed
+    %%%%%:  345-block  5
+call   15 never executed
+    $$$$$:  345-block  6
+branch 16 never executed
+branch 17 never executed
+    $$$$$:  345-block  7
+call   18 never executed
+    $$$$$:  345-block  8
+branch 19 never executed
+branch 20 never executed
+    $$$$$:  345-block  9
+call   21 never executed
+    #####:  346:      : *this;
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+    %%%%%:  346-block  0
+call    5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+    %%%%%:  346-block  1
+        -:  347:}
+        -:  348:
+        -:  349:// Removes any redundant separators that might be in the pathname.
+        -:  350:// For example, "bar///foo" becomes "bar/foo". Does not eliminate other
+        -:  351:// redundancies that might be in a pathname involving "." or "..".
+function _ZN7testing8internal8FilePath9NormalizeEv called 1 returned 100% blocks executed 80%
+        1:  352:void FilePath::Normalize() {
+        1:  353:  auto out = pathname_.begin();
+        1:  353-block  0
+call    0 returned 1
+call    1 returned 1
+call    2 returned 1
+call    3 returned 1
+        -:  354:
+       70:  355:  for (const char character : pathname_) {
+call    0 returned 1
+call    1 returned 1
+call    2 returned 1
+call    3 returned 1
+call    4 returned 1
+call    5 returned 1
+call    6 returned 1
+call    7 returned 1
+       70:  355-block  0
+call    8 returned 70
+branch  9 taken 69 (fallthrough)
+branch 10 taken 1
+       69:  355-block  1
+call   11 returned 69
+call   12 returned 69
+       69:  355-block  2
+call   13 returned 69
+       69:  356:    if (!IsPathSeparator(character)) {
+call    0 returned 69
+branch  1 taken 63 (fallthrough)
+branch  2 taken 6
+       63:  357:      *(out++) = character;
+       63:  357-block  0
+call    0 returned 63
+call    1 returned 63
+call    2 returned 63
+call    3 returned 63
+call    4 returned 63
+call    5 returned 63
+       6*:  358:    } else if (out == pathname_.begin() || *std::prev(out) != kPathSeparator) {
+        6:  358-block  0
+call    0 returned 6
+call    1 returned 6
+call    2 returned 6
+call    3 returned 6
+call    4 returned 6
+call    5 returned 6
+branch  6 taken 5 (fallthrough)
+branch  7 taken 1
+        5:  358-block  1
+call    8 returned 5
+call    9 returned 5
+branch 10 taken 5 (fallthrough)
+branch 11 taken 0 (throw)
+        5:  358-block  2
+call   12 returned 5
+call   13 returned 5
+call   14 returned 5
+branch 15 taken 5 (fallthrough)
+branch 16 taken 0
+        6:  358-block  3
+    %%%%%:  358-block  4
+        6:  358-block  5
+branch 17 taken 5 (fallthrough)
+branch 18 taken 1
+        5:  358-block  6
+call   19 returned 5
+        6:  358-block  7
+branch 20 taken 6 (fallthrough)
+branch 21 taken 0
+        6:  358-block  8
+call   22 returned 6
+        6:  358-block  9
+branch 23 taken 6 (fallthrough)
+branch 24 taken 0
+    $$$$$:  358-block 10
+branch 25 never executed
+branch 26 never executed
+    $$$$$:  358-block 11
+call   27 never executed
+    $$$$$:  358-block 12
+branch 28 never executed
+branch 29 never executed
+    $$$$$:  358-block 13
+call   30 never executed
+        6:  359:      *(out++) = kPathSeparator;
+        6:  359-block  0
+call    0 returned 6
+call    1 returned 6
+call    2 returned 6
+call    3 returned 6
+call    4 returned 6
+call    5 returned 6
+        -:  360:    } else {
+    #####:  361:      continue;
+    %%%%%:  361-block  0
+        -:  362:    }
+        -:  363:  }
+        -:  364:
+        1:  365:  pathname_.erase(out, pathname_.end());
+call    0 returned 1
+call    1 returned 1
+call    2 returned 1
+call    3 returned 1
+call    4 returned 1
+call    5 returned 1
+call    6 returned 1
+call    7 returned 1
+call    8 returned 1
+call    9 returned 1
+call   10 returned 1
+call   11 returned 1
+branch 12 taken 1 (fallthrough)
+branch 13 taken 0 (throw)
+        1:  365-block  0
+call   14 returned 1
+call   15 returned 1
+call   16 returned 1
+    $$$$$:  365-block  1
+call   17 never executed
+    $$$$$:  365-block  2
+call   18 never executed
+    $$$$$:  365-block  3
+call   19 never executed
+        1:  366:}
+        -:  367:
+        -:  368:}  // namespace internal
+        -:  369:}  // namespace testing

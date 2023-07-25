@@ -1,0 +1,16 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/danielatomas/2ºano/1ºsemestre/Programação/aula9e10/ex6.cpp
+iostream
+-
+vector
+-
+algorithm
+-
+

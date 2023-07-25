@@ -1,0 +1,81 @@
+1.
+a)
+Cache I:
+0x0000222c = 0000 0000 0000 0000 0010 | 0010 0010 11 | 00 = 8748
+tag = 0000 0000 0000 0000 0010
+index = 0010 0010 11
+
+Cache II:
+0x0000222c = 0000 0000 0000 0000 00 | 10 0010 00 | 1011 | 00
+tag = 0000 0000 0000 0000 00
+index = 10 0010 00
+
+Cache III:
+0x0000222c = 0000 0000 0000 0000 0010 00 | 10 0010 11 | 00
+tag = 0000 0000 0000 0000 0010 00
+index = 10 0010 11
+
+b)
+Cache I:
+0x00001956 = 0000 0000 0000 0000 0001 | 1001 0101 01 | 10
+tag = 0000 0000 0000 0000 0001
+index = 1001 0101 01
+
+Cache II:
+0x00001956 = 0000 0000 0000 0000 00 | 01 1001 01 01 | 01 | 10
+tag = 0000 0000 0000 0000 00
+index = 01 1001 01 01
+
+Cache III:
+0x00001956 = 0000 0000 0000 0000 0001 10 | 01 0101 01 | 10
+tag = 0000 0000 0000 0000 0001 10
+index = 01 0101 01
+
+2.
+64Kb = 2^6 * 2^10 = 2^16
+a)
+Cache I: 1024 x 4 Directed-Mapped Cache
+Cache II: 256 x 64 Directed-Mapped Cache
+Cache III: 4-way Set-Associative Cache
+
+b)/c)/d)
+
+Nº linhas: 2^(bits index)
+Capacidade de cada linha: 2^(dim block offset) * 2^(dim byte offset)
+Capacidade de cache: (nºlinhas) * (capacidade de cada linha)
+
+Cache I:
+Nº linhas: 2^10 = 1024 linhas,
+Capacidade de cada linha: 2^0 * 2^2 = 4Bytes,
+Capacidade de cache: 2^10 * 2^2 = 4096Bytes
+
+Cache II:
+Nº linhas: 2^8 = 256 linhas,
+Capacidade de cada linha: 2^4 * 2^2 = 64Bytes,
+Capacidade de cache: 16384Bytes
+
+Cache III:
+Nº linhas: 2^8 = 256 linhas,
+Capacidade de cada linha: 2^0 * 2^2 = 4Bytes,
+Capacidade de cache: 1024Bytes
+
+f)
+Cache I:
+31.....16| 15 12 | 11 2 | 1 0 |
+00...00  |       | 120  |     |  = 2^32 = 4Bytes
+R: 2^4
+
+Cache II:
+31.....16| 15 14 | 13 2 | 1 0 |
+R: 2^2
+
+Cache III:
+31.....16| 15 10 | 9  2 | 1 0 |
+00...00  |       |      |     |  = 2^32 = 4Bytes
+R: 2^6
+
+3.
+b)
+Cache I: 2^20
+Cache II: 2^18
+Cache II: 2^22

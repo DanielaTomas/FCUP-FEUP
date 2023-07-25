@@ -1,0 +1,634 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="progp1"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;CMake Files\external\;CMake Files\external\gtest\;CMake Files\external\gtest\googletest\;CMake Files\external\gtest\googletest\cmake\;CMake Files\cmake-build-debug\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="install/local">
+				<Option working_dir="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 install/local"/>
+					<CompileFile command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="install">
+				<Option working_dir="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 install"/>
+					<CompileFile command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="install/strip">
+				<Option working_dir="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 install/strip"/>
+					<CompileFile command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="list_install_components">
+				<Option working_dir="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 list_install_components"/>
+					<CompileFile command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="color_test">
+				<Option output="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/color_test" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/external/stb"/>
+					<Add directory="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/."/>
+					<Add directory="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/external/gtest/googletest/include"/>
+					<Add directory="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/external/gtest/googletest"/>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 color_test"/>
+					<CompileFile command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="color_test/fast">
+				<Option output="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/color_test" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/external/stb"/>
+					<Add directory="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/."/>
+					<Add directory="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/external/gtest/googletest/include"/>
+					<Add directory="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/external/gtest/googletest"/>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 color_test/fast"/>
+					<CompileFile command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="script_test">
+				<Option output="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/script_test" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/external/stb"/>
+					<Add directory="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/."/>
+					<Add directory="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/external/gtest/googletest/include"/>
+					<Add directory="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/external/gtest/googletest"/>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 script_test"/>
+					<CompileFile command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="script_test/fast">
+				<Option output="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/script_test" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/external/stb"/>
+					<Add directory="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/."/>
+					<Add directory="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/external/gtest/googletest/include"/>
+					<Add directory="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/external/gtest/googletest"/>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 script_test/fast"/>
+					<CompileFile command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="docs">
+				<Option working_dir="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 docs"/>
+					<CompileFile command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="package">
+				<Option working_dir="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 package"/>
+					<CompileFile command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="image_test">
+				<Option output="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/image_test" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/external/stb"/>
+					<Add directory="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/."/>
+					<Add directory="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/external/gtest/googletest/include"/>
+					<Add directory="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/external/gtest/googletest"/>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 image_test"/>
+					<CompileFile command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="image_test/fast">
+				<Option output="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/image_test" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/external/stb"/>
+					<Add directory="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/."/>
+					<Add directory="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/external/gtest/googletest/include"/>
+					<Add directory="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/external/gtest/googletest"/>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 image_test/fast"/>
+					<CompileFile command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="run_script">
+				<Option output="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/run_script" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/external/stb"/>
+					<Add directory="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/external/gtest/googletest/include"/>
+					<Add directory="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/."/>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 run_script"/>
+					<CompileFile command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="run_script/fast">
+				<Option output="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/run_script" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/external/stb"/>
+					<Add directory="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/external/gtest/googletest/include"/>
+					<Add directory="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/."/>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 run_script/fast"/>
+					<CompileFile command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rgb">
+				<Option output="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/librgb.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/external/stb"/>
+					<Add directory="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/external/gtest/googletest/include"/>
+					<Add directory="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/."/>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 rgb"/>
+					<CompileFile command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rgb/fast">
+				<Option output="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/librgb.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/external/stb"/>
+					<Add directory="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/external/gtest/googletest/include"/>
+					<Add directory="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/."/>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 rgb/fast"/>
+					<CompileFile command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="image_diff">
+				<Option output="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/image_diff" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/external/stb"/>
+					<Add directory="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/external/gtest/googletest/include"/>
+					<Add directory="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/."/>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 image_diff"/>
+					<CompileFile command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="image_diff/fast">
+				<Option output="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/image_diff" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/external/stb"/>
+					<Add directory="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/external/gtest/googletest/include"/>
+					<Add directory="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/."/>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 image_diff/fast"/>
+					<CompileFile command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="image_dump">
+				<Option output="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/image_dump" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/external/stb"/>
+					<Add directory="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/external/gtest/googletest/include"/>
+					<Add directory="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/."/>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 image_dump"/>
+					<CompileFile command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="image_dump/fast">
+				<Option output="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/image_dump" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/external/stb"/>
+					<Add directory="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/external/gtest/googletest/include"/>
+					<Add directory="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/."/>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 image_dump/fast"/>
+					<CompileFile command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="package_source">
+				<Option working_dir="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 package_source"/>
+					<CompileFile command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="gtest">
+				<Option output="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/lib/libgtestd.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/external/gtest/googletest"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/external/stb"/>
+					<Add directory="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/external/gtest/googletest/include"/>
+					<Add directory="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/external/gtest/googletest"/>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/external/gtest/googletest/Makefile&quot;  VERBOSE=1 gtest"/>
+					<CompileFile command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/external/gtest/googletest/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/external/gtest/googletest/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/external/gtest/googletest/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="gtest/fast">
+				<Option output="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/lib/libgtestd.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/external/gtest/googletest"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/external/stb"/>
+					<Add directory="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/external/gtest/googletest/include"/>
+					<Add directory="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/external/gtest/googletest"/>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/external/gtest/googletest/Makefile&quot;  VERBOSE=1 gtest/fast"/>
+					<CompileFile command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/external/gtest/googletest/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/external/gtest/googletest/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/external/gtest/googletest/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="gtest_main">
+				<Option output="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/lib/libgtest_maind.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/external/gtest/googletest"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/external/stb"/>
+					<Add directory="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/external/gtest/googletest/include"/>
+					<Add directory="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/external/gtest/googletest"/>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/external/gtest/googletest/Makefile&quot;  VERBOSE=1 gtest_main"/>
+					<CompileFile command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/external/gtest/googletest/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/external/gtest/googletest/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/external/gtest/googletest/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="gtest_main/fast">
+				<Option output="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/lib/libgtest_maind.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/external/gtest/googletest"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/external/stb"/>
+					<Add directory="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/external/gtest/googletest/include"/>
+					<Add directory="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/external/gtest/googletest"/>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/external/gtest/googletest/Makefile&quot;  VERBOSE=1 gtest_main/fast"/>
+					<CompileFile command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/external/gtest/googletest/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/external/gtest/googletest/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/external/gtest/googletest/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/external/gtest/googletest/src/gtest-all.cc">
+			<Option target="gtest"/>
+		</Unit>
+		<Unit filename="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/external/gtest/googletest/src/gtest_main.cc">
+			<Option target="gtest_main"/>
+		</Unit>
+		<Unit filename="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/png/png.cpp">
+			<Option target="rgb"/>
+		</Unit>
+		<Unit filename="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/png/png.hpp">
+			<Option target="rgb"/>
+		</Unit>
+		<Unit filename="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/programs/image_diff.cpp">
+			<Option target="image_diff"/>
+		</Unit>
+		<Unit filename="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/programs/image_dump.cpp">
+			<Option target="image_dump"/>
+		</Unit>
+		<Unit filename="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/programs/run_script.cpp">
+			<Option target="run_script"/>
+		</Unit>
+		<Unit filename="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/rgb/color.cpp">
+			<Option target="rgb"/>
+		</Unit>
+		<Unit filename="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/rgb/color.hpp">
+			<Option target="rgb"/>
+		</Unit>
+		<Unit filename="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/rgb/image.cpp">
+			<Option target="rgb"/>
+		</Unit>
+		<Unit filename="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/rgb/image.hpp">
+			<Option target="rgb"/>
+		</Unit>
+		<Unit filename="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/rgb/script.cpp">
+			<Option target="rgb"/>
+		</Unit>
+		<Unit filename="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/rgb/script.hpp">
+			<Option target="rgb"/>
+		</Unit>
+		<Unit filename="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/test/color_test.cpp">
+			<Option target="color_test"/>
+		</Unit>
+		<Unit filename="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/test/image_test.cpp">
+			<Option target="image_test"/>
+		</Unit>
+		<Unit filename="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/test/script_test.cpp">
+			<Option target="script_test"/>
+		</Unit>
+		<Unit filename="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/external/gtest/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\external\gtest\"/>
+		</Unit>
+		<Unit filename="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/external/gtest/googletest/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\external\gtest\googletest\"/>
+		</Unit>
+		<Unit filename="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/external/gtest/googletest/cmake/internal_utils.cmake">
+			<Option virtualFolder="CMake Files\external\gtest\googletest\cmake\"/>
+		</Unit>
+		<Unit filename="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/CMakeDoxyfile.in">
+			<Option virtualFolder="CMake Files\cmake-build-debug\"/>
+		</Unit>
+		<Unit filename="/home/danielatomas/2ºano/1ºsemestre/Programação/progp1/cmake-build-debug/CMakeDoxygenDefaults.cmake">
+			<Option virtualFolder="CMake Files\cmake-build-debug\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

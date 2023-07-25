@@ -1,0 +1,1 @@
+/usr/bin/c++ -g CMakeFiles/ex5.dir/ex5.cpp.o -o ex5 

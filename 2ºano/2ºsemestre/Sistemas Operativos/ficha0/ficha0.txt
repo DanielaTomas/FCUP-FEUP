@@ -1,0 +1,127 @@
+1.
+/home/danielatomas
+
+2.
+mkdir -p dir1/dir2/dir4/dir6
+mkdir dir1/dir3
+mkdir dir1/dir2/dir5
+
+3.
+dir1/dir2
+
+4.
+touch ./dir1/dir2/f1.txt
+      ./dir1/dir2/h22.txt
+      ./dir1/dir2/g368.pdf
+      ./dir1/dir2/dir4/g22.doc
+      ./dir1/dir3/f3a.txt
+      ./dir1/dir3/g56.doc
+      ./dir1/dir3/g3x.pdf
+
+5.
+nada
+dir1/dir3/f3a.txt
+
+6.
+dir2 e os ficheiros dentro dele são removidos
+
+7.
+total 28712
+-rw-r--r-- 1 lblopes staff 1412 Dec 29 15:43 f3a.txt
+-rw-r--r--@ 1 lblopes staff 13923695 Dec 29 15:44 g3x.pdf
+-rw-r--r--@ 1 lblopes staff 13793 Dec 29 15:47 j52.docx
+
+Permissões dos 3 ficheiros (octal): 644
+4+2+0 = 6
+4+0+0 = 4
+4+0+0 = 4
+Donos dos ficheiros: lblopes staff
+Tamanho dos ficheiros: 1412 bytes,13923695 bytes, 13793 bytes
+Datas de criação: Dec 29 15:43, Dec 29 15:44, Dec 29 15:47
+
+total 0
+-rw-rw-r-- 1 danielatomas danielatomas 0 mar  2 17:35 f3a.txt
+-rw-rw-r-- 1 danielatomas danielatomas 0 mar  2 17:35 g3x.pdf
+-rw-rw-r-- 1 danielatomas danielatomas 0 mar  2 17:35 g56.doc
+
+Permissões dos 3 ficheiros (octal): 664
+4+2+0 = 6
+4+2+0 = 6
+4+0+0 = 4
+Donos dos ficheiros: danielatomas danielatomas
+Tamanho dos ficheiros: 0 bytes
+Datas de criação: mar  2 17:35
+
+8. (assumindo que doit tem todas as permissões, ou seja, -rwxrwxrwx)
+chmod 755    → user: rwx, group/others: rx
+chmod u-wx   → user: r, group/others: rwx
+chmod go-rx  → user: rwx, group/others: w
+chmod 644    → user: rw, group/others: r
+
+9.
+cat trees.txt | cut -d ':' -f 1,4
+pine:1.2
+oak:0.9
+birch:1.6
+yew:4.3
+alder:9.6
+
+cat trees.txt | cut -d ':' -f 1,4 | sort
+alder:9.6
+birch:1.6
+oak:0.9
+pine:1.2
+yew:4.3
+
+10.
+cat q1.txt | sed 's/Ring/Sword/g' > q2.txt
+O comando cat demonstra o conteúdo do ficheiro q1.txt.
+O pipe (|) faz com que o output de cat q1.txt sirva de entrada para o próximo comando, sed 's/Ring/Sword/g'.
+Logo, as palavras iguais a Ring vão ser alteradas para Sword e esse output vai ser redirecionado para o ficheiro q2.txt (> q2.txt) que é criado automaticamente caso não exista.
+(O ficheiro q1.txt não é alterado)
+
+cat q2.txt | grep -v Mordor
+O comando cat demonstra o conteúdo do ficheiro q2.txt.
+O pipe (|) faz com que o output de cat q2.txt sirva de entrada para o próximo comando, grep -v Mordor.
+O grep procura padrões em cada ficheiro. A opcão -v faz com que sejam apresentadas todas as linhas que não tenham uma determinada palavra.
+Logo, o output vai ser todas as linhas do ficheiro q2.txt que não tenham a palavra Mordor.
+
+wc -l q2.txt
+O comando wc conta linhas, palavras e caracteres de um ficheiro. A opcão -l faz com que sejam contadas apenas as linhas.
+Logo, o output vai ser o número de linhas do ficheiro q2.txt.
+
+11.
+diff f1.txt f2.txt
+
+1,4c1,4
+< I don’t know half of you
+< half as well as I should like;
+< and I like less than half of you
+< half as well as you deserve
+---
+> I don’t know two thirds of you
+> two thirds as well as I should like;
+> and I like less than two thirds of you
+> two thirds as well as you deserve
+
+diff f1.txt f2.txt
+
+2,3c2,3
+< half as well as I should like;
+< and I like less than half of you
+---
+> half as well as I should do not like;
+> and I do not like less than half of you
+
+12.
+sort -d < words1.txt > words2.txt
+-d, --dictionary-order
+              consider only blanks and alphanumeric characters
+
+13.
+Permite saber quantos processos estão a ser executados mo terminal
+-A     Select all processes.  Identical to -e.
+
+14.
+kill -9 3577 3578 3579
+Termina os processos 3577, 3578 e 3579

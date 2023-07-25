@@ -1,0 +1,11 @@
+/home/danielatomas/2ºano/1ºsemestre/Programação/aula6e7/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/danielatomas/2ºano/1ºsemestre/Programação/aula6e7/cmake-build-debug/CMakeFiles/ex5.dir
+/home/danielatomas/2ºano/1ºsemestre/Programação/aula6e7/cmake-build-debug/CMakeFiles/ex7.dir
+/home/danielatomas/2ºano/1ºsemestre/Programação/aula6e7/cmake-build-debug/CMakeFiles/doxdocs.dir
+/home/danielatomas/2ºano/1ºsemestre/Programação/aula6e7/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/danielatomas/2ºano/1ºsemestre/Programação/aula6e7/cmake-build-debug/gtest/CMakeFiles/rebuild_cache.dir
+/home/danielatomas/2ºano/1ºsemestre/Programação/aula6e7/cmake-build-debug/gtest/CMakeFiles/edit_cache.dir
+/home/danielatomas/2ºano/1ºsemestre/Programação/aula6e7/cmake-build-debug/gtest/googletest/CMakeFiles/rebuild_cache.dir
+/home/danielatomas/2ºano/1ºsemestre/Programação/aula6e7/cmake-build-debug/gtest/googletest/CMakeFiles/edit_cache.dir
+/home/danielatomas/2ºano/1ºsemestre/Programação/aula6e7/cmake-build-debug/gtest/googletest/CMakeFiles/gtest_main.dir
+/home/danielatomas/2ºano/1ºsemestre/Programação/aula6e7/cmake-build-debug/gtest/googletest/CMakeFiles/gtest.dir

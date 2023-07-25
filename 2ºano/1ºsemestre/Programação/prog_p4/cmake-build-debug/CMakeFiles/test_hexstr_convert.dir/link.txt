@@ -1,0 +1,1 @@
+/usr/bin/c++  -Wall -g -fsanitize=address -fsanitize=undefined -fno-omit-frame-pointer -g CMakeFiles/test_hexstr_convert.dir/src/test_hexstr_convert.cpp.o -o test_hexstr_convert  lib/libgtestd.a lib/libgtest_maind.a -lpthread libfuncs.a lib/libgtestd.a -lpthread 

@@ -1,0 +1,21 @@
+20
+CrystalPalace 11 9 18 39 51
+Everton 11 14 13 59 55
+AFCBournemouth 11 9 18 45 67
+ManchesterUnited 19 9 10 49 35
+Tottenham 19 13 6 69 35
+Arsenal 20 11 7 65 36
+Liverpool 16 12 10 63 50
+SwanseaCity 12 11 15 42 52
+Newcastle 9 10 19 44 65
+AstonVilla 3 8 27 27 76
+WestHam 16 14 8 65 51
+LeicesterCity 23 12 3 68 36
+Watford 12 9 17 40 50
+Chelsea 12 14 12 59 53
+NorwichCity 9 7 22 39 67
+Southampton 18 9 11 59 41
+Sunderland 9 12 17 48 62
+ManchesterCity 19 9 10 71 41
+StokeCity 14 9 15 41 55
+WestBromwich 10 13 15 34 48

@@ -1,0 +1,16 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/danielatomas/2ºano/1ºsemestre/Programação/prog_p4/src/stack.c
+stdio.h
+-
+stdbool.h
+-
+stdlib.h
+-
+

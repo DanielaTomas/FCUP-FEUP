@@ -1,0 +1,10 @@
+2
+3
+1 1 1
+6
+Eduardo 5 4
+Kyara 11 3
+Rafaela 14 5
+Nuria 18 5
+Lucas 19 3
+Barbara 28 4

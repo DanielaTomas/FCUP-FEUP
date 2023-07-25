@@ -1,0 +1,184 @@
+Grupo 1
+1.1.
+ a) (n/100)%10
+ b) char[] v = new char[k]
+ c) m.length < k (para o nº de colunas seria: m[0].length < k)
+ d) s.charAt(s.length()-1)
+
+Grupo 2
+2.1.
+ class Matrix {
+   int rows, cols;
+   int[][] matrix;
+   Matrix(int r, int c, int k) { //construtor
+      rows = r;
+      cols = c;
+      matrix = new int[rows][cols];
+      for(int i = 0; i < rows; i++)
+        for(int j = 0; j < cols; j++)
+          matrix[i][j] = k;
+   }
+ }
+
+2.2.
+ Matrix transpose() {
+    Matrix m = new Matrix(cols,rows,0);
+    for(int i = 0; i < rows; i++)
+      for(int j = 0; j < cols; j++)
+        m.matrix[j][i] = matrix[i][j];
+    return m;
+ }
+
+Grupo 3
+3.1.
+ Um interface é uma declaração dos métodos sem específicar o seu corpo. O interface
+ não tem código de implementação nem pode ser instanciado, equanto que uma classe
+ contém sempre uma implementação e pode ser instanciada.
+
+Grupo 4
+4.1. Ω , Θ ou O
+ n^4 = O(4^n)
+ 2^n = Θ(2^(n+2))
+ 42 = Θ(24)
+ log(log n^2) = O(log n^2)
+ √n = Ω(log₄ n^2)
+
+4.2.
+ a) O(n^2)
+ b) O(n)
+ c) O(log n)
+ d) O(n)
+ e) O(n log n)
+
+4.3. (solução → ver slide 57 e 58 sobre complexidade algorítmica)
+
+4.4.
+ A → Θ(1) ; 10ms
+ B → Θ(n) ; 25ms
+ C → quadrática ; 80ms
+ D → Θ(n^3) ; 5ms
+ E → exponencial ; 2^10 * 10
+
+4.5.
+ a) O(1)
+ b) O(n)
+
+4.6.
+ Boolean Array -> complexidade temporal O(1)
+ Vantagem: Solução mais rápida
+ Desvantagem: gasta mais memória e não é genérica.
+ (O método clear do Boolean Array é o único método pior, porque a complexidade
+ temporal não é constante (O(k)) ao contrário do array desordenado (O(1)))
+
+Grupo 5
+5.1.
+ a) complexidade temporal: O(n)
+  boolean contains(T x) {
+    Node<T> cur = first;
+    while(cur != null) {
+      if(cur.getValue().compareTo(x)) return true;
+      cur = cur.getNext();
+    }
+    return false;
+  }
+
+ b) complexidade temporal: O(n)
+  void remove(Integer i) {
+     if(i < 0 || size <= i || size <= 0) return;
+     Node<T> cur = first;
+     else if(i == 0) first = null;
+     else if(i == (size - 1)) {
+       for(int j = 0; j < size-2; j++)
+         cur = cur.getNext();
+       cur.setNext(cur.getNext().getNext());
+     }
+     else {
+       for(int j = 0; j < i-1; j++)
+         cur = cur.getNext();
+       cur.setNext(cur.getNext().getNext());
+     }
+     size--;
+  }
+
+5.2.
+ Os arrays têm um espaço limitado definido inicialmente. Quando queremos adicionar
+ elementos mas não sabemos quantos faz mais sentido usar uma lista ligada, porque
+ esta cresce dinamicamente à medida que são adicionados os elementos.
+
+5.3. complexidade temporal: O(n^2) -> (não sei se está certo!)
+fila.enqueue(pilha.pop()) -> ... -> pilha.push(fila.dequeue()) -> ...
+                              ↓                                    ↓
+          (fazer o mesmo até a pilha ficar vazia)    (fazer o mesmo até a fila ficar vazia)
+
+| C |      _______     | A |
+| B |  ->   C B A   -> | B |
+|_A_|      ̅ ̅ ̅ ̅ ̅ ̅ ̅      |_C_|
+Pilha       Fila       Pilha
+
+Grupo 6
+6.1.
+ a) Preorder: A B D G H C E F I
+ b) Inorder: G D H B A E C I F
+ c) Largura: A B C D E F G H I
+
+6.2.
+ a) complexidade temporal: O(n)
+  public int depth() {
+   return depth(root);
+  }
+  private int depth(BTNode<T> n) {
+    if(n == null) return -1;
+    return 1 + Math.max(depth(next.getLeft()),depth(next.getLeft()));
+  }
+
+ b) complexidade temporal: O(n)
+  public int level(int k) {
+   return level(root,k);
+  }
+  public int level(BTNode<T> n, int k) {
+   if(n == null) return 0;
+   if(k == 0) return 1;
+   return level(n.getLeft(),k-1) + level(n.getRight(),k-1);
+  }
+
+Grupo 7
+7.1.
+ a)      42        b)      42         c)      24
+        /  \             /    \             /    \
+       20   50          20     50          20     50
+      /  \    \        /  \      \        /        \
+     11  24   53      11  24      53     11        53
+                                  /
+                                 51
+
+7.2. No nó mais à esquerda.
+
+7.3.
+ Altura mínima: 3
+ Ordem de Inserção: 8, 4, 2, 1, 3, 6, 5, 7, 12, 10, 9, 11, 14, 13, 15
+
+                   8
+              /         \
+             4           12
+           /   \       /    \
+          2     6     10     14
+         / \   / \   /  \    /  \
+        1   3 5   7 9    11 13   15
+
+7.4. complexidade emporal: O(log n)
+ Começar na raiz e comparar com o nó. Se o elemento for esse encontrou, caso seja
+ menor vai para a esquerda e caso seja maior vai para a direita e assim sucessivamente.
+
+Grupo 8
+8.1.
+ a)       3       b)       2       c)       4
+        /    \           /    \           /   \
+       4      5         4      3         7     5
+      /  \   /         /  \   / \       /  \
+     8    7 10        8    7 10  5     8    10
+
+8.2.
+ a) Ordem crescente
+
+ b) complexidade temporal: O(n log n)
+    complexidade espacial: O(n) (array de tamanho n)

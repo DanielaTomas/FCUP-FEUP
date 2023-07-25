@@ -1,0 +1,11 @@
+/home/daniela/2ºano/Programação/prog_p4/build/CMakeFiles/rebuild_cache.dir
+/home/daniela/2ºano/Programação/prog_p4/build/CMakeFiles/doxdocs.dir
+/home/daniela/2ºano/Programação/prog_p4/build/CMakeFiles/edit_cache.dir
+/home/daniela/2ºano/Programação/prog_p4/build/CMakeFiles/test_days_in_month.dir
+/home/daniela/2ºano/Programação/prog_p4/build/CMakeFiles/funcs.dir
+/home/daniela/2ºano/Programação/prog_p4/build/gtest/CMakeFiles/rebuild_cache.dir
+/home/daniela/2ºano/Programação/prog_p4/build/gtest/CMakeFiles/edit_cache.dir
+/home/daniela/2ºano/Programação/prog_p4/build/gtest/googletest/CMakeFiles/rebuild_cache.dir
+/home/daniela/2ºano/Programação/prog_p4/build/gtest/googletest/CMakeFiles/edit_cache.dir
+/home/daniela/2ºano/Programação/prog_p4/build/gtest/googletest/CMakeFiles/gtest_main.dir
+/home/daniela/2ºano/Programação/prog_p4/build/gtest/googletest/CMakeFiles/gtest.dir

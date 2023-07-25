@@ -1,0 +1,9 @@
+<svg width="120" height="200" xmlns="http://www.w3.org/2000/svg">
+    <circle id="c1" cx="40" cy="40" r="25" fill="red"/>
+    <circle id="c2" cx="40" cy="40" r="25" fill="blue" transform="translate(50 0)"/>
+    <!-- Cópia de c1 e c2 (transladadas) -->
+    <use href="#c1" transform="translate(50 60)"/>
+    <use id="cc" href="#c2" transform="translate(-50 60)"/>
+    <!-- "Cópia de cópia" -->
+    <use href="#cc" transform="translate(50 60)"/>
+</svg>

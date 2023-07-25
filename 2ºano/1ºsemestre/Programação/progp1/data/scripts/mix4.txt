@@ -1,0 +1,3 @@
+open input/circles.png
+mix input/squares.png 10
+save output/mix4.png

@@ -1,0 +1,2315 @@
+        -:    0:Source:/home/daniela/2ºano/Programação/prog_p4/gtest/googletest/src/gtest-printers.cc
+        -:    0:Graph:/home/daniela/2ºano/Programação/prog_p4/cmake-build-debug-coverage/gtest/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.gcno
+        -:    0:Data:/home/daniela/2ºano/Programação/prog_p4/cmake-build-debug-coverage/gtest/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.gcda
+        -:    0:Runs:1
+        -:    1:// Copyright 2007, Google Inc.
+        -:    2:// All rights reserved.
+        -:    3://
+        -:    4:// Redistribution and use in source and binary forms, with or without
+        -:    5:// modification, are permitted provided that the following conditions are
+        -:    6:// met:
+        -:    7://
+        -:    8://     * Redistributions of source code must retain the above copyright
+        -:    9:// notice, this list of conditions and the following disclaimer.
+        -:   10://     * Redistributions in binary form must reproduce the above
+        -:   11:// copyright notice, this list of conditions and the following disclaimer
+        -:   12:// in the documentation and/or other materials provided with the
+        -:   13:// distribution.
+        -:   14://     * Neither the name of Google Inc. nor the names of its
+        -:   15:// contributors may be used to endorse or promote products derived from
+        -:   16:// this software without specific prior written permission.
+        -:   17://
+        -:   18:// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+        -:   19:// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+        -:   20:// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+        -:   21:// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+        -:   22:// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+        -:   23:// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+        -:   24:// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+        -:   25:// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+        -:   26:// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+        -:   27:// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+        -:   28:// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+        -:   29:
+        -:   30:
+        -:   31:// Google Test - The Google C++ Testing and Mocking Framework
+        -:   32://
+        -:   33:// This file implements a universal value printer that can print a
+        -:   34:// value of any type T:
+        -:   35://
+        -:   36://   void ::testing::internal::UniversalPrinter<T>::Print(value, ostream_ptr);
+        -:   37://
+        -:   38:// It uses the << operator when possible, and prints the bytes in the
+        -:   39:// object otherwise.  A user can override its behavior for a class
+        -:   40:// type Foo by defining either operator<<(::std::ostream&, const Foo&)
+        -:   41:// or void PrintTo(const Foo&, ::std::ostream*) in the namespace that
+        -:   42:// defines Foo.
+        -:   43:
+        -:   44:#include "gtest/gtest-printers.h"
+        -:   45:
+        -:   46:#include <stdio.h>
+        -:   47:
+        -:   48:#include <cctype>
+        -:   49:#include <cstdint>
+        -:   50:#include <cwchar>
+        -:   51:#include <ostream>  // NOLINT
+        -:   52:#include <string>
+        -:   53:#include <type_traits>
+        -:   54:
+        -:   55:#include "gtest/internal/gtest-port.h"
+        -:   56:#include "src/gtest-internal-inl.h"
+        -:   57:
+        -:   58:namespace testing {
+        -:   59:
+        -:   60:namespace {
+        -:   61:
+        -:   62:using ::std::ostream;
+        -:   63:
+        -:   64:// Prints a segment of bytes in the given object.
+        -:   65:GTEST_ATTRIBUTE_NO_SANITIZE_MEMORY_
+        -:   66:GTEST_ATTRIBUTE_NO_SANITIZE_ADDRESS_
+        -:   67:GTEST_ATTRIBUTE_NO_SANITIZE_HWADDRESS_
+        -:   68:GTEST_ATTRIBUTE_NO_SANITIZE_THREAD_
+function _ZN7testing12_GLOBAL__N_126PrintByteSegmentInObjectToEPKhmmPSo called 0 returned 0% blocks executed 0%
+    #####:   69:void PrintByteSegmentInObjectTo(const unsigned char* obj_bytes, size_t start,
+        -:   70:                                size_t count, ostream* os) {
+    #####:   71:  char text[5] = "";
+    %%%%%:   71-block  0
+call    0 never executed
+    #####:   72:  for (size_t i = 0; i != count; i++) {
+    %%%%%:   72-block  0
+branch  0 never executed
+branch  1 never executed
+    %%%%%:   72-block  1
+    #####:   73:    const size_t j = start + i;
+    #####:   74:    if (i != 0) {
+    %%%%%:   74-block  0
+branch  0 never executed
+branch  1 never executed
+        -:   75:      // Organizes the bytes into groups of 2 for easy parsing by
+        -:   76:      // human.
+    #####:   77:      if ((j % 2) == 0)
+    %%%%%:   77-block  0
+branch  0 never executed
+branch  1 never executed
+    #####:   78:        *os << ' ';
+    %%%%%:   78-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+        -:   79:      else
+    #####:   80:        *os << '-';
+    %%%%%:   80-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+        -:   81:    }
+    #####:   82:    GTEST_SNPRINTF_(text, sizeof(text), "%02X", obj_bytes[j]);
+    %%%%%:   82-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    %%%%%:   82-block  1
+    #####:   83:    *os << text;
+    %%%%%:   83-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+        -:   84:  }
+    #####:   85:}
+        -:   86:
+        -:   87:// Prints the bytes in the given value to the given ostream.
+function _ZN7testing12_GLOBAL__N_124PrintBytesInObjectToImplEPKhmPSo called 0 returned 0% blocks executed 0%
+    #####:   88:void PrintBytesInObjectToImpl(const unsigned char* obj_bytes, size_t count,
+        -:   89:                              ostream* os) {
+        -:   90:  // Tells the user how big the object is.
+    #####:   91:  *os << count << "-byte object <";
+    %%%%%:   91-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+        -:   92:
+    #####:   93:  const size_t kThreshold = 132;
+    #####:   94:  const size_t kChunkSize = 64;
+        -:   95:  // If the object size is bigger than kThreshold, we'll have to omit
+        -:   96:  // some details by printing only the first and the last kChunkSize
+        -:   97:  // bytes.
+    #####:   98:  if (count < kThreshold) {
+branch  0 never executed
+branch  1 never executed
+    #####:   99:    PrintByteSegmentInObjectTo(obj_bytes, 0, count, os);
+    %%%%%:   99-block  0
+call    0 never executed
+        -:  100:  } else {
+    #####:  101:    PrintByteSegmentInObjectTo(obj_bytes, 0, kChunkSize, os);
+    %%%%%:  101-block  0
+call    0 never executed
+    #####:  102:    *os << " ... ";
+call    0 never executed
+call    1 never executed
+        -:  103:    // Rounds up to 2-byte boundary.
+    #####:  104:    const size_t resume_pos = (count - kChunkSize + 1)/2*2;
+    #####:  105:    PrintByteSegmentInObjectTo(obj_bytes, resume_pos, count - resume_pos, os);
+call    0 never executed
+        -:  106:  }
+    #####:  107:  *os << ">";
+    %%%%%:  107-block  0
+call    0 never executed
+call    1 never executed
+    #####:  108:}
+        -:  109:
+        -:  110:// Helpers for widening a character to char32_t. Since the standard does not
+        -:  111:// specify if char / wchar_t is signed or unsigned, it is important to first
+        -:  112:// convert it to the unsigned type of the same width before widening it to
+        -:  113:// char32_t.
+        -:  114:template <typename CharType>
+    #####:  115:char32_t ToChar32(CharType in) {
+        -:  116:  return static_cast<char32_t>(
+    #####:  117:      static_cast<typename std::make_unsigned<CharType>::type>(in));
+        -:  118:}
+------------------
+_ZN7testing12_GLOBAL__N_18ToChar32IaEEDiT_:
+function _ZN7testing12_GLOBAL__N_18ToChar32IaEEDiT_ called 0 returned 0% blocks executed 0%
+    #####:  115:char32_t ToChar32(CharType in) {
+        -:  116:  return static_cast<char32_t>(
+    #####:  117:      static_cast<typename std::make_unsigned<CharType>::type>(in));
+    %%%%%:  117-block  0
+        -:  118:}
+------------------
+_ZN7testing12_GLOBAL__N_18ToChar32IhEEDiT_:
+function _ZN7testing12_GLOBAL__N_18ToChar32IhEEDiT_ called 0 returned 0% blocks executed 0%
+    #####:  115:char32_t ToChar32(CharType in) {
+        -:  116:  return static_cast<char32_t>(
+    #####:  117:      static_cast<typename std::make_unsigned<CharType>::type>(in));
+    %%%%%:  117-block  0
+        -:  118:}
+------------------
+_ZN7testing12_GLOBAL__N_18ToChar32IDiEEDiT_:
+function _ZN7testing12_GLOBAL__N_18ToChar32IDiEEDiT_ called 0 returned 0% blocks executed 0%
+    #####:  115:char32_t ToChar32(CharType in) {
+        -:  116:  return static_cast<char32_t>(
+    #####:  117:      static_cast<typename std::make_unsigned<CharType>::type>(in));
+    %%%%%:  117-block  0
+        -:  118:}
+------------------
+_ZN7testing12_GLOBAL__N_18ToChar32IwEEDiT_:
+function _ZN7testing12_GLOBAL__N_18ToChar32IwEEDiT_ called 0 returned 0% blocks executed 0%
+    #####:  115:char32_t ToChar32(CharType in) {
+        -:  116:  return static_cast<char32_t>(
+    #####:  117:      static_cast<typename std::make_unsigned<CharType>::type>(in));
+    %%%%%:  117-block  0
+        -:  118:}
+------------------
+_ZN7testing12_GLOBAL__N_18ToChar32IDsEEDiT_:
+function _ZN7testing12_GLOBAL__N_18ToChar32IDsEEDiT_ called 0 returned 0% blocks executed 0%
+    #####:  115:char32_t ToChar32(CharType in) {
+        -:  116:  return static_cast<char32_t>(
+    #####:  117:      static_cast<typename std::make_unsigned<CharType>::type>(in));
+    %%%%%:  117-block  0
+        -:  118:}
+------------------
+_ZN7testing12_GLOBAL__N_18ToChar32IcEEDiT_:
+function _ZN7testing12_GLOBAL__N_18ToChar32IcEEDiT_ called 0 returned 0% blocks executed 0%
+    #####:  115:char32_t ToChar32(CharType in) {
+        -:  116:  return static_cast<char32_t>(
+    #####:  117:      static_cast<typename std::make_unsigned<CharType>::type>(in));
+    %%%%%:  117-block  0
+        -:  118:}
+------------------
+        -:  119:
+        -:  120:}  // namespace
+        -:  121:
+        -:  122:namespace internal {
+        -:  123:
+        -:  124:// Delegates to PrintBytesInObjectToImpl() to print the bytes in the
+        -:  125:// given object.  The delegation simplifies the implementation, which
+        -:  126:// uses the << operator and thus is easier done outside of the
+        -:  127:// ::testing::internal namespace, which contains a << operator that
+        -:  128:// sometimes conflicts with the one in STL.
+function _ZN7testing8internal20PrintBytesInObjectToEPKhmPSo called 0 returned 0% blocks executed 0%
+    #####:  129:void PrintBytesInObjectTo(const unsigned char* obj_bytes, size_t count,
+        -:  130:                          ostream* os) {
+    #####:  131:  PrintBytesInObjectToImpl(obj_bytes, count, os);
+    %%%%%:  131-block  0
+call    0 never executed
+    #####:  132:}
+        -:  133:
+        -:  134:// Depending on the value of a char (or wchar_t), we print it in one
+        -:  135:// of three formats:
+        -:  136://   - as is if it's a printable ASCII (e.g. 'a', '2', ' '),
+        -:  137://   - as a hexadecimal escape sequence (e.g. '\x7F'), or
+        -:  138://   - as a special escape sequence (e.g. '\r', '\n').
+        -:  139:enum CharFormat {
+        -:  140:  kAsIs,
+        -:  141:  kHexEscape,
+        -:  142:  kSpecialEscape
+        -:  143:};
+        -:  144:
+        -:  145:// Returns true if c is a printable ASCII character.  We test the
+        -:  146:// value of c directly instead of calling isprint(), which is buggy on
+        -:  147:// Windows Mobile.
+function _ZN7testing8internal16IsPrintableAsciiEDi called 0 returned 0% blocks executed 0%
+    #####:  148:inline bool IsPrintableAscii(char32_t c) { return 0x20 <= c && c <= 0x7E; }
+    %%%%%:  148-block  0
+branch  0 never executed
+branch  1 never executed
+    %%%%%:  148-block  1
+branch  2 never executed
+branch  3 never executed
+    %%%%%:  148-block  2
+    %%%%%:  148-block  3
+    %%%%%:  148-block  4
+        -:  149:
+        -:  150:// Prints c (of type char, char8_t, char16_t, char32_t, or wchar_t) as a
+        -:  151:// character literal without the quotes, escaping it when necessary; returns how
+        -:  152:// c was formatted.
+        -:  153:template <typename Char>
+    #####:  154:static CharFormat PrintAsCharLiteralTo(Char c, ostream* os) {
+    #####:  155:  const char32_t u_c = ToChar32(c);
+    #####:  156:  switch (u_c) {
+    #####:  157:    case L'\0':
+    #####:  158:      *os << "\\0";
+    #####:  159:      break;
+    #####:  160:    case L'\'':
+    #####:  161:      *os << "\\'";
+    #####:  162:      break;
+    #####:  163:    case L'\\':
+    #####:  164:      *os << "\\\\";
+    #####:  165:      break;
+    #####:  166:    case L'\a':
+    #####:  167:      *os << "\\a";
+    #####:  168:      break;
+    #####:  169:    case L'\b':
+    #####:  170:      *os << "\\b";
+    #####:  171:      break;
+    #####:  172:    case L'\f':
+    #####:  173:      *os << "\\f";
+    #####:  174:      break;
+    #####:  175:    case L'\n':
+    #####:  176:      *os << "\\n";
+    #####:  177:      break;
+    #####:  178:    case L'\r':
+    #####:  179:      *os << "\\r";
+    #####:  180:      break;
+    #####:  181:    case L'\t':
+    #####:  182:      *os << "\\t";
+    #####:  183:      break;
+    #####:  184:    case L'\v':
+    #####:  185:      *os << "\\v";
+    #####:  186:      break;
+    #####:  187:    default:
+    #####:  188:      if (IsPrintableAscii(u_c)) {
+    #####:  189:        *os << static_cast<char>(c);
+    #####:  190:        return kAsIs;
+        -:  191:      } else {
+    #####:  192:        ostream::fmtflags flags = os->flags();
+    #####:  193:        *os << "\\x" << std::hex << std::uppercase << static_cast<int>(u_c);
+    #####:  194:        os->flags(flags);
+    #####:  195:        return kHexEscape;
+        -:  196:      }
+        -:  197:  }
+    #####:  198:  return kSpecialEscape;
+        -:  199:}
+------------------
+_ZN7testing8internalL20PrintAsCharLiteralToIwEENS0_10CharFormatET_PSo:
+function _ZN7testing8internalL20PrintAsCharLiteralToIwEENS0_10CharFormatET_PSo called 0 returned 0% blocks executed 0%
+    #####:  154:static CharFormat PrintAsCharLiteralTo(Char c, ostream* os) {
+    #####:  155:  const char32_t u_c = ToChar32(c);
+    %%%%%:  155-block  0
+call    0 never executed
+    #####:  156:  switch (u_c) {
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+branch  5 never executed
+branch  6 never executed
+branch  7 never executed
+branch  8 never executed
+branch  9 never executed
+branch 10 never executed
+    #####:  157:    case L'\0':
+    #####:  158:      *os << "\\0";
+    %%%%%:  158-block  0
+call    0 never executed
+call    1 never executed
+    #####:  159:      break;
+    #####:  160:    case L'\'':
+    #####:  161:      *os << "\\'";
+    %%%%%:  161-block  0
+call    0 never executed
+call    1 never executed
+    #####:  162:      break;
+    #####:  163:    case L'\\':
+    #####:  164:      *os << "\\\\";
+    %%%%%:  164-block  0
+call    0 never executed
+call    1 never executed
+    #####:  165:      break;
+    #####:  166:    case L'\a':
+    #####:  167:      *os << "\\a";
+    %%%%%:  167-block  0
+call    0 never executed
+call    1 never executed
+    #####:  168:      break;
+    #####:  169:    case L'\b':
+    #####:  170:      *os << "\\b";
+    %%%%%:  170-block  0
+call    0 never executed
+call    1 never executed
+    #####:  171:      break;
+    #####:  172:    case L'\f':
+    #####:  173:      *os << "\\f";
+    %%%%%:  173-block  0
+call    0 never executed
+call    1 never executed
+    #####:  174:      break;
+    #####:  175:    case L'\n':
+    #####:  176:      *os << "\\n";
+    %%%%%:  176-block  0
+call    0 never executed
+call    1 never executed
+    #####:  177:      break;
+    #####:  178:    case L'\r':
+    #####:  179:      *os << "\\r";
+    %%%%%:  179-block  0
+call    0 never executed
+call    1 never executed
+    #####:  180:      break;
+    #####:  181:    case L'\t':
+    #####:  182:      *os << "\\t";
+    %%%%%:  182-block  0
+call    0 never executed
+call    1 never executed
+    #####:  183:      break;
+    #####:  184:    case L'\v':
+    #####:  185:      *os << "\\v";
+    %%%%%:  185-block  0
+call    0 never executed
+call    1 never executed
+    #####:  186:      break;
+    #####:  187:    default:
+    #####:  188:      if (IsPrintableAscii(u_c)) {
+    %%%%%:  188-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  189:        *os << static_cast<char>(c);
+    %%%%%:  189-block  0
+call    0 never executed
+call    1 never executed
+    #####:  190:        return kAsIs;
+        -:  191:      } else {
+    #####:  192:        ostream::fmtflags flags = os->flags();
+    %%%%%:  192-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+    #####:  193:        *os << "\\x" << std::hex << std::uppercase << static_cast<int>(u_c);
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+call   11 never executed
+call   12 never executed
+call   13 never executed
+    #####:  194:        os->flags(flags);
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+    #####:  195:        return kHexEscape;
+        -:  196:      }
+        -:  197:  }
+    #####:  198:  return kSpecialEscape;
+    %%%%%:  198-block  0
+        -:  199:}
+------------------
+_ZN7testing8internalL20PrintAsCharLiteralToIaEENS0_10CharFormatET_PSo:
+function _ZN7testing8internalL20PrintAsCharLiteralToIaEENS0_10CharFormatET_PSo called 0 returned 0% blocks executed 0%
+    #####:  154:static CharFormat PrintAsCharLiteralTo(Char c, ostream* os) {
+    #####:  155:  const char32_t u_c = ToChar32(c);
+    %%%%%:  155-block  0
+call    0 never executed
+    #####:  156:  switch (u_c) {
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+branch  5 never executed
+branch  6 never executed
+branch  7 never executed
+branch  8 never executed
+branch  9 never executed
+branch 10 never executed
+    #####:  157:    case L'\0':
+    #####:  158:      *os << "\\0";
+    %%%%%:  158-block  0
+call    0 never executed
+call    1 never executed
+    #####:  159:      break;
+    #####:  160:    case L'\'':
+    #####:  161:      *os << "\\'";
+    %%%%%:  161-block  0
+call    0 never executed
+call    1 never executed
+    #####:  162:      break;
+    #####:  163:    case L'\\':
+    #####:  164:      *os << "\\\\";
+    %%%%%:  164-block  0
+call    0 never executed
+call    1 never executed
+    #####:  165:      break;
+    #####:  166:    case L'\a':
+    #####:  167:      *os << "\\a";
+    %%%%%:  167-block  0
+call    0 never executed
+call    1 never executed
+    #####:  168:      break;
+    #####:  169:    case L'\b':
+    #####:  170:      *os << "\\b";
+    %%%%%:  170-block  0
+call    0 never executed
+call    1 never executed
+    #####:  171:      break;
+    #####:  172:    case L'\f':
+    #####:  173:      *os << "\\f";
+    %%%%%:  173-block  0
+call    0 never executed
+call    1 never executed
+    #####:  174:      break;
+    #####:  175:    case L'\n':
+    #####:  176:      *os << "\\n";
+    %%%%%:  176-block  0
+call    0 never executed
+call    1 never executed
+    #####:  177:      break;
+    #####:  178:    case L'\r':
+    #####:  179:      *os << "\\r";
+    %%%%%:  179-block  0
+call    0 never executed
+call    1 never executed
+    #####:  180:      break;
+    #####:  181:    case L'\t':
+    #####:  182:      *os << "\\t";
+    %%%%%:  182-block  0
+call    0 never executed
+call    1 never executed
+    #####:  183:      break;
+    #####:  184:    case L'\v':
+    #####:  185:      *os << "\\v";
+    %%%%%:  185-block  0
+call    0 never executed
+call    1 never executed
+    #####:  186:      break;
+    #####:  187:    default:
+    #####:  188:      if (IsPrintableAscii(u_c)) {
+    %%%%%:  188-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  189:        *os << static_cast<char>(c);
+    %%%%%:  189-block  0
+call    0 never executed
+call    1 never executed
+    #####:  190:        return kAsIs;
+        -:  191:      } else {
+    #####:  192:        ostream::fmtflags flags = os->flags();
+    %%%%%:  192-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+    #####:  193:        *os << "\\x" << std::hex << std::uppercase << static_cast<int>(u_c);
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+call   11 never executed
+call   12 never executed
+call   13 never executed
+    #####:  194:        os->flags(flags);
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+    #####:  195:        return kHexEscape;
+        -:  196:      }
+        -:  197:  }
+    #####:  198:  return kSpecialEscape;
+    %%%%%:  198-block  0
+        -:  199:}
+------------------
+_ZN7testing8internalL20PrintAsCharLiteralToIhEENS0_10CharFormatET_PSo:
+function _ZN7testing8internalL20PrintAsCharLiteralToIhEENS0_10CharFormatET_PSo called 0 returned 0% blocks executed 0%
+    #####:  154:static CharFormat PrintAsCharLiteralTo(Char c, ostream* os) {
+    #####:  155:  const char32_t u_c = ToChar32(c);
+    %%%%%:  155-block  0
+call    0 never executed
+    #####:  156:  switch (u_c) {
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+branch  5 never executed
+branch  6 never executed
+branch  7 never executed
+branch  8 never executed
+branch  9 never executed
+branch 10 never executed
+    #####:  157:    case L'\0':
+    #####:  158:      *os << "\\0";
+    %%%%%:  158-block  0
+call    0 never executed
+call    1 never executed
+    #####:  159:      break;
+    #####:  160:    case L'\'':
+    #####:  161:      *os << "\\'";
+    %%%%%:  161-block  0
+call    0 never executed
+call    1 never executed
+    #####:  162:      break;
+    #####:  163:    case L'\\':
+    #####:  164:      *os << "\\\\";
+    %%%%%:  164-block  0
+call    0 never executed
+call    1 never executed
+    #####:  165:      break;
+    #####:  166:    case L'\a':
+    #####:  167:      *os << "\\a";
+    %%%%%:  167-block  0
+call    0 never executed
+call    1 never executed
+    #####:  168:      break;
+    #####:  169:    case L'\b':
+    #####:  170:      *os << "\\b";
+    %%%%%:  170-block  0
+call    0 never executed
+call    1 never executed
+    #####:  171:      break;
+    #####:  172:    case L'\f':
+    #####:  173:      *os << "\\f";
+    %%%%%:  173-block  0
+call    0 never executed
+call    1 never executed
+    #####:  174:      break;
+    #####:  175:    case L'\n':
+    #####:  176:      *os << "\\n";
+    %%%%%:  176-block  0
+call    0 never executed
+call    1 never executed
+    #####:  177:      break;
+    #####:  178:    case L'\r':
+    #####:  179:      *os << "\\r";
+    %%%%%:  179-block  0
+call    0 never executed
+call    1 never executed
+    #####:  180:      break;
+    #####:  181:    case L'\t':
+    #####:  182:      *os << "\\t";
+    %%%%%:  182-block  0
+call    0 never executed
+call    1 never executed
+    #####:  183:      break;
+    #####:  184:    case L'\v':
+    #####:  185:      *os << "\\v";
+    %%%%%:  185-block  0
+call    0 never executed
+call    1 never executed
+    #####:  186:      break;
+    #####:  187:    default:
+    #####:  188:      if (IsPrintableAscii(u_c)) {
+    %%%%%:  188-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  189:        *os << static_cast<char>(c);
+    %%%%%:  189-block  0
+call    0 never executed
+call    1 never executed
+    #####:  190:        return kAsIs;
+        -:  191:      } else {
+    #####:  192:        ostream::fmtflags flags = os->flags();
+    %%%%%:  192-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+    #####:  193:        *os << "\\x" << std::hex << std::uppercase << static_cast<int>(u_c);
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+call   11 never executed
+call   12 never executed
+call   13 never executed
+    #####:  194:        os->flags(flags);
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+    #####:  195:        return kHexEscape;
+        -:  196:      }
+        -:  197:  }
+    #####:  198:  return kSpecialEscape;
+    %%%%%:  198-block  0
+        -:  199:}
+------------------
+_ZN7testing8internalL20PrintAsCharLiteralToIDiEENS0_10CharFormatET_PSo:
+function _ZN7testing8internalL20PrintAsCharLiteralToIDiEENS0_10CharFormatET_PSo called 0 returned 0% blocks executed 0%
+    #####:  154:static CharFormat PrintAsCharLiteralTo(Char c, ostream* os) {
+    #####:  155:  const char32_t u_c = ToChar32(c);
+    %%%%%:  155-block  0
+call    0 never executed
+    #####:  156:  switch (u_c) {
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+branch  5 never executed
+branch  6 never executed
+branch  7 never executed
+branch  8 never executed
+branch  9 never executed
+branch 10 never executed
+    #####:  157:    case L'\0':
+    #####:  158:      *os << "\\0";
+    %%%%%:  158-block  0
+call    0 never executed
+call    1 never executed
+    #####:  159:      break;
+    #####:  160:    case L'\'':
+    #####:  161:      *os << "\\'";
+    %%%%%:  161-block  0
+call    0 never executed
+call    1 never executed
+    #####:  162:      break;
+    #####:  163:    case L'\\':
+    #####:  164:      *os << "\\\\";
+    %%%%%:  164-block  0
+call    0 never executed
+call    1 never executed
+    #####:  165:      break;
+    #####:  166:    case L'\a':
+    #####:  167:      *os << "\\a";
+    %%%%%:  167-block  0
+call    0 never executed
+call    1 never executed
+    #####:  168:      break;
+    #####:  169:    case L'\b':
+    #####:  170:      *os << "\\b";
+    %%%%%:  170-block  0
+call    0 never executed
+call    1 never executed
+    #####:  171:      break;
+    #####:  172:    case L'\f':
+    #####:  173:      *os << "\\f";
+    %%%%%:  173-block  0
+call    0 never executed
+call    1 never executed
+    #####:  174:      break;
+    #####:  175:    case L'\n':
+    #####:  176:      *os << "\\n";
+    %%%%%:  176-block  0
+call    0 never executed
+call    1 never executed
+    #####:  177:      break;
+    #####:  178:    case L'\r':
+    #####:  179:      *os << "\\r";
+    %%%%%:  179-block  0
+call    0 never executed
+call    1 never executed
+    #####:  180:      break;
+    #####:  181:    case L'\t':
+    #####:  182:      *os << "\\t";
+    %%%%%:  182-block  0
+call    0 never executed
+call    1 never executed
+    #####:  183:      break;
+    #####:  184:    case L'\v':
+    #####:  185:      *os << "\\v";
+    %%%%%:  185-block  0
+call    0 never executed
+call    1 never executed
+    #####:  186:      break;
+    #####:  187:    default:
+    #####:  188:      if (IsPrintableAscii(u_c)) {
+    %%%%%:  188-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  189:        *os << static_cast<char>(c);
+    %%%%%:  189-block  0
+call    0 never executed
+call    1 never executed
+    #####:  190:        return kAsIs;
+        -:  191:      } else {
+    #####:  192:        ostream::fmtflags flags = os->flags();
+    %%%%%:  192-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+    #####:  193:        *os << "\\x" << std::hex << std::uppercase << static_cast<int>(u_c);
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+call   11 never executed
+call   12 never executed
+call   13 never executed
+    #####:  194:        os->flags(flags);
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+    #####:  195:        return kHexEscape;
+        -:  196:      }
+        -:  197:  }
+    #####:  198:  return kSpecialEscape;
+    %%%%%:  198-block  0
+        -:  199:}
+------------------
+        -:  200:
+        -:  201:// Prints a char32_t c as if it's part of a string literal, escaping it when
+        -:  202:// necessary; returns how c was formatted.
+function _ZN7testing8internalL22PrintAsStringLiteralToEDiPSo called 0 returned 0% blocks executed 0%
+    #####:  203:static CharFormat PrintAsStringLiteralTo(char32_t c, ostream* os) {
+    #####:  204:  switch (c) {
+    %%%%%:  204-block  0
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  205:    case L'\'':
+    #####:  206:      *os << "'";
+    %%%%%:  206-block  0
+call    0 never executed
+call    1 never executed
+    #####:  207:      return kAsIs;
+    #####:  208:    case L'"':
+    #####:  209:      *os << "\\\"";
+    %%%%%:  209-block  0
+call    0 never executed
+call    1 never executed
+    #####:  210:      return kSpecialEscape;
+    #####:  211:    default:
+    #####:  212:      return PrintAsCharLiteralTo(c, os);
+    %%%%%:  212-block  0
+call    0 never executed
+        -:  213:  }
+        -:  214:}
+        -:  215:
+function _ZN7testing8internalL18GetCharWidthPrefixEc called 0 returned 0% blocks executed 0%
+    #####:  216:static const char* GetCharWidthPrefix(char) {
+    #####:  217:  return "";
+    %%%%%:  217-block  0
+        -:  218:}
+        -:  219:
+function _ZN7testing8internalL18GetCharWidthPrefixEa called 0 returned 0% blocks executed 0%
+    #####:  220:static const char* GetCharWidthPrefix(signed char) {
+    #####:  221:  return "";
+    %%%%%:  221-block  0
+        -:  222:}
+        -:  223:
+function _ZN7testing8internalL18GetCharWidthPrefixEh called 0 returned 0% blocks executed 0%
+    #####:  224:static const char* GetCharWidthPrefix(unsigned char) {
+    #####:  225:  return "";
+    %%%%%:  225-block  0
+        -:  226:}
+        -:  227:
+        -:  228:#ifdef __cpp_char8_t
+        -:  229:static const char* GetCharWidthPrefix(char8_t) {
+        -:  230:  return "u8";
+        -:  231:}
+        -:  232:#endif
+        -:  233:
+function _ZN7testing8internalL18GetCharWidthPrefixEDs called 0 returned 0% blocks executed 0%
+    #####:  234:static const char* GetCharWidthPrefix(char16_t) {
+    #####:  235:  return "u";
+    %%%%%:  235-block  0
+        -:  236:}
+        -:  237:
+function _ZN7testing8internalL18GetCharWidthPrefixEDi called 0 returned 0% blocks executed 0%
+    #####:  238:static const char* GetCharWidthPrefix(char32_t) {
+    #####:  239:  return "U";
+    %%%%%:  239-block  0
+        -:  240:}
+        -:  241:
+function _ZN7testing8internalL18GetCharWidthPrefixEw called 0 returned 0% blocks executed 0%
+    #####:  242:static const char* GetCharWidthPrefix(wchar_t) {
+    #####:  243:  return "L";
+    %%%%%:  243-block  0
+        -:  244:}
+        -:  245:
+        -:  246:// Prints a char c as if it's part of a string literal, escaping it when
+        -:  247:// necessary; returns how c was formatted.
+function _ZN7testing8internalL22PrintAsStringLiteralToEcPSo called 0 returned 0% blocks executed 0%
+    #####:  248:static CharFormat PrintAsStringLiteralTo(char c, ostream* os) {
+    #####:  249:  return PrintAsStringLiteralTo(ToChar32(c), os);
+    %%%%%:  249-block  0
+call    0 never executed
+call    1 never executed
+        -:  250:}
+        -:  251:
+        -:  252:#ifdef __cpp_char8_t
+        -:  253:static CharFormat PrintAsStringLiteralTo(char8_t c, ostream* os) {
+        -:  254:  return PrintAsStringLiteralTo(ToChar32(c), os);
+        -:  255:}
+        -:  256:#endif
+        -:  257:
+function _ZN7testing8internalL22PrintAsStringLiteralToEDsPSo called 0 returned 0% blocks executed 0%
+    #####:  258:static CharFormat PrintAsStringLiteralTo(char16_t c, ostream* os) {
+    #####:  259:  return PrintAsStringLiteralTo(ToChar32(c), os);
+    %%%%%:  259-block  0
+call    0 never executed
+call    1 never executed
+        -:  260:}
+        -:  261:
+function _ZN7testing8internalL22PrintAsStringLiteralToEwPSo called 0 returned 0% blocks executed 0%
+    #####:  262:static CharFormat PrintAsStringLiteralTo(wchar_t c, ostream* os) {
+    #####:  263:  return PrintAsStringLiteralTo(ToChar32(c), os);
+    %%%%%:  263-block  0
+call    0 never executed
+call    1 never executed
+        -:  264:}
+        -:  265:
+        -:  266:// Prints a character c (of type char, char8_t, char16_t, char32_t, or wchar_t)
+        -:  267:// and its code. '\0' is printed as "'\\0'", other unprintable characters are
+        -:  268:// also properly escaped using the standard C++ escape sequence.
+        -:  269:template <typename Char>
+    #####:  270:void PrintCharAndCodeTo(Char c, ostream* os) {
+        -:  271:  // First, print c as a literal in the most readable form we can find.
+    #####:  272:  *os << GetCharWidthPrefix(c) << "'";
+    #####:  273:  const CharFormat format = PrintAsCharLiteralTo(c, os);
+    #####:  274:  *os << "'";
+        -:  275:
+        -:  276:  // To aid user debugging, we also print c's code in decimal, unless
+        -:  277:  // it's 0 (in which case c was printed as '\\0', making the code
+        -:  278:  // obvious).
+    #####:  279:  if (c == 0)
+    #####:  280:    return;
+    #####:  281:  *os << " (" << static_cast<int>(c);
+        -:  282:
+        -:  283:  // For more convenience, we print c's code again in hexadecimal,
+        -:  284:  // unless c was already printed in the form '\x##' or the code is in
+        -:  285:  // [1, 9].
+    #####:  286:  if (format == kHexEscape || (1 <= c && c <= 9)) {
+        -:  287:    // Do nothing.
+        -:  288:  } else {
+    #####:  289:    *os << ", 0x" << String::FormatHexInt(static_cast<int>(c));
+        -:  290:  }
+    #####:  291:  *os << ")";
+        -:  292:}
+------------------
+_ZN7testing8internal18PrintCharAndCodeToIwEEvT_PSo:
+function _ZN7testing8internal18PrintCharAndCodeToIwEEvT_PSo called 0 returned 0% blocks executed 0%
+    #####:  270:void PrintCharAndCodeTo(Char c, ostream* os) {
+        -:  271:  // First, print c as a literal in the most readable form we can find.
+    #####:  272:  *os << GetCharWidthPrefix(c) << "'";
+    %%%%%:  272-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+    #####:  273:  const CharFormat format = PrintAsCharLiteralTo(c, os);
+call    0 never executed
+    #####:  274:  *os << "'";
+call    0 never executed
+call    1 never executed
+        -:  275:
+        -:  276:  // To aid user debugging, we also print c's code in decimal, unless
+        -:  277:  // it's 0 (in which case c was printed as '\\0', making the code
+        -:  278:  // obvious).
+    #####:  279:  if (c == 0)
+branch  0 never executed
+branch  1 never executed
+    #####:  280:    return;
+    %%%%%:  280-block  0
+    #####:  281:  *os << " (" << static_cast<int>(c);
+    %%%%%:  281-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+        -:  282:
+        -:  283:  // For more convenience, we print c's code again in hexadecimal,
+        -:  284:  // unless c was already printed in the form '\x##' or the code is in
+        -:  285:  // [1, 9].
+    #####:  286:  if (format == kHexEscape || (1 <= c && c <= 9)) {
+branch  0 never executed
+branch  1 never executed
+    %%%%%:  286-block  0
+branch  2 never executed
+branch  3 never executed
+    %%%%%:  286-block  1
+branch  4 never executed
+branch  5 never executed
+        -:  287:    // Do nothing.
+        -:  288:  } else {
+    #####:  289:    *os << ", 0x" << String::FormatHexInt(static_cast<int>(c));
+    %%%%%:  289-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+    %%%%%:  289-block  1
+call    8 never executed
+call    9 never executed
+    $$$$$:  289-block  2
+call   10 never executed
+    $$$$$:  289-block  3
+call   11 never executed
+        -:  290:  }
+    #####:  291:  *os << ")";
+    %%%%%:  291-block  0
+call    0 never executed
+call    1 never executed
+        -:  292:}
+------------------
+_ZN7testing8internal18PrintCharAndCodeToIaEEvT_PSo:
+function _ZN7testing8internal18PrintCharAndCodeToIaEEvT_PSo called 0 returned 0% blocks executed 0%
+    #####:  270:void PrintCharAndCodeTo(Char c, ostream* os) {
+        -:  271:  // First, print c as a literal in the most readable form we can find.
+    #####:  272:  *os << GetCharWidthPrefix(c) << "'";
+    %%%%%:  272-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+    #####:  273:  const CharFormat format = PrintAsCharLiteralTo(c, os);
+call    0 never executed
+    #####:  274:  *os << "'";
+call    0 never executed
+call    1 never executed
+        -:  275:
+        -:  276:  // To aid user debugging, we also print c's code in decimal, unless
+        -:  277:  // it's 0 (in which case c was printed as '\\0', making the code
+        -:  278:  // obvious).
+    #####:  279:  if (c == 0)
+branch  0 never executed
+branch  1 never executed
+    #####:  280:    return;
+    %%%%%:  280-block  0
+    #####:  281:  *os << " (" << static_cast<int>(c);
+    %%%%%:  281-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+        -:  282:
+        -:  283:  // For more convenience, we print c's code again in hexadecimal,
+        -:  284:  // unless c was already printed in the form '\x##' or the code is in
+        -:  285:  // [1, 9].
+    #####:  286:  if (format == kHexEscape || (1 <= c && c <= 9)) {
+branch  0 never executed
+branch  1 never executed
+    %%%%%:  286-block  0
+branch  2 never executed
+branch  3 never executed
+    %%%%%:  286-block  1
+branch  4 never executed
+branch  5 never executed
+        -:  287:    // Do nothing.
+        -:  288:  } else {
+    #####:  289:    *os << ", 0x" << String::FormatHexInt(static_cast<int>(c));
+    %%%%%:  289-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+    %%%%%:  289-block  1
+call    8 never executed
+call    9 never executed
+    $$$$$:  289-block  2
+call   10 never executed
+    $$$$$:  289-block  3
+call   11 never executed
+        -:  290:  }
+    #####:  291:  *os << ")";
+    %%%%%:  291-block  0
+call    0 never executed
+call    1 never executed
+        -:  292:}
+------------------
+_ZN7testing8internal18PrintCharAndCodeToIhEEvT_PSo:
+function _ZN7testing8internal18PrintCharAndCodeToIhEEvT_PSo called 0 returned 0% blocks executed 0%
+    #####:  270:void PrintCharAndCodeTo(Char c, ostream* os) {
+        -:  271:  // First, print c as a literal in the most readable form we can find.
+    #####:  272:  *os << GetCharWidthPrefix(c) << "'";
+    %%%%%:  272-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+    #####:  273:  const CharFormat format = PrintAsCharLiteralTo(c, os);
+call    0 never executed
+    #####:  274:  *os << "'";
+call    0 never executed
+call    1 never executed
+        -:  275:
+        -:  276:  // To aid user debugging, we also print c's code in decimal, unless
+        -:  277:  // it's 0 (in which case c was printed as '\\0', making the code
+        -:  278:  // obvious).
+    #####:  279:  if (c == 0)
+branch  0 never executed
+branch  1 never executed
+    #####:  280:    return;
+    %%%%%:  280-block  0
+    #####:  281:  *os << " (" << static_cast<int>(c);
+    %%%%%:  281-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+        -:  282:
+        -:  283:  // For more convenience, we print c's code again in hexadecimal,
+        -:  284:  // unless c was already printed in the form '\x##' or the code is in
+        -:  285:  // [1, 9].
+    #####:  286:  if (format == kHexEscape || (1 <= c && c <= 9)) {
+branch  0 never executed
+branch  1 never executed
+    %%%%%:  286-block  0
+branch  2 never executed
+branch  3 never executed
+    %%%%%:  286-block  1
+branch  4 never executed
+branch  5 never executed
+        -:  287:    // Do nothing.
+        -:  288:  } else {
+    #####:  289:    *os << ", 0x" << String::FormatHexInt(static_cast<int>(c));
+    %%%%%:  289-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+    %%%%%:  289-block  1
+call    8 never executed
+call    9 never executed
+    $$$$$:  289-block  2
+call   10 never executed
+    $$$$$:  289-block  3
+call   11 never executed
+        -:  290:  }
+    #####:  291:  *os << ")";
+    %%%%%:  291-block  0
+call    0 never executed
+call    1 never executed
+        -:  292:}
+------------------
+        -:  293:
+function _ZN7testing8internal7PrintToEhPSo called 0 returned 0% blocks executed 0%
+    #####:  294:void PrintTo(unsigned char c, ::std::ostream* os) { PrintCharAndCodeTo(c, os); }
+    %%%%%:  294-block  0
+call    0 never executed
+function _ZN7testing8internal7PrintToEaPSo called 0 returned 0% blocks executed 0%
+    #####:  295:void PrintTo(signed char c, ::std::ostream* os) { PrintCharAndCodeTo(c, os); }
+    %%%%%:  295-block  0
+call    0 never executed
+        -:  296:
+        -:  297:// Prints a wchar_t as a symbol if it is printable or as its internal
+        -:  298:// code otherwise and also as its code.  L'\0' is printed as "L'\\0'".
+function _ZN7testing8internal7PrintToEwPSo called 0 returned 0% blocks executed 0%
+    #####:  299:void PrintTo(wchar_t wc, ostream* os) { PrintCharAndCodeTo(wc, os); }
+    %%%%%:  299-block  0
+call    0 never executed
+        -:  300:
+        -:  301:// TODO(dcheng): Consider making this delegate to PrintCharAndCodeTo() as well.
+function _ZN7testing8internal7PrintToEDiPSo called 0 returned 0% blocks executed 0%
+    #####:  302:void PrintTo(char32_t c, ::std::ostream* os) {
+    #####:  303:  *os << std::hex << "U+" << std::uppercase << std::setfill('0') << std::setw(4)
+    %%%%%:  303-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+call   11 never executed
+call   12 never executed
+call   13 never executed
+call   14 never executed
+    #####:  304:      << static_cast<uint32_t>(c);
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+    #####:  305:}
+        -:  306:
+        -:  307:// gcc/clang __{u,}int128_t
+        -:  308:#if defined(__SIZEOF_INT128__)
+function _ZN7testing8internal7PrintToEoPSo called 0 returned 0% blocks executed 0%
+    #####:  309:void PrintTo(__uint128_t v, ::std::ostream* os) {
+    #####:  310:  if (v == 0) {
+    %%%%%:  310-block  0
+branch  0 never executed
+branch  1 never executed
+    #####:  311:    *os << "0";
+    %%%%%:  311-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    #####:  312:    return;
+    %%%%%:  312-block  0
+        -:  313:  }
+        -:  314:
+        -:  315:  // Buffer large enough for ceil(log10(2^128))==39 and the null terminator
+    #####:  316:  char buf[40];
+    %%%%%:  316-block  0
+call    0 never executed
+    #####:  317:  char* p = buf + sizeof(buf);
+call    0 never executed
+        -:  318:
+        -:  319:  // Some configurations have a __uint128_t, but no support for built in
+        -:  320:  // division. Do manual long division instead.
+        -:  321:
+    #####:  322:  uint64_t high = static_cast<uint64_t>(v >> 64);
+    #####:  323:  uint64_t low = static_cast<uint64_t>(v);
+        -:  324:
+    #####:  325:  *--p = 0;
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    #####:  326:  while (high != 0 || low != 0) {
+    %%%%%:  326-block  0
+branch  0 never executed
+branch  1 never executed
+    %%%%%:  326-block  1
+branch  2 never executed
+branch  3 never executed
+    #####:  327:    uint64_t high_mod = high % 10;
+    #####:  328:    high = high / 10;
+        -:  329:    // This is the long division algorithm specialized for a divisor of 10 and
+        -:  330:    // only two elements.
+        -:  331:    // Notable values:
+        -:  332:    //   2^64 / 10 == 1844674407370955161
+        -:  333:    //   2^64 % 10 == 6
+    #####:  334:    const uint64_t carry = 6 * high_mod + low % 10;
+    #####:  335:    low = low / 10 + high_mod * 1844674407370955161 + carry / 10;
+        -:  336:
+    #####:  337:    char digit = static_cast<char>(carry % 10);
+    #####:  338:    *--p = '0' + digit;
+    %%%%%:  338-block  0
+call    0 never executed
+call    1 never executed
+        -:  339:  }
+    #####:  340:  *os << p;
+    %%%%%:  340-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+        -:  341:}
+function _ZN7testing8internal7PrintToEnPSo called 0 returned 0% blocks executed 0%
+    #####:  342:void PrintTo(__int128_t v, ::std::ostream* os) {
+    #####:  343:  __uint128_t uv = static_cast<__uint128_t>(v);
+    #####:  344:  if (v < 0) {
+    %%%%%:  344-block  0
+branch  0 never executed
+branch  1 never executed
+    #####:  345:    *os << "-";
+    %%%%%:  345-block  0
+call    0 never executed
+call    1 never executed
+    #####:  346:    uv = -uv;
+        -:  347:  }
+    #####:  348:  PrintTo(uv, os);
+    %%%%%:  348-block  0
+call    0 never executed
+    #####:  349:}
+        -:  350:#endif  // __SIZEOF_INT128__
+        -:  351:
+        -:  352:// Prints the given array of characters to the ostream.  CharType must be either
+        -:  353:// char, char8_t, char16_t, char32_t, or wchar_t.
+        -:  354:// The array starts at begin, the length is len, it may include '\0' characters
+        -:  355:// and may not be NUL-terminated.
+        -:  356:template <typename CharType>
+        -:  357:GTEST_ATTRIBUTE_NO_SANITIZE_MEMORY_
+        -:  358:GTEST_ATTRIBUTE_NO_SANITIZE_ADDRESS_
+        -:  359:GTEST_ATTRIBUTE_NO_SANITIZE_HWADDRESS_
+        -:  360:GTEST_ATTRIBUTE_NO_SANITIZE_THREAD_
+    #####:  361:static CharFormat PrintCharsAsStringTo(
+        -:  362:    const CharType* begin, size_t len, ostream* os) {
+    #####:  363:  const char* const quote_prefix = GetCharWidthPrefix(*begin);
+    #####:  364:  *os << quote_prefix << "\"";
+    #####:  365:  bool is_previous_hex = false;
+    #####:  366:  CharFormat print_format = kAsIs;
+    #####:  367:  for (size_t index = 0; index < len; ++index) {
+    #####:  368:    const CharType cur = begin[index];
+    #####:  369:    if (is_previous_hex && IsXDigit(cur)) {
+        -:  370:      // Previous character is of '\x..' form and this character can be
+        -:  371:      // interpreted as another hexadecimal digit in its number. Break string to
+        -:  372:      // disambiguate.
+    #####:  373:      *os << "\" " << quote_prefix << "\"";
+        -:  374:    }
+    #####:  375:    is_previous_hex = PrintAsStringLiteralTo(cur, os) == kHexEscape;
+        -:  376:    // Remember if any characters required hex escaping.
+    #####:  377:    if (is_previous_hex) {
+    #####:  378:      print_format = kHexEscape;
+        -:  379:    }
+        -:  380:  }
+    #####:  381:  *os << "\"";
+    #####:  382:  return print_format;
+        -:  383:}
+------------------
+_ZN7testing8internalL20PrintCharsAsStringToIwEENS0_10CharFormatEPKT_mPSo:
+function _ZN7testing8internalL20PrintCharsAsStringToIwEENS0_10CharFormatEPKT_mPSo called 0 returned 0% blocks executed 0%
+    #####:  361:static CharFormat PrintCharsAsStringTo(
+        -:  362:    const CharType* begin, size_t len, ostream* os) {
+    #####:  363:  const char* const quote_prefix = GetCharWidthPrefix(*begin);
+    %%%%%:  363-block  0
+call    0 never executed
+call    1 never executed
+    #####:  364:  *os << quote_prefix << "\"";
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    #####:  365:  bool is_previous_hex = false;
+    #####:  366:  CharFormat print_format = kAsIs;
+    #####:  367:  for (size_t index = 0; index < len; ++index) {
+    %%%%%:  367-block  0
+branch  0 never executed
+branch  1 never executed
+    %%%%%:  367-block  1
+    #####:  368:    const CharType cur = begin[index];
+    %%%%%:  368-block  0
+call    0 never executed
+call    1 never executed
+    #####:  369:    if (is_previous_hex && IsXDigit(cur)) {
+branch  0 never executed
+branch  1 never executed
+    %%%%%:  369-block  0
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+    %%%%%:  369-block  1
+    %%%%%:  369-block  2
+    %%%%%:  369-block  3
+branch  5 never executed
+branch  6 never executed
+        -:  370:      // Previous character is of '\x..' form and this character can be
+        -:  371:      // interpreted as another hexadecimal digit in its number. Break string to
+        -:  372:      // disambiguate.
+    #####:  373:      *os << "\" " << quote_prefix << "\"";
+    %%%%%:  373-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+        -:  374:    }
+    #####:  375:    is_previous_hex = PrintAsStringLiteralTo(cur, os) == kHexEscape;
+    %%%%%:  375-block  0
+call    0 never executed
+        -:  376:    // Remember if any characters required hex escaping.
+    #####:  377:    if (is_previous_hex) {
+branch  0 never executed
+branch  1 never executed
+    #####:  378:      print_format = kHexEscape;
+    %%%%%:  378-block  0
+        -:  379:    }
+        -:  380:  }
+    #####:  381:  *os << "\"";
+    %%%%%:  381-block  0
+call    0 never executed
+call    1 never executed
+    #####:  382:  return print_format;
+        -:  383:}
+------------------
+_ZN7testing8internalL20PrintCharsAsStringToIDiEENS0_10CharFormatEPKT_mPSo:
+function _ZN7testing8internalL20PrintCharsAsStringToIDiEENS0_10CharFormatEPKT_mPSo called 0 returned 0% blocks executed 0%
+    #####:  361:static CharFormat PrintCharsAsStringTo(
+        -:  362:    const CharType* begin, size_t len, ostream* os) {
+    #####:  363:  const char* const quote_prefix = GetCharWidthPrefix(*begin);
+    %%%%%:  363-block  0
+call    0 never executed
+call    1 never executed
+    #####:  364:  *os << quote_prefix << "\"";
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    #####:  365:  bool is_previous_hex = false;
+    #####:  366:  CharFormat print_format = kAsIs;
+    #####:  367:  for (size_t index = 0; index < len; ++index) {
+    %%%%%:  367-block  0
+branch  0 never executed
+branch  1 never executed
+    %%%%%:  367-block  1
+    #####:  368:    const CharType cur = begin[index];
+    %%%%%:  368-block  0
+call    0 never executed
+call    1 never executed
+    #####:  369:    if (is_previous_hex && IsXDigit(cur)) {
+branch  0 never executed
+branch  1 never executed
+    %%%%%:  369-block  0
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+    %%%%%:  369-block  1
+    %%%%%:  369-block  2
+    %%%%%:  369-block  3
+branch  5 never executed
+branch  6 never executed
+        -:  370:      // Previous character is of '\x..' form and this character can be
+        -:  371:      // interpreted as another hexadecimal digit in its number. Break string to
+        -:  372:      // disambiguate.
+    #####:  373:      *os << "\" " << quote_prefix << "\"";
+    %%%%%:  373-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+        -:  374:    }
+    #####:  375:    is_previous_hex = PrintAsStringLiteralTo(cur, os) == kHexEscape;
+    %%%%%:  375-block  0
+call    0 never executed
+        -:  376:    // Remember if any characters required hex escaping.
+    #####:  377:    if (is_previous_hex) {
+branch  0 never executed
+branch  1 never executed
+    #####:  378:      print_format = kHexEscape;
+    %%%%%:  378-block  0
+        -:  379:    }
+        -:  380:  }
+    #####:  381:  *os << "\"";
+    %%%%%:  381-block  0
+call    0 never executed
+call    1 never executed
+    #####:  382:  return print_format;
+        -:  383:}
+------------------
+_ZN7testing8internalL20PrintCharsAsStringToIDsEENS0_10CharFormatEPKT_mPSo:
+function _ZN7testing8internalL20PrintCharsAsStringToIDsEENS0_10CharFormatEPKT_mPSo called 0 returned 0% blocks executed 0%
+    #####:  361:static CharFormat PrintCharsAsStringTo(
+        -:  362:    const CharType* begin, size_t len, ostream* os) {
+    #####:  363:  const char* const quote_prefix = GetCharWidthPrefix(*begin);
+    %%%%%:  363-block  0
+call    0 never executed
+call    1 never executed
+    #####:  364:  *os << quote_prefix << "\"";
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    #####:  365:  bool is_previous_hex = false;
+    #####:  366:  CharFormat print_format = kAsIs;
+    #####:  367:  for (size_t index = 0; index < len; ++index) {
+    %%%%%:  367-block  0
+branch  0 never executed
+branch  1 never executed
+    %%%%%:  367-block  1
+    #####:  368:    const CharType cur = begin[index];
+    %%%%%:  368-block  0
+call    0 never executed
+call    1 never executed
+    #####:  369:    if (is_previous_hex && IsXDigit(cur)) {
+branch  0 never executed
+branch  1 never executed
+    %%%%%:  369-block  0
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+    %%%%%:  369-block  1
+    %%%%%:  369-block  2
+    %%%%%:  369-block  3
+branch  5 never executed
+branch  6 never executed
+        -:  370:      // Previous character is of '\x..' form and this character can be
+        -:  371:      // interpreted as another hexadecimal digit in its number. Break string to
+        -:  372:      // disambiguate.
+    #####:  373:      *os << "\" " << quote_prefix << "\"";
+    %%%%%:  373-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+        -:  374:    }
+    #####:  375:    is_previous_hex = PrintAsStringLiteralTo(cur, os) == kHexEscape;
+    %%%%%:  375-block  0
+call    0 never executed
+        -:  376:    // Remember if any characters required hex escaping.
+    #####:  377:    if (is_previous_hex) {
+branch  0 never executed
+branch  1 never executed
+    #####:  378:      print_format = kHexEscape;
+    %%%%%:  378-block  0
+        -:  379:    }
+        -:  380:  }
+    #####:  381:  *os << "\"";
+    %%%%%:  381-block  0
+call    0 never executed
+call    1 never executed
+    #####:  382:  return print_format;
+        -:  383:}
+------------------
+_ZN7testing8internalL20PrintCharsAsStringToIcEENS0_10CharFormatEPKT_mPSo:
+function _ZN7testing8internalL20PrintCharsAsStringToIcEENS0_10CharFormatEPKT_mPSo called 0 returned 0% blocks executed 0%
+    #####:  361:static CharFormat PrintCharsAsStringTo(
+        -:  362:    const CharType* begin, size_t len, ostream* os) {
+    #####:  363:  const char* const quote_prefix = GetCharWidthPrefix(*begin);
+    %%%%%:  363-block  0
+call    0 never executed
+call    1 never executed
+    #####:  364:  *os << quote_prefix << "\"";
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    #####:  365:  bool is_previous_hex = false;
+    #####:  366:  CharFormat print_format = kAsIs;
+    #####:  367:  for (size_t index = 0; index < len; ++index) {
+    %%%%%:  367-block  0
+branch  0 never executed
+branch  1 never executed
+    %%%%%:  367-block  1
+    #####:  368:    const CharType cur = begin[index];
+    %%%%%:  368-block  0
+call    0 never executed
+call    1 never executed
+    #####:  369:    if (is_previous_hex && IsXDigit(cur)) {
+branch  0 never executed
+branch  1 never executed
+    %%%%%:  369-block  0
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+    %%%%%:  369-block  1
+    %%%%%:  369-block  2
+    %%%%%:  369-block  3
+branch  5 never executed
+branch  6 never executed
+        -:  370:      // Previous character is of '\x..' form and this character can be
+        -:  371:      // interpreted as another hexadecimal digit in its number. Break string to
+        -:  372:      // disambiguate.
+    #####:  373:      *os << "\" " << quote_prefix << "\"";
+    %%%%%:  373-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+        -:  374:    }
+    #####:  375:    is_previous_hex = PrintAsStringLiteralTo(cur, os) == kHexEscape;
+    %%%%%:  375-block  0
+call    0 never executed
+        -:  376:    // Remember if any characters required hex escaping.
+    #####:  377:    if (is_previous_hex) {
+branch  0 never executed
+branch  1 never executed
+    #####:  378:      print_format = kHexEscape;
+    %%%%%:  378-block  0
+        -:  379:    }
+        -:  380:  }
+    #####:  381:  *os << "\"";
+    %%%%%:  381-block  0
+call    0 never executed
+call    1 never executed
+    #####:  382:  return print_format;
+        -:  383:}
+------------------
+        -:  384:
+        -:  385:// Prints a (const) char/wchar_t array of 'len' elements, starting at address
+        -:  386:// 'begin'.  CharType must be either char or wchar_t.
+        -:  387:template <typename CharType>
+        -:  388:GTEST_ATTRIBUTE_NO_SANITIZE_MEMORY_
+        -:  389:GTEST_ATTRIBUTE_NO_SANITIZE_ADDRESS_
+        -:  390:GTEST_ATTRIBUTE_NO_SANITIZE_HWADDRESS_
+        -:  391:GTEST_ATTRIBUTE_NO_SANITIZE_THREAD_
+    #####:  392:static void UniversalPrintCharArray(
+        -:  393:    const CharType* begin, size_t len, ostream* os) {
+        -:  394:  // The code
+        -:  395:  //   const char kFoo[] = "foo";
+        -:  396:  // generates an array of 4, not 3, elements, with the last one being '\0'.
+        -:  397:  //
+        -:  398:  // Therefore when printing a char array, we don't print the last element if
+        -:  399:  // it's '\0', such that the output matches the string literal as it's
+        -:  400:  // written in the source code.
+    #####:  401:  if (len > 0 && begin[len - 1] == '\0') {
+    #####:  402:    PrintCharsAsStringTo(begin, len - 1, os);
+    #####:  403:    return;
+        -:  404:  }
+        -:  405:
+        -:  406:  // If, however, the last element in the array is not '\0', e.g.
+        -:  407:  //    const char kFoo[] = { 'f', 'o', 'o' };
+        -:  408:  // we must print the entire array.  We also print a message to indicate
+        -:  409:  // that the array is not NUL-terminated.
+    #####:  410:  PrintCharsAsStringTo(begin, len, os);
+    #####:  411:  *os << " (no terminating NUL)";
+        -:  412:}
+------------------
+_ZN7testing8internalL23UniversalPrintCharArrayIwEEvPKT_mPSo:
+function _ZN7testing8internalL23UniversalPrintCharArrayIwEEvPKT_mPSo called 0 returned 0% blocks executed 0%
+    #####:  392:static void UniversalPrintCharArray(
+        -:  393:    const CharType* begin, size_t len, ostream* os) {
+        -:  394:  // The code
+        -:  395:  //   const char kFoo[] = "foo";
+        -:  396:  // generates an array of 4, not 3, elements, with the last one being '\0'.
+        -:  397:  //
+        -:  398:  // Therefore when printing a char array, we don't print the last element if
+        -:  399:  // it's '\0', such that the output matches the string literal as it's
+        -:  400:  // written in the source code.
+    #####:  401:  if (len > 0 && begin[len - 1] == '\0') {
+    %%%%%:  401-block  0
+branch  0 never executed
+branch  1 never executed
+    %%%%%:  401-block  1
+call    2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    #####:  402:    PrintCharsAsStringTo(begin, len - 1, os);
+    %%%%%:  402-block  0
+call    0 never executed
+    #####:  403:    return;
+        -:  404:  }
+        -:  405:
+        -:  406:  // If, however, the last element in the array is not '\0', e.g.
+        -:  407:  //    const char kFoo[] = { 'f', 'o', 'o' };
+        -:  408:  // we must print the entire array.  We also print a message to indicate
+        -:  409:  // that the array is not NUL-terminated.
+    #####:  410:  PrintCharsAsStringTo(begin, len, os);
+    %%%%%:  410-block  0
+call    0 never executed
+    #####:  411:  *os << " (no terminating NUL)";
+call    0 never executed
+call    1 never executed
+        -:  412:}
+------------------
+_ZN7testing8internalL23UniversalPrintCharArrayIDiEEvPKT_mPSo:
+function _ZN7testing8internalL23UniversalPrintCharArrayIDiEEvPKT_mPSo called 0 returned 0% blocks executed 0%
+    #####:  392:static void UniversalPrintCharArray(
+        -:  393:    const CharType* begin, size_t len, ostream* os) {
+        -:  394:  // The code
+        -:  395:  //   const char kFoo[] = "foo";
+        -:  396:  // generates an array of 4, not 3, elements, with the last one being '\0'.
+        -:  397:  //
+        -:  398:  // Therefore when printing a char array, we don't print the last element if
+        -:  399:  // it's '\0', such that the output matches the string literal as it's
+        -:  400:  // written in the source code.
+    #####:  401:  if (len > 0 && begin[len - 1] == '\0') {
+    %%%%%:  401-block  0
+branch  0 never executed
+branch  1 never executed
+    %%%%%:  401-block  1
+call    2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    #####:  402:    PrintCharsAsStringTo(begin, len - 1, os);
+    %%%%%:  402-block  0
+call    0 never executed
+    #####:  403:    return;
+        -:  404:  }
+        -:  405:
+        -:  406:  // If, however, the last element in the array is not '\0', e.g.
+        -:  407:  //    const char kFoo[] = { 'f', 'o', 'o' };
+        -:  408:  // we must print the entire array.  We also print a message to indicate
+        -:  409:  // that the array is not NUL-terminated.
+    #####:  410:  PrintCharsAsStringTo(begin, len, os);
+    %%%%%:  410-block  0
+call    0 never executed
+    #####:  411:  *os << " (no terminating NUL)";
+call    0 never executed
+call    1 never executed
+        -:  412:}
+------------------
+_ZN7testing8internalL23UniversalPrintCharArrayIDsEEvPKT_mPSo:
+function _ZN7testing8internalL23UniversalPrintCharArrayIDsEEvPKT_mPSo called 0 returned 0% blocks executed 0%
+    #####:  392:static void UniversalPrintCharArray(
+        -:  393:    const CharType* begin, size_t len, ostream* os) {
+        -:  394:  // The code
+        -:  395:  //   const char kFoo[] = "foo";
+        -:  396:  // generates an array of 4, not 3, elements, with the last one being '\0'.
+        -:  397:  //
+        -:  398:  // Therefore when printing a char array, we don't print the last element if
+        -:  399:  // it's '\0', such that the output matches the string literal as it's
+        -:  400:  // written in the source code.
+    #####:  401:  if (len > 0 && begin[len - 1] == '\0') {
+    %%%%%:  401-block  0
+branch  0 never executed
+branch  1 never executed
+    %%%%%:  401-block  1
+call    2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    #####:  402:    PrintCharsAsStringTo(begin, len - 1, os);
+    %%%%%:  402-block  0
+call    0 never executed
+    #####:  403:    return;
+        -:  404:  }
+        -:  405:
+        -:  406:  // If, however, the last element in the array is not '\0', e.g.
+        -:  407:  //    const char kFoo[] = { 'f', 'o', 'o' };
+        -:  408:  // we must print the entire array.  We also print a message to indicate
+        -:  409:  // that the array is not NUL-terminated.
+    #####:  410:  PrintCharsAsStringTo(begin, len, os);
+    %%%%%:  410-block  0
+call    0 never executed
+    #####:  411:  *os << " (no terminating NUL)";
+call    0 never executed
+call    1 never executed
+        -:  412:}
+------------------
+_ZN7testing8internalL23UniversalPrintCharArrayIcEEvPKT_mPSo:
+function _ZN7testing8internalL23UniversalPrintCharArrayIcEEvPKT_mPSo called 0 returned 0% blocks executed 0%
+    #####:  392:static void UniversalPrintCharArray(
+        -:  393:    const CharType* begin, size_t len, ostream* os) {
+        -:  394:  // The code
+        -:  395:  //   const char kFoo[] = "foo";
+        -:  396:  // generates an array of 4, not 3, elements, with the last one being '\0'.
+        -:  397:  //
+        -:  398:  // Therefore when printing a char array, we don't print the last element if
+        -:  399:  // it's '\0', such that the output matches the string literal as it's
+        -:  400:  // written in the source code.
+    #####:  401:  if (len > 0 && begin[len - 1] == '\0') {
+    %%%%%:  401-block  0
+branch  0 never executed
+branch  1 never executed
+    %%%%%:  401-block  1
+call    2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    #####:  402:    PrintCharsAsStringTo(begin, len - 1, os);
+    %%%%%:  402-block  0
+call    0 never executed
+    #####:  403:    return;
+        -:  404:  }
+        -:  405:
+        -:  406:  // If, however, the last element in the array is not '\0', e.g.
+        -:  407:  //    const char kFoo[] = { 'f', 'o', 'o' };
+        -:  408:  // we must print the entire array.  We also print a message to indicate
+        -:  409:  // that the array is not NUL-terminated.
+    #####:  410:  PrintCharsAsStringTo(begin, len, os);
+    %%%%%:  410-block  0
+call    0 never executed
+    #####:  411:  *os << " (no terminating NUL)";
+call    0 never executed
+call    1 never executed
+        -:  412:}
+------------------
+        -:  413:
+        -:  414:// Prints a (const) char array of 'len' elements, starting at address 'begin'.
+function _ZN7testing8internal19UniversalPrintArrayEPKcmPSo called 0 returned 0% blocks executed 0%
+    #####:  415:void UniversalPrintArray(const char* begin, size_t len, ostream* os) {
+    #####:  416:  UniversalPrintCharArray(begin, len, os);
+    %%%%%:  416-block  0
+call    0 never executed
+    #####:  417:}
+        -:  418:
+        -:  419:#ifdef __cpp_char8_t
+        -:  420:// Prints a (const) char8_t array of 'len' elements, starting at address
+        -:  421:// 'begin'.
+        -:  422:void UniversalPrintArray(const char8_t* begin, size_t len, ostream* os) {
+        -:  423:  UniversalPrintCharArray(begin, len, os);
+        -:  424:}
+        -:  425:#endif
+        -:  426:
+        -:  427:// Prints a (const) char16_t array of 'len' elements, starting at address
+        -:  428:// 'begin'.
+function _ZN7testing8internal19UniversalPrintArrayEPKDsmPSo called 0 returned 0% blocks executed 0%
+    #####:  429:void UniversalPrintArray(const char16_t* begin, size_t len, ostream* os) {
+    #####:  430:  UniversalPrintCharArray(begin, len, os);
+    %%%%%:  430-block  0
+call    0 never executed
+    #####:  431:}
+        -:  432:
+        -:  433:// Prints a (const) char32_t array of 'len' elements, starting at address
+        -:  434:// 'begin'.
+function _ZN7testing8internal19UniversalPrintArrayEPKDimPSo called 0 returned 0% blocks executed 0%
+    #####:  435:void UniversalPrintArray(const char32_t* begin, size_t len, ostream* os) {
+    #####:  436:  UniversalPrintCharArray(begin, len, os);
+    %%%%%:  436-block  0
+call    0 never executed
+    #####:  437:}
+        -:  438:
+        -:  439:// Prints a (const) wchar_t array of 'len' elements, starting at address
+        -:  440:// 'begin'.
+function _ZN7testing8internal19UniversalPrintArrayEPKwmPSo called 0 returned 0% blocks executed 0%
+    #####:  441:void UniversalPrintArray(const wchar_t* begin, size_t len, ostream* os) {
+    #####:  442:  UniversalPrintCharArray(begin, len, os);
+    %%%%%:  442-block  0
+call    0 never executed
+    #####:  443:}
+        -:  444:
+        -:  445:namespace {
+        -:  446:
+        -:  447:// Prints a null-terminated C-style string to the ostream.
+        -:  448:template <typename Char>
+    #####:  449:void PrintCStringTo(const Char* s, ostream* os) {
+    #####:  450:  if (s == nullptr) {
+    #####:  451:    *os << "NULL";
+        -:  452:  } else {
+    #####:  453:    *os << ImplicitCast_<const void*>(s) << " pointing to ";
+    #####:  454:    PrintCharsAsStringTo(s, std::char_traits<Char>::length(s), os);
+        -:  455:  }
+    #####:  456:}
+------------------
+_ZN7testing8internal12_GLOBAL__N_114PrintCStringToIwEEvPKT_PSo:
+function _ZN7testing8internal12_GLOBAL__N_114PrintCStringToIwEEvPKT_PSo called 0 returned 0% blocks executed 0%
+    #####:  449:void PrintCStringTo(const Char* s, ostream* os) {
+    #####:  450:  if (s == nullptr) {
+    %%%%%:  450-block  0
+branch  0 never executed
+branch  1 never executed
+    #####:  451:    *os << "NULL";
+    %%%%%:  451-block  0
+call    0 never executed
+call    1 never executed
+        -:  452:  } else {
+    #####:  453:    *os << ImplicitCast_<const void*>(s) << " pointing to ";
+    %%%%%:  453-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+    #####:  454:    PrintCharsAsStringTo(s, std::char_traits<Char>::length(s), os);
+call    0 never executed
+call    1 never executed
+        -:  455:  }
+    #####:  456:}
+------------------
+_ZN7testing8internal12_GLOBAL__N_114PrintCStringToIDiEEvPKT_PSo:
+function _ZN7testing8internal12_GLOBAL__N_114PrintCStringToIDiEEvPKT_PSo called 0 returned 0% blocks executed 0%
+    #####:  449:void PrintCStringTo(const Char* s, ostream* os) {
+    #####:  450:  if (s == nullptr) {
+    %%%%%:  450-block  0
+branch  0 never executed
+branch  1 never executed
+    #####:  451:    *os << "NULL";
+    %%%%%:  451-block  0
+call    0 never executed
+call    1 never executed
+        -:  452:  } else {
+    #####:  453:    *os << ImplicitCast_<const void*>(s) << " pointing to ";
+    %%%%%:  453-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+    #####:  454:    PrintCharsAsStringTo(s, std::char_traits<Char>::length(s), os);
+call    0 never executed
+call    1 never executed
+        -:  455:  }
+    #####:  456:}
+------------------
+_ZN7testing8internal12_GLOBAL__N_114PrintCStringToIDsEEvPKT_PSo:
+function _ZN7testing8internal12_GLOBAL__N_114PrintCStringToIDsEEvPKT_PSo called 0 returned 0% blocks executed 0%
+    #####:  449:void PrintCStringTo(const Char* s, ostream* os) {
+    #####:  450:  if (s == nullptr) {
+    %%%%%:  450-block  0
+branch  0 never executed
+branch  1 never executed
+    #####:  451:    *os << "NULL";
+    %%%%%:  451-block  0
+call    0 never executed
+call    1 never executed
+        -:  452:  } else {
+    #####:  453:    *os << ImplicitCast_<const void*>(s) << " pointing to ";
+    %%%%%:  453-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+    #####:  454:    PrintCharsAsStringTo(s, std::char_traits<Char>::length(s), os);
+call    0 never executed
+call    1 never executed
+        -:  455:  }
+    #####:  456:}
+------------------
+_ZN7testing8internal12_GLOBAL__N_114PrintCStringToIcEEvPKT_PSo:
+function _ZN7testing8internal12_GLOBAL__N_114PrintCStringToIcEEvPKT_PSo called 0 returned 0% blocks executed 0%
+    #####:  449:void PrintCStringTo(const Char* s, ostream* os) {
+    #####:  450:  if (s == nullptr) {
+    %%%%%:  450-block  0
+branch  0 never executed
+branch  1 never executed
+    #####:  451:    *os << "NULL";
+    %%%%%:  451-block  0
+call    0 never executed
+call    1 never executed
+        -:  452:  } else {
+    #####:  453:    *os << ImplicitCast_<const void*>(s) << " pointing to ";
+    %%%%%:  453-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+    #####:  454:    PrintCharsAsStringTo(s, std::char_traits<Char>::length(s), os);
+call    0 never executed
+call    1 never executed
+        -:  455:  }
+    #####:  456:}
+------------------
+        -:  457:
+        -:  458:}  // anonymous namespace
+        -:  459:
+function _ZN7testing8internal7PrintToEPKcPSo called 0 returned 0% blocks executed 0%
+    #####:  460:void PrintTo(const char* s, ostream* os) { PrintCStringTo(s, os); }
+    %%%%%:  460-block  0
+call    0 never executed
+        -:  461:
+        -:  462:#ifdef __cpp_char8_t
+        -:  463:void PrintTo(const char8_t* s, ostream* os) { PrintCStringTo(s, os); }
+        -:  464:#endif
+        -:  465:
+function _ZN7testing8internal7PrintToEPKDsPSo called 0 returned 0% blocks executed 0%
+    #####:  466:void PrintTo(const char16_t* s, ostream* os) { PrintCStringTo(s, os); }
+    %%%%%:  466-block  0
+call    0 never executed
+        -:  467:
+function _ZN7testing8internal7PrintToEPKDiPSo called 0 returned 0% blocks executed 0%
+    #####:  468:void PrintTo(const char32_t* s, ostream* os) { PrintCStringTo(s, os); }
+    %%%%%:  468-block  0
+call    0 never executed
+        -:  469:
+        -:  470:// MSVC compiler can be configured to define whar_t as a typedef
+        -:  471:// of unsigned short. Defining an overload for const wchar_t* in that case
+        -:  472:// would cause pointers to unsigned shorts be printed as wide strings,
+        -:  473:// possibly accessing more memory than intended and causing invalid
+        -:  474:// memory accesses. MSVC defines _NATIVE_WCHAR_T_DEFINED symbol when
+        -:  475:// wchar_t is implemented as a native type.
+        -:  476:#if !defined(_MSC_VER) || defined(_NATIVE_WCHAR_T_DEFINED)
+        -:  477:// Prints the given wide C string to the ostream.
+function _ZN7testing8internal7PrintToEPKwPSo called 0 returned 0% blocks executed 0%
+    #####:  478:void PrintTo(const wchar_t* s, ostream* os) { PrintCStringTo(s, os); }
+    %%%%%:  478-block  0
+call    0 never executed
+        -:  479:#endif  // wchar_t is native
+        -:  480:
+        -:  481:namespace {
+        -:  482:
+function _ZN7testing8internal12_GLOBAL__N_131ContainsUnprintableControlCodesEPKcm called 0 returned 0% blocks executed 0%
+    #####:  483:bool ContainsUnprintableControlCodes(const char* str, size_t length) {
+    #####:  484:  const unsigned char *s = reinterpret_cast<const unsigned char *>(str);
+        -:  485:
+    #####:  486:  for (size_t i = 0; i < length; i++) {
+    %%%%%:  486-block  0
+    %%%%%:  486-block  1
+branch  0 never executed
+branch  1 never executed
+    %%%%%:  486-block  2
+    #####:  487:    unsigned char ch = *s++;
+    %%%%%:  487-block  0
+call    0 never executed
+call    1 never executed
+    #####:  488:    if (std::iscntrl(ch)) {
+branch  0 never executed
+branch  1 never executed
+    #####:  489:        switch (ch) {
+    %%%%%:  489-block  0
+branch  0 never executed
+branch  1 never executed
+    #####:  490:        case '\t':
+        -:  491:        case '\n':
+        -:  492:        case '\r':
+    #####:  493:          break;
+    %%%%%:  493-block  0
+    #####:  494:        default:
+    #####:  495:          return true;
+    %%%%%:  495-block  0
+        -:  496:        }
+        -:  497:      }
+        -:  498:  }
+    #####:  499:  return false;
+    %%%%%:  499-block  0
+        -:  500:}
+        -:  501:
+function _ZN7testing8internal12_GLOBAL__N_115IsUTF8TrailByteEh called 0 returned 0% blocks executed 0%
+    #####:  502:bool IsUTF8TrailByte(unsigned char t) { return 0x80 <= t && t<= 0xbf; }
+    %%%%%:  502-block  0
+branch  0 never executed
+branch  1 never executed
+    %%%%%:  502-block  1
+branch  2 never executed
+branch  3 never executed
+    %%%%%:  502-block  2
+    %%%%%:  502-block  3
+    %%%%%:  502-block  4
+        -:  503:
+function _ZN7testing8internal12_GLOBAL__N_111IsValidUTF8EPKcm called 0 returned 0% blocks executed 0%
+    #####:  504:bool IsValidUTF8(const char* str, size_t length) {
+    #####:  505:  const unsigned char *s = reinterpret_cast<const unsigned char *>(str);
+        -:  506:
+    #####:  507:  for (size_t i = 0; i < length;) {
+    %%%%%:  507-block  0
+    %%%%%:  507-block  1
+branch  0 never executed
+branch  1 never executed
+    %%%%%:  507-block  2
+    #####:  508:    unsigned char lead = s[i++];
+    %%%%%:  508-block  0
+call    0 never executed
+call    1 never executed
+        -:  509:
+    #####:  510:    if (lead <= 0x7f) {
+branch  0 never executed
+branch  1 never executed
+    #####:  511:      continue;  // single-byte character (ASCII) 0..7F
+    %%%%%:  511-block  0
+        -:  512:    }
+    #####:  513:    if (lead < 0xc2) {
+    %%%%%:  513-block  0
+branch  0 never executed
+branch  1 never executed
+    #####:  514:      return false;  // trail byte or non-shortest form
+    %%%%%:  514-block  0
+    #####:  515:    } else if (lead <= 0xdf && (i + 1) <= length && IsUTF8TrailByte(s[i])) {
+    %%%%%:  515-block  0
+branch  0 never executed
+branch  1 never executed
+    %%%%%:  515-block  1
+branch  2 never executed
+branch  3 never executed
+    %%%%%:  515-block  2
+call    4 never executed
+call    5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+    %%%%%:  515-block  3
+    %%%%%:  515-block  4
+    %%%%%:  515-block  5
+branch  9 never executed
+branch 10 never executed
+    #####:  516:      ++i;  // 2-byte character
+    %%%%%:  516-block  0
+    #####:  517:    } else if (0xe0 <= lead && lead <= 0xef && (i + 2) <= length &&
+    %%%%%:  517-block  0
+branch  0 never executed
+branch  1 never executed
+    %%%%%:  517-block  1
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+branch  5 never executed
+    #####:  518:               IsUTF8TrailByte(s[i]) &&
+    %%%%%:  518-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+    #####:  519:               IsUTF8TrailByte(s[i + 1]) &&
+    %%%%%:  519-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    %%%%%:  519-block  1
+branch  3 never executed
+branch  4 never executed
+        -:  520:               // check for non-shortest form and surrogate
+    #####:  521:               (lead != 0xe0 || s[i] >= 0xa0) &&
+    %%%%%:  521-block  0
+branch  0 never executed
+branch  1 never executed
+    %%%%%:  521-block  1
+call    2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    %%%%%:  521-block  2
+branch  6 never executed
+branch  7 never executed
+    %%%%%:  521-block  3
+    %%%%%:  521-block  4
+    %%%%%:  521-block  5
+branch  8 never executed
+branch  9 never executed
+    #####:  522:               (lead != 0xed || s[i] < 0xa0)) {
+    %%%%%:  522-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    #####:  523:      i += 2;  // 3-byte character
+    %%%%%:  523-block  0
+    #####:  524:    } else if (0xf0 <= lead && lead <= 0xf4 && (i + 3) <= length &&
+    %%%%%:  524-block  0
+branch  0 never executed
+branch  1 never executed
+    %%%%%:  524-block  1
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+branch  5 never executed
+    #####:  525:               IsUTF8TrailByte(s[i]) &&
+    %%%%%:  525-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+    #####:  526:               IsUTF8TrailByte(s[i + 1]) &&
+    %%%%%:  526-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+    #####:  527:               IsUTF8TrailByte(s[i + 2]) &&
+    %%%%%:  527-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    %%%%%:  527-block  1
+branch  3 never executed
+branch  4 never executed
+        -:  528:               // check for non-shortest form
+    #####:  529:               (lead != 0xf0 || s[i] >= 0x90) &&
+    %%%%%:  529-block  0
+branch  0 never executed
+branch  1 never executed
+    %%%%%:  529-block  1
+call    2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    %%%%%:  529-block  2
+branch  6 never executed
+branch  7 never executed
+    %%%%%:  529-block  3
+    %%%%%:  529-block  4
+    %%%%%:  529-block  5
+branch  8 never executed
+branch  9 never executed
+    #####:  530:               (lead != 0xf4 || s[i] < 0x90)) {
+    %%%%%:  530-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    #####:  531:      i += 3;  // 4-byte character
+    %%%%%:  531-block  0
+        -:  532:    } else {
+    #####:  533:      return false;
+    %%%%%:  533-block  0
+        -:  534:    }
+        -:  535:  }
+    #####:  536:  return true;
+    %%%%%:  536-block  0
+        -:  537:}
+        -:  538:
+function _ZN7testing8internal12_GLOBAL__N_122ConditionalPrintAsTextEPKcmPSo called 0 returned 0% blocks executed 0%
+    #####:  539:void ConditionalPrintAsText(const char* str, size_t length, ostream* os) {
+    #####:  540:  if (!ContainsUnprintableControlCodes(str, length) &&
+    %%%%%:  540-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+    %%%%%:  540-block  1
+    %%%%%:  540-block  2
+    %%%%%:  540-block  3
+branch  5 never executed
+branch  6 never executed
+    #####:  541:      IsValidUTF8(str, length)) {
+    %%%%%:  541-block  0
+call    0 never executed
+    #####:  542:    *os << "\n    As Text: \"" << str << "\"";
+    %%%%%:  542-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+        -:  543:  }
+    #####:  544:}
+        -:  545:
+        -:  546:}  // anonymous namespace
+        -:  547:
+function _ZN7testing8internal13PrintStringToERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPSo called 0 returned 0% blocks executed 0%
+    #####:  548:void PrintStringTo(const ::std::string& s, ostream* os) {
+    #####:  549:  if (PrintCharsAsStringTo(s.data(), s.size(), os) == kHexEscape) {
+    %%%%%:  549-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+    #####:  550:    if (GTEST_FLAG_GET(print_utf8)) {
+    %%%%%:  550-block  0
+branch  0 never executed
+branch  1 never executed
+    %%%%%:  550-block  1
+    %%%%%:  550-block  2
+branch  2 never executed
+branch  3 never executed
+    #####:  551:      ConditionalPrintAsText(s.data(), s.size(), os);
+    %%%%%:  551-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+        -:  552:    }
+        -:  553:  }
+    #####:  554:}
+        -:  555:
+        -:  556:#ifdef __cpp_char8_t
+        -:  557:void PrintU8StringTo(const ::std::u8string& s, ostream* os) {
+        -:  558:  PrintCharsAsStringTo(s.data(), s.size(), os);
+        -:  559:}
+        -:  560:#endif
+        -:  561:
+function _ZN7testing8internal16PrintU16StringToERKNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEEEPSo called 0 returned 0% blocks executed 0%
+    #####:  562:void PrintU16StringTo(const ::std::u16string& s, ostream* os) {
+    #####:  563:  PrintCharsAsStringTo(s.data(), s.size(), os);
+    %%%%%:  563-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+    #####:  564:}
+        -:  565:
+function _ZN7testing8internal16PrintU32StringToERKNSt7__cxx1112basic_stringIDiSt11char_traitsIDiESaIDiEEEPSo called 0 returned 0% blocks executed 0%
+    #####:  566:void PrintU32StringTo(const ::std::u32string& s, ostream* os) {
+    #####:  567:  PrintCharsAsStringTo(s.data(), s.size(), os);
+    %%%%%:  567-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+    #####:  568:}
+        -:  569:
+        -:  570:#if GTEST_HAS_STD_WSTRING
+function _ZN7testing8internal17PrintWideStringToERKNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEEEPSo called 0 returned 0% blocks executed 0%
+    #####:  571:void PrintWideStringTo(const ::std::wstring& s, ostream* os) {
+    #####:  572:  PrintCharsAsStringTo(s.data(), s.size(), os);
+    %%%%%:  572-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+    #####:  573:}
+        -:  574:#endif  // GTEST_HAS_STD_WSTRING
+        -:  575:
+        -:  576:}  // namespace internal
+        -:  577:
+        -:  578:}  // namespace testing

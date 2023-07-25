@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang = "en">
+    <head>
+        <title>Form</title>
+        <meta charset="utf-8">
+    </head>
+    <body>
+        <form method = "get"> 
+        <!-- <form method = "post">-->
+            <label>Name: <input  type = "text" name = "name"> </label>
+            <fieldset>
+              <legend>Age: </legend>
+              <label>&lt;18<input name = "age" type = "radio"></label>
+              <label>19-35<input name = "age" type = "radio"></label>
+              <label>36-48<input name = "age" type = "radio"></label>
+              <label>&gt;49<input name = "age" type = "radio"></label>
+            </fieldset>
+
+            <label>Profession: <input name = "profession" list = "professions">
+             <datalist id="professions">
+               <option>Fireman</option>
+               <option>Police</option>
+               <option>Doctor</option>
+               <option>Engineer</option>
+             </datalist>
+            </label>
+
+            <label>Country:
+            <select name = "country">
+                <option value = "pt">Portugal</option>
+                <option value = "es">Spain</option>
+                <option value = "fr">France</option>
+                <option value = "uk">United Kingdom</option>
+            </select>  
+            </label>
+
+            <fieldset>
+                <legend>Interests: </legend>
+                <label>Sports<input type = "checkbox" name = "interest"></label>
+                <label>Music<input type = "checkbox" name = "interest"></label>
+                <label>Games<input type = "checkbox" name = "interest"></label>
+                <label>Cinema<input type = "checkbox" name = "interest"></label>
+                <label>Books<input type = "checkbox" name = "interest"></label>
+            </fieldset>
+
+            <label>How did you find about this site?<textarea name = "opinion"></textarea></label>
+            
+            <button type="submit">Send</button>
+        </form>
+    </body>
+</html>

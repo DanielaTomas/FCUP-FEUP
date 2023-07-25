@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="pt.up.fe.ldts.example3.SimpleOrderSpockTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2021-12-07T17:24:17" hostname="daniela-VirtualBox" time="0.019">
+  <properties/>
+  <testcase name="Fixed Discount" classname="pt.up.fe.ldts.example3.SimpleOrderSpockTest" time="0.016"/>
+  <testcase name="Percentage Discount" classname="pt.up.fe.ldts.example3.SimpleOrderSpockTest" time="0.002"/>
+  <testcase name="No Discount" classname="pt.up.fe.ldts.example3.SimpleOrderSpockTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

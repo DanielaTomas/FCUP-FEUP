@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.aor.numbers.PositiveFilterTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2021-11-27T17:57:46" hostname="daniela-VirtualBox" time="0.005">
+  <properties/>
+  <testcase name="accept()" classname="com.aor.numbers.PositiveFilterTest" time="0.005"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,11 @@
+<svg width="660" height="660" xmlns="http://www.w3.org/2000/svg">
+    <line x1="50" y1="198" x2="50" y2="50"
+          transform="scale(4)" transform-origin="50 50"
+          stroke="red"/>
+    <line x1="50" y1="50" x2="198" y2="198"
+          transform="scale(3)" transform-origin="0 50"
+           stroke="green"/>
+    <line x1="198" y1="198" x2="198" y2="1"
+          transform="scale(2)" transform-origin="198 1"
+          stroke="blue"/>
+</svg>

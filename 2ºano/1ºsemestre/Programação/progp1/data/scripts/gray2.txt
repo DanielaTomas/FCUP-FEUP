@@ -1,0 +1,4 @@
+open input/pacman.png
+to_gray_scale
+to_gray_scale
+save output/gray2.png

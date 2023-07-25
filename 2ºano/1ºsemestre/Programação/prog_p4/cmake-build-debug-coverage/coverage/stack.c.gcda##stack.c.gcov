@@ -1,0 +1,145 @@
+        -:    0:Source:/home/daniela/2ºano/Programação/prog_p4/src/stack.c
+        -:    0:Graph:/home/daniela/2ºano/Programação/prog_p4/cmake-build-debug-coverage/CMakeFiles/stack.dir/src/stack.c.gcno
+        -:    0:Data:/home/daniela/2ºano/Programação/prog_p4/cmake-build-debug-coverage/CMakeFiles/stack.dir/src/stack.c.gcda
+        -:    0:Runs:1
+        -:    1:#include <stdio.h>
+        -:    2:#include <stdbool.h>
+        -:    3:#include <stdlib.h>
+        -:    4:
+        -:    5:struct _stacknode {
+        -:    6:    int value;
+        -:    7:    struct _stacknode* next;
+        -:    8:};
+        -:    9:
+        -:   10:typedef struct _stacknode stacknode;
+        -:   11:
+        -:   12:typedef struct {
+        -:   13:    int size;
+        -:   14:    stacknode* top;
+        -:   15:} stack;
+        -:   16:
+function stack_create called 7 returned 100% blocks executed 100%
+        7:   17:stack* stack_create(void) {
+        7:   18:    return calloc(1, sizeof(stack));
+        7:   18-block  0
+        -:   19:}
+        -:   20:
+function stack_destroy called 7 returned 100% blocks executed 100%
+        7:   21:void stack_destroy(stack* s) {
+        7:   22:    stacknode* n = s -> top;
+        7:   22-block  0
+call    0 returned 7
+call    1 returned 7
+       13:   23:    while (n != NULL) {
+       13:   23-block  0
+branch  0 taken 6
+branch  1 taken 7 (fallthrough)
+        6:   24:        stacknode* aux = n -> next;
+        6:   24-block  0
+call    0 returned 6
+call    1 returned 6
+        6:   25:        free(n);
+        6:   26:        n = aux;
+        -:   27:    }
+        7:   28:    free(s);
+        7:   29:}
+        -:   30:
+function stack_size called 20 returned 100% blocks executed 100%
+       20:   31:int stack_size(const stack* s) {
+       20:   32:    return s -> size;
+       20:   32-block  0
+call    0 returned 20
+        -:   33:}
+        -:   34:
+function stack_is_empty called 13 returned 100% blocks executed 100%
+       13:   35:bool stack_is_empty(const stack* s) {
+       13:   36:    return stack_size(s) == 0;
+       13:   36-block  0
+call    0 returned 13
+        -:   37:}
+        -:   38:
+function stack_push called 13 returned 100% blocks executed 100%
+       13:   39:void stack_push(stack* s, int v) {
+       13:   40:    stacknode* new_node = malloc(sizeof(stacknode));
+       13:   41:    new_node -> value = v;
+       13:   41-block  0
+call    0 returned 13
+       13:   42:    new_node -> next = s -> top;
+call    0 returned 13
+call    1 returned 13
+call    2 returned 13
+call    3 returned 13
+       13:   43:    s -> top = new_node;
+call    0 returned 13
+call    1 returned 13
+       13:   44:    s -> size++;
+call    0 returned 13
+call    1 returned 13
+       13:   45:}
+        -:   46:
+function stack_pop called 8 returned 100% blocks executed 100%
+        8:   47:bool stack_pop(stack* s, int* v) {
+        8:   48:    if (s -> size == 0) return false;
+        8:   48-block  0
+call    0 returned 8
+branch  1 taken 1 (fallthrough)
+branch  2 taken 7
+        1:   48-block  1
+        7:   49:    stacknode* old_top = s -> top;
+        7:   49-block  0
+call    0 returned 7
+call    1 returned 7
+        7:   50:    *v = old_top -> value;
+call    0 returned 7
+call    1 returned 7
+        7:   51:    s -> top = old_top -> next;
+call    0 returned 7
+call    1 returned 7
+call    2 returned 7
+call    3 returned 7
+        7:   52:    s -> size--;
+call    0 returned 7
+call    1 returned 7
+        7:   53:    free(old_top);
+        7:   54:    return true;
+        -:   55:}
+        -:   56:
+function stack_peek called 6 returned 100% blocks executed 100%
+        6:   57:bool stack_peek(const stack* s, int* v) {
+        6:   58:    if(stack_is_empty(s)) return false;
+        6:   58-block  0
+call    0 returned 6
+branch  1 taken 3 (fallthrough)
+branch  2 taken 3
+        3:   58-block  1
+        3:   59:    *v = s -> top -> value;
+        3:   59-block  0
+call    0 returned 3
+call    1 returned 3
+call    2 returned 3
+call    3 returned 3
+        3:   60:    return true;
+        -:   61:}
+        -:   62:
+function stack_to_array called 3 returned 100% blocks executed 100%
+        3:   63:void stack_to_array(const stack* s, int array[]) {
+        3:   64:    stacknode *node = s->top;
+        3:   64-block  0
+call    0 returned 3
+call    1 returned 3
+        3:   65:    int pos = 0;
+        9:   66:    while(node != NULL) {
+        9:   66-block  0
+branch  0 taken 6
+branch  1 taken 3 (fallthrough)
+        6:   67:        array[pos] = node -> value;
+        6:   67-block  0
+call    0 returned 6
+call    1 returned 6
+call    2 returned 6
+        6:   68:        node = node -> next;
+call    0 returned 6
+call    1 returned 6
+        6:   69:        pos++;
+        -:   70:    }
+        3:   71:}

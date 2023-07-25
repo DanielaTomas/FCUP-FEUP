@@ -1,0 +1,1 @@
+/usr/bin/c++  -Wall -g -fsanitize=address -fsanitize=undefined -fno-omit-frame-pointer -g CMakeFiles/test_exp_taylor.dir/src/test_exp_taylor.cpp.o -o test_exp_taylor  lib/libgtestd.a lib/libgtest_maind.a -lpthread libfuncs.a lib/libgtestd.a -lpthread 

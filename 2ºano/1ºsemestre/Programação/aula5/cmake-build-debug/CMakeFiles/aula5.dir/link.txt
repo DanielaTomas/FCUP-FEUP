@@ -1,0 +1,1 @@
+/usr/bin/c++ -g CMakeFiles/aula5.dir/hello.cpp.o CMakeFiles/aula5.dir/ex2.cpp.o -o aula5 

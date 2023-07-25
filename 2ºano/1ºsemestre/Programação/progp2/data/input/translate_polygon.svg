@@ -1,0 +1,18 @@
+<svg width="260" height="260"  xmlns="http://www.w3.org/2000/svg">
+    <polygon points="0,0 0,259 259,259" fill="green"/>
+    <polygon points="0,0 0,50 50,50" fill="red"/>
+    <polygon points="0,0 0,50 50,50" fill="blue"
+             transform="translate(50 0)"/>
+    <polygon points="0,0 0,50 50,50" fill="yellow"
+             transform="translate(0 75)"/>
+    <polygon points="0,0 0,50 50,50" fill="blue"
+             transform="translate(125 75)"/>
+    <polygon points="0,0 0,50 50,50" fill="yellow"
+             transform="translate(0 150)"/>
+    <polygon points="0,0 0,50 50,50" fill="green"
+             transform="translate(75 75)"/>
+    <polygon points="0,0 0,50 50,50" fill="yellow"
+             transform="translate(75 150)"/>
+    <polygon points="0,0 0,50 50,50" fill="blue"
+             transform="translate(200 150)"/>
+</svg>

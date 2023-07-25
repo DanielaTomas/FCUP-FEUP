@@ -1,0 +1,6 @@
+/home/danielatomas/clion-2021.2.3/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_DEPENDS_USE_COMPILER=FALSE -G "CodeBlocks - Unix Makefiles" /home/danielatomas/2ºano/1ºsemestre/Programação/aula8
+CMake Error at CMakeLists.txt:1 (cmake_minimum_required):
+  CMake 3.21 or higher is required.  You are running version 3.20.2
+
+
+-- Configuring incomplete, errors occurred!

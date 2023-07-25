@@ -1,0 +1,1 @@
+/usr/bin/c++ -g CMakeFiles/aula9e10.dir/ex1.cpp.o -o aula9e10 

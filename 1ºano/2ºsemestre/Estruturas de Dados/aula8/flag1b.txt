@@ -1,0 +1,11 @@
+1
+1
+A1 Vermelho 0 10
+A3 Laranja 0 10
+A4 Amarelo 5 5
+A6 Verde 15 10
+A7 Azul 20 5
+A2 Vermelho 25 5
+A5 Amarelo 25 5
+A8 Amarelo 100 10
+A9 Vermelho 105 5

@@ -1,0 +1,14 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/daniela/2ºano/Programação/prog_p4/src/funcs.c
+funcs.h
+/home/daniela/2ºano/Programação/prog_p4/src/funcs.h
+
+/home/daniela/2ºano/Programação/prog_p4/src/funcs.h
+

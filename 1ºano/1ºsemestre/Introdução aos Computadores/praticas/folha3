@@ -1,0 +1,141 @@
+Folha 3 : O Computador
+
+(a) Transistor - Dispositivo semicondutor, normalmente feito de silício, usado
+    para amplificar ou atenuar a intensidade da corrente elétrica
+    em circuitos elétrico. É como um interruptor que liga e desliga
+    controlado por eletricidade.
+
+    Gate - Dispositivo eletrónico idealizado ou físico que implementa funções
+    lógicas num circuito. Possui uma ou mais entradas binárias, mas
+    apenas uma saída. Os logic gates são constituídos principalmente por
+    transistores que atuam como interruptores eletrónicos.
+
+    Circuito integrado (chip) - Dispositivo que combina dezenas a milhões de
+    transistores.
+
+    Die - Secções retangulares individuais que são cortadas de um wafer (fatia
+    fina de material semicondutor), mais conhecidas como chips.
+
+(b) CPU (central processor unit) - Também chamado de processador, o CPU é a
+    parte ativa do computador, que contém o caminho de dados e o controle
+    e que adiciona números, testa números, sinaliza dispositivos de I/O para
+    ativarem, etc.
+
+    GPU (graphics processing unit) - Tipo de microprocessador especializado em
+    processar gráficos. O GPU é normalmente utilizado em placas de vídeo, mas
+    versões mais simplificadas são integradas diretamente na motherboard.
+
+    TPU (thermoplastic polyurethane) - Faz parte de uma classe de plásticos de
+    poliuretano com muitas propriedades, incluindo elasticidade, transparência e
+    resistência ao óleo, graxa e abrasão. Tecnicamente, são elastómetros
+    termoplásticos que consistem em copolímeros de blocos segmentados lineares
+    compostos de segmentos duros e moles.
+    São utilizados, por exemplo, no revestimento de cabos e fios
+
+(c) DSP (digital signal processor)- Microprocessadores especializados em
+    processamento digital de sinal usados para processar sinais de áudio, vídeo,
+    etc, que em tempo real ou não. As suas mairoes características são o
+    cancelamento de ruído e a sua alta velocidade (medida em mips).
+
+(d) Memória principal/primária - Memória usada para armazenar programas enquanto
+    eles estão em execução. Normalmente consiste em DRAM nos computadores
+    atuais.
+
+    Memória cache - Memória pequena e rápida que atua como um buffer para uma
+    memória maior e mais lenta.
+
+(e) RAM (random access memory) - Forma de memória de computador que pode ser
+    lida e alterada em qualquer ordem, normalmente usada para armazenar dados de
+    trabalho e código de máquina temporariamente. Um dispositivo de memória de
+    acesso aleatório permite que dados sejam lidos ou gravados quase na mesma
+    quantidade de tempo, independentemente da localização física dos dados
+    dentro da memória.
+
+    ROM (read only memory)- Tipo de memória não volátil. Os dados armazenados na
+    ROM não podem ser modificados eletrónicamente após a fabricação do
+    dispositivo de memória, ou seja, o computador pode ler os dados, mas não
+    pode gravar É útil para armazenar software que raramente é alterado durante
+    a vida útil do sistema (firmware).
+
+    SRAM (static random access memory) - Memória contruída como um circuito
+    integrado, mas mais rápida e menos densa do que a DRAM.
+
+    DRAM (dynamic random access memory) - Memória construída como um circuito
+    integrado. Fornece acesso aleatório a qualquer local. Os tempos de acesso
+    são de 50 nanosegundos e o custo por giigabyte em 2012 era de 5$ a 10$.
+
+    DDR (double data rate)- Permite que dois dados sejam transmitidos ao mesmo
+    tempo (no mesmo ciclo de clock). Uma DDR é duas vezes mais rápida que uma
+    SDRAM. O padrão DDR evoluiu ao longo do tempo para o DDR2 e, posteriormente,
+    para o DDR3.
+
+    SIMM (single inline memory module)- Tipo de módulo de memória que contém
+    memória de acesso aleatório (RAM) numa pequena placa de circuito com pinos
+    que se conectam à motherboard.
+
+    DIMM (dual inline memory module)- Compreende uma série de circuitos
+    integrados de memória de acesso aleatório (RAM). Esses módulos são montados
+    numa placa de circuito impresso (PCB). Embora nos SIMM são redundantes em
+    ambos os lados, 
+    Os DIMM começaram a substituir os SIMM
+
+(f) Motherboard - É o principal da placa de circuito impresso (PCB) em
+    computadores de uso geral e outros sistemas expansíveis. Mantém e permite a
+    comunicação entre muitos dos componentes eletrónicos cruciais de um sistema,
+    como o CPU e a memória, e fornece conectores para outros periféricos. É como
+    a "mãe" de todos os componentes conectados a ela. É, portanto, um
+    dispositivo com uma única placa e sem expansões ou recursos adicionais.
+
+(g) Chipset -
+
+    Northbridge -
+
+    Southbridge -
+
+(h) Placa gráfica -
+
+(i) DMA -
+
+(j) IDE -
+
+    EIDE -
+
+    SCSI -
+
+    SATA -
+
+(k) ISA -
+
+    EISA -
+
+    PCI -
+
+    PCI-E -
+
+(l) HDD -
+
+    SSD -
+
+(m) USB -
+
+    Firewire -
+
+    Thunderbolt -
+
+(n) VGA -
+
+    DVI -
+
+    HDMI -
+
+(o) Ethernet -
+
+    WiFi -
+
+    Bluetooth -
+
+(p) CD -
+
+    DVD -
+
+    BluRay -

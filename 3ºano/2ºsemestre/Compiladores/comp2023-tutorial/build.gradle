@@ -1,0 +1,49 @@
+plugins {
+	// For runnable JARs
+	id 'application'
+ 	id 'distribution'
+}
+
+// Java project
+apply plugin: 'java'
+
+// ANTLR support
+apply plugin: 'antlr'
+
+// Repositories providers
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+	implementation "junit:junit:4.11"     
+	implementation group: 'org.eclipse.jgit', name: 'org.eclipse.jgit', version: '5.11.1.202105131744-r'
+    implementation group: 'com.google.code.gson', name: 'gson', version: '2.10'
+    antlr "org.antlr:antlr4:4.5.3"    
+}
+
+
+// Project sources
+sourceSets {
+   main {
+      java {
+         srcDir 'src/main'
+      }
+   }
+	
+   test {
+      java {
+         srcDir 'test'
+      }
+	  
+	  resources {
+		srcDir 'test'
+	  }
+   }
+}
+
+mainClassName = 'pt.up.fe.comp2023.Launcher'
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+}

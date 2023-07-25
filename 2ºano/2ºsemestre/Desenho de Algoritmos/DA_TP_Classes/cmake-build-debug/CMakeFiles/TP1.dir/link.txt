@@ -1,0 +1,1 @@
+/usr/bin/c++ -g CMakeFiles/TP1.dir/main.cpp.o CMakeFiles/TP1.dir/TP1/ex1.cpp.o CMakeFiles/TP1.dir/TP1/ex2.cpp.o CMakeFiles/TP1.dir/TP1/ex3.cpp.o CMakeFiles/TP1.dir/TP1/ex4.cpp.o CMakeFiles/TP1.dir/TP1/ex5.cpp.o CMakeFiles/TP1.dir/TP1/ex6.cpp.o CMakeFiles/TP1.dir/TP1/ex7.cpp.o -o TP1  lib/libgtest_maind.a lib/libgmock_maind.a lib/libgmockd.a lib/libgtestd.a -lpthread 

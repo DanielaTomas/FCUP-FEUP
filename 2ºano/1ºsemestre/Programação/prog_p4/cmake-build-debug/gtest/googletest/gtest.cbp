@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="gtest"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;CMake Files\gtest\;CMake Files\gtest\googletest\;CMake Files\gtest\googletest\cmake\;CMake Files\cmake-build-debug\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/home/danielatomas/2ºano/1ºsemestre/Programação/prog_p4/cmake-build-debug/gtest/googletest"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/prog_p4/cmake-build-debug/gtest/googletest/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/prog_p4/cmake-build-debug/gtest/googletest/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/prog_p4/cmake-build-debug/gtest/googletest/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/prog_p4/cmake-build-debug/gtest/googletest/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="gtest_main">
+				<Option output="/home/danielatomas/2ºano/1ºsemestre/Programação/prog_p4/cmake-build-debug/lib/libgtest_maind.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/danielatomas/2ºano/1ºsemestre/Programação/prog_p4/cmake-build-debug/gtest/googletest"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/danielatomas/2ºano/1ºsemestre/Programação/prog_p4/src"/>
+					<Add directory="/home/danielatomas/2ºano/1ºsemestre/Programação/prog_p4/gtest/googletest/include"/>
+					<Add directory="/home/danielatomas/2ºano/1ºsemestre/Programação/prog_p4/gtest/googletest"/>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/prog_p4/cmake-build-debug/gtest/googletest/Makefile&quot;  VERBOSE=1 gtest_main"/>
+					<CompileFile command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/prog_p4/cmake-build-debug/gtest/googletest/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/prog_p4/cmake-build-debug/gtest/googletest/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/prog_p4/cmake-build-debug/gtest/googletest/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="gtest_main/fast">
+				<Option output="/home/danielatomas/2ºano/1ºsemestre/Programação/prog_p4/cmake-build-debug/lib/libgtest_maind.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/danielatomas/2ºano/1ºsemestre/Programação/prog_p4/cmake-build-debug/gtest/googletest"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/danielatomas/2ºano/1ºsemestre/Programação/prog_p4/src"/>
+					<Add directory="/home/danielatomas/2ºano/1ºsemestre/Programação/prog_p4/gtest/googletest/include"/>
+					<Add directory="/home/danielatomas/2ºano/1ºsemestre/Programação/prog_p4/gtest/googletest"/>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/prog_p4/cmake-build-debug/gtest/googletest/Makefile&quot;  VERBOSE=1 gtest_main/fast"/>
+					<CompileFile command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/prog_p4/cmake-build-debug/gtest/googletest/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/prog_p4/cmake-build-debug/gtest/googletest/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/prog_p4/cmake-build-debug/gtest/googletest/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="gtest">
+				<Option output="/home/danielatomas/2ºano/1ºsemestre/Programação/prog_p4/cmake-build-debug/lib/libgtestd.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/danielatomas/2ºano/1ºsemestre/Programação/prog_p4/cmake-build-debug/gtest/googletest"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/danielatomas/2ºano/1ºsemestre/Programação/prog_p4/src"/>
+					<Add directory="/home/danielatomas/2ºano/1ºsemestre/Programação/prog_p4/gtest/googletest/include"/>
+					<Add directory="/home/danielatomas/2ºano/1ºsemestre/Programação/prog_p4/gtest/googletest"/>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/prog_p4/cmake-build-debug/gtest/googletest/Makefile&quot;  VERBOSE=1 gtest"/>
+					<CompileFile command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/prog_p4/cmake-build-debug/gtest/googletest/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/prog_p4/cmake-build-debug/gtest/googletest/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/prog_p4/cmake-build-debug/gtest/googletest/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="gtest/fast">
+				<Option output="/home/danielatomas/2ºano/1ºsemestre/Programação/prog_p4/cmake-build-debug/lib/libgtestd.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/danielatomas/2ºano/1ºsemestre/Programação/prog_p4/cmake-build-debug/gtest/googletest"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/danielatomas/2ºano/1ºsemestre/Programação/prog_p4/src"/>
+					<Add directory="/home/danielatomas/2ºano/1ºsemestre/Programação/prog_p4/gtest/googletest/include"/>
+					<Add directory="/home/danielatomas/2ºano/1ºsemestre/Programação/prog_p4/gtest/googletest"/>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/prog_p4/cmake-build-debug/gtest/googletest/Makefile&quot;  VERBOSE=1 gtest/fast"/>
+					<CompileFile command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/prog_p4/cmake-build-debug/gtest/googletest/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/prog_p4/cmake-build-debug/gtest/googletest/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j2 -f &quot;/home/danielatomas/2ºano/1ºsemestre/Programação/prog_p4/cmake-build-debug/gtest/googletest/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/home/danielatomas/2ºano/1ºsemestre/Programação/prog_p4/gtest/googletest/src/gtest-all.cc">
+			<Option target="gtest"/>
+		</Unit>
+		<Unit filename="/home/danielatomas/2ºano/1ºsemestre/Programação/prog_p4/gtest/googletest/src/gtest_main.cc">
+			<Option target="gtest_main"/>
+		</Unit>
+		<Unit filename="/home/danielatomas/2ºano/1ºsemestre/Programação/prog_p4/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/home/danielatomas/2ºano/1ºsemestre/Programação/prog_p4/gtest/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\gtest\"/>
+		</Unit>
+		<Unit filename="/home/danielatomas/2ºano/1ºsemestre/Programação/prog_p4/gtest/googletest/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\gtest\googletest\"/>
+		</Unit>
+		<Unit filename="/home/danielatomas/2ºano/1ºsemestre/Programação/prog_p4/gtest/googletest/cmake/internal_utils.cmake">
+			<Option virtualFolder="CMake Files\gtest\googletest\cmake\"/>
+		</Unit>
+		<Unit filename="/home/danielatomas/2ºano/1ºsemestre/Programação/prog_p4/cmake-build-debug/CMakeDoxyfile.in">
+			<Option virtualFolder="CMake Files\cmake-build-debug\"/>
+		</Unit>
+		<Unit filename="/home/danielatomas/2ºano/1ºsemestre/Programação/prog_p4/cmake-build-debug/CMakeDoxygenDefaults.cmake">
+			<Option virtualFolder="CMake Files\cmake-build-debug\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

@@ -1,0 +1,46 @@
+1.
+
+NOT A = A NOR A
+
+A OR B = NOT (A NOR B) = (A NOR B) NOR (A NOR B)
+
+A AND B = (A NOR A) NOR (B NOR B)
+
+A | B | A NOR B
+V | V |    F
+V | F |    F
+F | V |    F
+F | F |    V
+
+2.
+a)
+
+C1 | C0 | d3 | d2 | d1 | d0 || f
+0  | 0  |ANY |ANY |ANY | S  || S
+1  | 0  |ANY | S  |ANY |ANY || S
+0  | 1  |ANY |ANY | S  |ANY || S
+1  | 1  | S  |ANY |ANY |ANY || S
+
+b)
+
+xi | yi | carryi || Sumi || Carryi+1
+0  | 0  |   S    ||  S   ||   0
+1  | 0  |   S    || -S   ||   S
+0  | 1  |   S    || -S   ||   S
+1  | 1  |   S    ||  S   ||   1
+
+c)
+
+R  | S  || Q    | -Q
+0  | 0  ||latch |latch
+1  | 0  ||  0   | 1
+0  | 1  ||  1   | 0
+1  | 1  ||  0   | 0
+
+d)
+
+D  | E  || Q    | -Q
+0  | 0  ||latch |latch
+1  | 0  ||latch |latch
+0  | 1  ||  0   | 1
+1  | 1  ||  1   | 0

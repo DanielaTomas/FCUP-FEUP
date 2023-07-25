@@ -1,0 +1,77 @@
+Config > Port > Baudrate > 115200
+
+systemctl restart networking
+
+t3 e t4 fazem a tradução
+
+t3 faz a ligação do computador com a ethernet e o t4 com o router
+
+./download ftp://ftp.up.pt/pub/kodi/timestamp.txt
+
+system reset-config
+
+----------------------------------------
+
+Para configurar o micMTIK router temos de fazer:
+- ligar a porta router mtik ao cisco da direita que vai fazer um loop de tradução. Depois, para a tradução ser feita ligamos o cisco da direita à esquerda do outro, que liga a uma serial port qualquer, isto é, gnu 40S0.
+
+Para as bridges:
+TUXy3E0    -> Switch Porta 1 
+TUXy2E0    -> Switch Porta 2
+TUXy4E0    -> Switch Porta 3
+TUXy4E1    -> Switch Porta 4
+- Observa-se que a 4 liga as interfaces
+- Para configurá-las, 
+
+tuxxy3
+> ifconfig eth0 up
+> ifconfig eth0 172.16.y0.1/24
+> ifconfig eth0
+
+tuxy4:
+
+> ifconfig eth0 up
+> ifconfig eth0 172.16.y0.254/24
+> ifconfig eth0 
+
+> ifconfig eth1 up
+> ifconfig eth1 172.16.y1.253/24
+> ifconfig eth1 
+
+tuxy2:
+
+> ifconfig eth0 up
+> ifconfig eth0 172.16.y1.1/24
+> ifconfig eth0 
+
+Primeiro remover as portas da bridge e depois fazer as ligações que queremos
+
+/interface bridge port remove [find interface =ether(1-5)]
+
+/interface bridge add name=bridge(Y0/Y1)
+
+/interface bridge port add bridge=bridgeY0 interface=ether1
+
+Quando falamos em gnuYX estamo-nos a referir ao tux, E0 = ligar à bridge 0 E1 = ligar à bridge 1
+
+- Trocar cisco rs232 desta vez ele liga ao router mtik
+
+Para configurar o router: 
+- routerboard: 
+ETH1 liga ao PY.1 (P não é porta)
+ETH2 liga a uma porta qualquer (porta 5)
+
+/ip address add address=172.16.sala.Y9/24 interface=ether1
+ether1: corresponde ao ETH1 do routerboard
+
+/ip address add address=172.16.Y1.254/24 interface=ether2
+ether2: corresponde ao ETH2 do routerboard
+
+
+
+echo 1 > /proc/sys/net/ipv4/ip_forward
+echo 0 > /proc/sys/net/ipv4/icmp_echo_ignore_broadcasts
+
+
+estática -> 3
+default -> internet

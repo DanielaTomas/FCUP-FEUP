@@ -1,0 +1,84 @@
+1.
+a)
+  add $s0, $s1, $s2
+  add $s0, $s3, $s0
+
+  f = g + h
+             => f = g + h + i
+  f = i + f
+
+b)
+  sll  $t0, $s0, 2
+  add  $t0, $s6, $t0
+  lw   $t1, 0($t0)
+  lw   $t2, 4($t0)
+  add  $t0, $t1, $t2
+  sll  $t1, $s1, 2
+  add  $t1, $s7, $t1
+  sw   $t0, 0($t1)
+
+  $t0 = f * 4
+  $t0 = &A[f]
+  $t1 = A[f]
+  $t2 = A[f+1]          => B[g] = A[f] + A[f+1];
+  $t0 = A[f] + A[f+1]
+  $t1 = g * 4
+  $t1 = &B[g]
+
+c)
+        li   $t2, 100
+        move $t1, $s6
+        li   $s3, 0
+  loop: lw   $t0, 0($t1)
+        add  $s0, $s0, $t0
+        addi $t1, $t1, 4
+        addi $s3, $s3, 1
+        blt  $s3, $t2, loop
+
+        $t2 = 100
+        $t1 = &A[0]
+        i = 0
+  loop: $t0 = A[0]/A[1]/.../A[99]      =>   for(i = 0; i < 100; i++) {
+        f = f + A[$t1]                        f = f + A[i];
+        $t1 = $t1 + 4                       }
+        i = i + 1
+        if(i < 100) loop
+
+2.
+a)
+  h = A[0] << 4;
+
+  sll  $s2, $s6, 4
+
+b)
+  B[8] = A[i − j];
+
+  move $t0, $s7
+  lw   $t1, 32($t0)
+  sub  $t2, $s3, $s4
+  sll  $t2, $t2, 2
+  add  $t2, $s6, $t2
+  lw   $t3, 0($t2)
+  sw   $t1, 0($t3)
+
+c)
+  B[8] = A[i] + A[j];
+
+  move $t0, $s7
+  lw   $t1, 32($t0)
+  sll  $t2, $s3, 2
+  add  $t2, $s6, $t2
+  lw   $t3, 0($t2)
+  sll  $t4, $s4, 2
+  add  $t4, $s6, $t4
+  lw   $t5, 0($t4)
+  add  $t6, $t3, $t5
+  sw   $t1, 0($t6)
+
+d)
+  f = A[B[g] + 1];
+
+  sll  $t1, $s1, 2
+  add  $t1, $s7, $t1
+  lw   $t2, 0($t1)
+  addi $t3, $t2, 1

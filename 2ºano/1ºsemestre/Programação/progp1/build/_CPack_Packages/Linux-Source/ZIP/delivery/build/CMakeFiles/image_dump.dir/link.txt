@@ -1,0 +1,1 @@
+/usr/bin/c++   -Wall -g -fsanitize=address -fsanitize=undefined -fno-omit-frame-pointer -DROOT_PROJ_DIR='"/home/daniela/2ºano/Programação/progp1/data"'   CMakeFiles/image_dump.dir/programs/image_dump.cpp.o  -o image_dump  librgb.a 

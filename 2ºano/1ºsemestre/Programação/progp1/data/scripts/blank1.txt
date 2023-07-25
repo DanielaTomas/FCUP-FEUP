@@ -1,0 +1,4 @@
+blank 
+ 200 100 
+ 255 0 0
+save output/blank1.png

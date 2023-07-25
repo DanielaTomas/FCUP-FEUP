@@ -1,0 +1,19 @@
+<svg width="2200" height="1100" xmlns="http://www.w3.org/2000/svg">
+    <g transform="scale(2)">
+        <g id="r0">
+            <g id="r01">
+                <rect x="0" y="0" width="25" height="20" fill="blue" transform="scale(8)"/>
+                <rect x="0" y="0" width="25" height="20" fill="green" transform="scale(4)"/>
+                <rect x="0" y="0" width="25" height="20" fill="red" transform="scale(2)"/>
+                <rect x="0" y="0" width="25" height="20" fill="black"/>
+            </g>
+            <g id="r02" transform="translate(325 325)">
+                <use href="#r01" id="r021"/>
+                <use href="#r021" transform="rotate(-90)"/>
+                <use href="#r021" transform="rotate(90)"/>
+                <use href="#r021" transform="rotate(180)"/>
+            </g>
+        </g>
+        <use href="#r0" transform="translate(530 0)"/>
+    </g>
+</svg>

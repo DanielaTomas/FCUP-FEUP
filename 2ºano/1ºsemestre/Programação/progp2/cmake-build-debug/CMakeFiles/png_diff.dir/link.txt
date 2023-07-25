@@ -1,0 +1,1 @@
+/usr/bin/c++  -Wall -g -fsanitize=address -fsanitize=undefined -fno-omit-frame-pointer -DROOT_PROJ_DIR='"/home/danielatomas/2ºano/1ºsemestre/Programação/progp2/data"' -g CMakeFiles/png_diff.dir/programs/png_diff.cpp.o -o png_diff  libsvg.a libtinyxml2.a 

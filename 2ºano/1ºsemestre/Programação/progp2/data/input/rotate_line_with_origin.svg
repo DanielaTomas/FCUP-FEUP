@@ -1,0 +1,10 @@
+<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
+    <line x1="50" y1="50" x2="100" y2="100" stroke="red"
+       transform="rotate(30)" transform-origin="75 75" />
+    <line x1="50" y1="50" x2="100" y2="100" stroke="green"
+          transform="rotate(-30)" transform-origin="75 75"  />
+    <line x1="50" y1="50" x2="100" y2="100" stroke="blue"
+          transform="rotate(60)" transform-origin="75 75"  />
+    <line x1="50" y1="50" x2="100" y2="100" stroke="yellow"
+          transform="rotate(-60)" transform-origin="75 75"  />
+</svg>

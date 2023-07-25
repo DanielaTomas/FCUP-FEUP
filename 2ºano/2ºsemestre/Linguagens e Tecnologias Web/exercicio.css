@@ -1,0 +1,15 @@
+/*
+#todo li { color : magenta } /* R1 
+div.widget ul#todo { color : green } /* R2 
+#todo li:first-child { color : cyan } /* R3 
+#todo li:nth-child(2) ~ li { color : red } /* R4 
+#todo li ~ li { color : blue } /* R5 
+li + li + li { color : purple} /* R6 
+*/
+
+.bar li { color: red } /* R1 */
+section :first-of-type .second { color: yellow } /* R2 */
+section#foo {color: blue } /* R3 */
+section[id=foo] > * {color: cyan } /* R4 */
+.bar li.first:first-child + li { color: inherit } /* R5 */
+#foo > li.first:first-child ~ li { color: magenta } /* R6 */

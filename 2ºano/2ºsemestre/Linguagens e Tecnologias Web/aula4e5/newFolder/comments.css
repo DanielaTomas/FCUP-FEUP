@@ -1,0 +1,86 @@
+#comments {
+  margin: 1em;
+}
+
+
+#comments .user {
+  font-style: italic;
+}
+
+#comments .user:after {
+  font-style: normal;
+  content: ' said:';
+}
+
+#comments .date {
+  float: right;
+}
+
+#comments p {
+  background-color: #edeff0;
+  padding: 1em;
+}
+
+#comments p:before {
+  content: '\201C';
+  font-size: 3em;
+  position: relative;
+  top: 15px;
+  color: #ccc;
+}
+
+#comments form {
+  display: grid;
+
+  padding: 1em;
+  gap: 1em;
+
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+
+  background-color: #edeff0;
+}
+
+#comments form h2 {
+  font-size: 1em;
+  grid-column-end: span 4;
+}
+
+#comments form input {
+  background-color: white;
+  height: 2em;
+}
+
+#comments form textarea {
+  display: block;
+  width: 100%;
+
+  margin: 0 auto;
+  padding: 0;
+
+  height: 6em;
+}
+
+#comments form label {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-column-end: span 2;
+  gap: 1em;
+  align-items: center;
+}
+
+#comments form label:last-of-type {
+  grid-column-end: span 4;
+  grid-template-columns: auto 1fr;
+}
+
+#comments form button {
+  width: auto;
+
+  grid-column-start: 4;
+
+  background-color: black;
+  color: white;
+
+  border: none;
+  padding: 1em;
+}

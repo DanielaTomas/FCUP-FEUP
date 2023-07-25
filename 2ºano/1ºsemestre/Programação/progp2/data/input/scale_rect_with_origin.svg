@@ -1,0 +1,5 @@
+<svg width="301" height="161" xmlns="http://www.w3.org/2000/svg">
+  <rect transform-origin="115 90" x="100" y="80" width="30" height="20" fill="green" transform="scale(4)"/>
+  <rect transform-origin="115 90" x="100" y="80" width="30" height="20" fill="red" transform="scale(2)"/>
+  <rect transform-origin="115 90" x="100" y="80" width="30" height="20" fill="blue"/>
+</svg>

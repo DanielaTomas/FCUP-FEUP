@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="pt.up.fe.ldts.example5.TurtleSpockTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2021-12-07T17:24:18" hostname="daniela-VirtualBox" time="0.042">
+  <properties/>
+  <testcase name="Rotate Left" classname="pt.up.fe.ldts.example5.TurtleSpockTest" time="0.024"/>
+  <testcase name="Rotate Right" classname="pt.up.fe.ldts.example5.TurtleSpockTest" time="0.0"/>
+  <testcase name="Forward" classname="pt.up.fe.ldts.example5.TurtleSpockTest" time="0.017"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

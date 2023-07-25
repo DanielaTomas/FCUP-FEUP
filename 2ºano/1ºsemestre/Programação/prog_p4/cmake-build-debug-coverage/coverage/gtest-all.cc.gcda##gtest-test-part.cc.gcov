@@ -1,0 +1,392 @@
+        -:    0:Source:/home/daniela/2ºano/Programação/prog_p4/gtest/googletest/src/gtest-test-part.cc
+        -:    0:Graph:/home/daniela/2ºano/Programação/prog_p4/cmake-build-debug-coverage/gtest/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.gcno
+        -:    0:Data:/home/daniela/2ºano/Programação/prog_p4/cmake-build-debug-coverage/gtest/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.gcda
+        -:    0:Runs:1
+        -:    1:// Copyright 2008, Google Inc.
+        -:    2:// All rights reserved.
+        -:    3://
+        -:    4:// Redistribution and use in source and binary forms, with or without
+        -:    5:// modification, are permitted provided that the following conditions are
+        -:    6:// met:
+        -:    7://
+        -:    8://     * Redistributions of source code must retain the above copyright
+        -:    9:// notice, this list of conditions and the following disclaimer.
+        -:   10://     * Redistributions in binary form must reproduce the above
+        -:   11:// copyright notice, this list of conditions and the following disclaimer
+        -:   12:// in the documentation and/or other materials provided with the
+        -:   13:// distribution.
+        -:   14://     * Neither the name of Google Inc. nor the names of its
+        -:   15:// contributors may be used to endorse or promote products derived from
+        -:   16:// this software without specific prior written permission.
+        -:   17://
+        -:   18:// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+        -:   19:// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+        -:   20:// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+        -:   21:// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+        -:   22:// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+        -:   23:// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+        -:   24:// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+        -:   25:// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+        -:   26:// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+        -:   27:// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+        -:   28:// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+        -:   29:
+        -:   30://
+        -:   31:// The Google C++ Testing and Mocking Framework (Google Test)
+        -:   32:
+        -:   33:#include "gtest/gtest-test-part.h"
+        -:   34:
+        -:   35:#include "gtest/internal/gtest-port.h"
+        -:   36:#include "src/gtest-internal-inl.h"
+        -:   37:
+        -:   38:namespace testing {
+        -:   39:
+        -:   40:using internal::GetUnitTestImpl;
+        -:   41:
+        -:   42:// Gets the summary of the failure message by omitting the stack trace
+        -:   43:// in it.
+function _ZN7testing14TestPartResult14ExtractSummaryB5cxx11EPKc called 0 returned 0% blocks executed 0%
+    #####:   44:std::string TestPartResult::ExtractSummary(const char* message) {
+    #####:   45:  const char* const stack_trace = strstr(message, internal::kStackTraceMarker);
+    %%%%%:   45-block  0
+branch  0 never executed
+branch  1 never executed
+    %%%%%:   45-block  1
+    #####:   46:  return stack_trace == nullptr ? message : std::string(message, stack_trace);
+    %%%%%:   46-block  0
+branch  0 never executed
+branch  1 never executed
+    %%%%%:   46-block  1
+call    2 never executed
+call    3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+    %%%%%:   46-block  2
+call    7 never executed
+call    8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+    %%%%%:   46-block  3
+branch 12 never executed
+branch 13 never executed
+    %%%%%:   46-block  4
+call   14 never executed
+    %%%%%:   46-block  5
+branch 15 never executed
+branch 16 never executed
+    %%%%%:   46-block  6
+call   17 never executed
+    %%%%%:   46-block  7
+branch 18 never executed
+branch 19 never executed
+    %%%%%:   46-block  8
+call   20 never executed
+    %%%%%:   46-block  9
+branch 21 never executed
+branch 22 never executed
+    %%%%%:   46-block 10
+call   23 never executed
+    %%%%%:   46-block 11
+    $$$$$:   46-block 12
+branch 24 never executed
+branch 25 never executed
+    $$$$$:   46-block 13
+call   26 never executed
+    $$$$$:   46-block 14
+branch 27 never executed
+branch 28 never executed
+    $$$$$:   46-block 15
+call   29 never executed
+    $$$$$:   46-block 16
+branch 30 never executed
+branch 31 never executed
+    $$$$$:   46-block 17
+call   32 never executed
+    $$$$$:   46-block 18
+branch 33 never executed
+branch 34 never executed
+    $$$$$:   46-block 19
+call   35 never executed
+        -:   47:}
+        -:   48:
+        -:   49:// Prints a TestPartResult object.
+function _ZN7testinglsERSoRKNS_14TestPartResultE called 0 returned 0% blocks executed 0%
+    #####:   50:std::ostream& operator<<(std::ostream& os, const TestPartResult& result) {
+    #####:   51:  return os << internal::FormatFileLocation(result.file_name(),
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+    $$$$$:   51-block  0
+call    7 never executed
+    $$$$$:   51-block  1
+call    8 never executed
+    #####:   52:                                            result.line_number())
+call    0 never executed
+        -:   53:            << " "
+    #####:   54:            << (result.type() == TestPartResult::kSuccess
+call    0 never executed
+        -:   55:                    ? "Success"
+    #####:   56:                    : result.type() == TestPartResult::kSkip
+    %%%%%:   56-block  0
+call    0 never executed
+call    1 never executed
+    #####:   57:                          ? "Skipped"
+branch  0 never executed
+branch  1 never executed
+    %%%%%:   57-block  0
+    %%%%%:   57-block  1
+    #####:   58:                          : result.type() == TestPartResult::kFatalFailure
+    %%%%%:   58-block  0
+call    0 never executed
+call    1 never executed
+    #####:   59:                                ? "Fatal failure"
+branch  0 never executed
+branch  1 never executed
+    %%%%%:   59-block  0
+    %%%%%:   59-block  1
+        -:   60:                                : "Non-fatal failure")
+        -:   61:            << ":\n"
+    #####:   62:            << result.message() << std::endl;
+    %%%%%:   62-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    %%%%%:   62-block  1
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+    %%%%%:   62-block  2
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+    %%%%%:   62-block  3
+    %%%%%:   62-block  4
+    %%%%%:   62-block  5
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+    %%%%%:   62-block  6
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+    %%%%%:   62-block  7
+call   16 never executed
+call   17 never executed
+call   18 never executed
+branch 19 never executed
+branch 20 never executed
+    %%%%%:   62-block  8
+call   21 never executed
+call   22 never executed
+call   23 never executed
+call   24 never executed
+branch 25 never executed
+branch 26 never executed
+    %%%%%:   62-block  9
+call   27 never executed
+call   28 never executed
+        -:   63:}
+        -:   64:
+        -:   65:// Appends a TestPartResult to the array.
+function _ZN7testing19TestPartResultArray6AppendERKNS_14TestPartResultE called 0 returned 0% blocks executed 0%
+    #####:   66:void TestPartResultArray::Append(const TestPartResult& result) {
+    #####:   67:  array_.push_back(result);
+    %%%%%:   67-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+    #####:   68:}
+        -:   69:
+        -:   70:// Returns the TestPartResult at the given index (0-based).
+function _ZNK7testing19TestPartResultArray17GetTestPartResultEi called 0 returned 0% blocks executed 0%
+    #####:   71:const TestPartResult& TestPartResultArray::GetTestPartResult(int index) const {
+    #####:   72:  if (index < 0 || index >= size()) {
+    %%%%%:   72-block  0
+branch  0 never executed
+branch  1 never executed
+    %%%%%:   72-block  1
+call    2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    %%%%%:   72-block  2
+    %%%%%:   72-block  3
+    %%%%%:   72-block  4
+branch  6 never executed
+branch  7 never executed
+    #####:   73:    printf("\nInvalid index (%d) into TestPartResultArray.\n", index);
+    %%%%%:   73-block  0
+branch  0 never executed
+branch  1 never executed
+    %%%%%:   73-block  1
+    %%%%%:   73-block  2
+call    2 never executed
+    #####:   74:    internal::posix::Abort();
+call    0 never executed
+        -:   75:  }
+        -:   76:
+    #####:   77:  return array_[static_cast<size_t>(index)];
+    %%%%%:   77-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+        -:   78:}
+        -:   79:
+        -:   80:// Returns the number of TestPartResult objects in the array.
+function _ZNK7testing19TestPartResultArray4sizeEv called 0 returned 0% blocks executed 0%
+    #####:   81:int TestPartResultArray::size() const {
+    #####:   82:  return static_cast<int>(array_.size());
+    %%%%%:   82-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+        -:   83:}
+        -:   84:
+        -:   85:namespace internal {
+        -:   86:
+function _ZN7testing8internal24HasNewFatalFailureHelperC2Ev called 0 returned 0% blocks executed 0%
+    #####:   87:HasNewFatalFailureHelper::HasNewFatalFailureHelper()
+    %%%%%:   87-block  0
+call    0 never executed
+call    1 never executed
+        -:   88:    : has_new_fatal_failure_(false),
+    #####:   89:      original_reporter_(GetUnitTestImpl()->
+    #####:   90:                         GetTestPartResultReporterForCurrentThread()) {
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+    %%%%%:   90-block  0
+call   12 never executed
+call   13 never executed
+call   14 never executed
+call   15 never executed
+call   16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+    %%%%%:   90-block  1
+call   20 never executed
+call   21 never executed
+    $$$$$:   90-block  2
+call   22 never executed
+call   23 never executed
+call   24 never executed
+call   25 never executed
+call   26 never executed
+    #####:   91:  GetUnitTestImpl()->SetTestPartResultReporterForCurrentThread(this);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    %%%%%:   91-block  0
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+    #####:   92:}
+    %%%%%:   92-block  0
+        -:   93:
+    #####:   94:HasNewFatalFailureHelper::~HasNewFatalFailureHelper() {
+    #####:   95:  GetUnitTestImpl()->SetTestPartResultReporterForCurrentThread(
+    #####:   96:      original_reporter_);
+    #####:   97:}
+------------------
+_ZN7testing8internal24HasNewFatalFailureHelperD0Ev:
+function _ZN7testing8internal24HasNewFatalFailureHelperD0Ev called 0 returned 0% blocks executed 0%
+    #####:   94:HasNewFatalFailureHelper::~HasNewFatalFailureHelper() {
+        -:   95:  GetUnitTestImpl()->SetTestPartResultReporterForCurrentThread(
+        -:   96:      original_reporter_);
+    #####:   97:}
+    %%%%%:   97-block  0
+call    0 never executed
+call    1 never executed
+------------------
+_ZN7testing8internal24HasNewFatalFailureHelperD2Ev:
+function _ZN7testing8internal24HasNewFatalFailureHelperD2Ev called 0 returned 0% blocks executed 0%
+    #####:   94:HasNewFatalFailureHelper::~HasNewFatalFailureHelper() {
+    %%%%%:   94-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+    #####:   95:  GetUnitTestImpl()->SetTestPartResultReporterForCurrentThread(
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+    #####:   96:      original_reporter_);
+call    0 never executed
+call    1 never executed
+    #####:   97:}
+------------------
+        -:   98:
+function _ZN7testing8internal24HasNewFatalFailureHelper20ReportTestPartResultERKNS_14TestPartResultE called 0 returned 0% blocks executed 0%
+    #####:   99:void HasNewFatalFailureHelper::ReportTestPartResult(
+        -:  100:    const TestPartResult& result) {
+    #####:  101:  if (result.fatally_failed())
+    %%%%%:  101-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    #####:  102:    has_new_fatal_failure_ = true;
+    %%%%%:  102-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+    #####:  103:  original_reporter_->ReportTestPartResult(result);
+    %%%%%:  103-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+call   11 never executed
+call   12 never executed
+call   13 never executed
+call   14 never executed
+call   15 never executed
+call   16 never executed
+call   17 never executed
+call   18 never executed
+    #####:  104:}
+        -:  105:
+        -:  106:}  // namespace internal
+        -:  107:
+        -:  108:}  // namespace testing

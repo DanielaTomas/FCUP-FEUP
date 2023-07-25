@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="StringReplacerTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2021-12-07T10:15:52" hostname="daniela-VirtualBox" time="0.001">
+  <properties/>
+  <testcase name="stringReplacer()" classname="StringReplacerTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

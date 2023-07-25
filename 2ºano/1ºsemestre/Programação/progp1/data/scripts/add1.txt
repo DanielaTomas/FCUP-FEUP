@@ -1,0 +1,7 @@
+blank 
+ 400 400 
+ 255 0 0 
+add input/lion.png 
+255 255 255
+0 0 
+save output/add1.png

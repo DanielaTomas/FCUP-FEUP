@@ -1,0 +1,11 @@
+<svg width="500" height="500"  xmlns="http://www.w3.org/2000/svg">
+  <polygon points="50,50 50,150 150,150 150,100"
+           transform="scale(4)" transform-origin="50 50"
+           fill="yellow"/>
+  <polygon points="50,50 50,150 150,150 150,100"
+           transform="scale(3)" transform-origin="0 50"
+           fill="black"/>
+  <polygon points="50,50 50,150 150,150 150,100"
+           transform="scale(2)" transform-origin="50 0"
+           fill="red"/>
+</svg>
