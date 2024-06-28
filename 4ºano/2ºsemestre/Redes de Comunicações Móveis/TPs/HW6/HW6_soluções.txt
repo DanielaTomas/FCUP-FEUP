@@ -1,0 +1,56 @@
+Exercises 6
+
+1.
+a. 
+Channel bandwidth = 25*2 = 50 KHz
+# duplex channels = 25000/50 = 500 channels
+
+b.
+500/4 = 125
+
+c.
+N = 1
+Spreading Factor = 2500/25 = 1000
+
+2.
+a.
+Reverse channel bandwidth: 845-825 = 20 MHz
+Forward channel bandwidth: 890-870 = 20 MHz
+Channel bandwidth = 30*2 = 60 kHz
+# duplex channels = (20000+20000)/60 ~ 666
+
+N = 4: 666/4 = 166
+N = 7: 666/7 = 95
+N = 12: 666/12 = 55
+N = 19: 666/19 = 35
+
+b. 
+666*16 = 10656
+
+c.
+N = 4: 4*16 = 64
+N = 7: 7*16 = 112
+N = 12: 12*16 = 192
+N = 19: 19*16 = 304
+
+d.
+N = 4: 100/4 * 666 = 16650      
+N = 7: 100/7 * 666 = 9514     
+N = 12: 100/12 * 666 = 5550      
+N = 19: 100/19 * 666 = 3505
+
+3.
+a.
+(50 MHz)/(25 KHz * 2) = 1000 channels
+
+b.
+100 cells; 100/4 = 25 clusters; 25*1000 = 25000 active users;
+
+c.
+10 times more users --> 10 times more cells; 1000 cells of size ~ 316m x 316m
+
+4.
+a. 100/4 * 5 = 125
+b. 125*4 = 500
+c. 125*1000 = 125000
+d. 1

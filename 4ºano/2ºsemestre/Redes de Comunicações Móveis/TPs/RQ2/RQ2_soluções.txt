@@ -1,0 +1,259 @@
+Revision Questions II
+
+1. Mitigating Narrowband Interference:
+   - Frequecy Hopping Spread Spectrum (FHSS):
+	- sequence of frequency changes determined via pseudo random number sequence
+   - Direct Sequence Spread Spectrum (DSSS):
+	- XOR of the signal with pseudo-random number (chipping sequence)
+		- many chips per bit (e.g., 128) result in higher bandwidth of the signal
+   - Complexity: FHSS and DSSS are complex due to synchronization requirements (FHSS is less complex)
+
+2. DSSS (Direct Sequence Spread Spectrum):
+   - Definition: XOR of the signal with pseudo-random number (chipping sequence)
+   - Robustness: Resistant to frequency selective fading because the wideband signal can recover even if parts are affected by fading.
+
+3. FHSS (Frequency Hopping Spread Spectrum):
+   - Definition: sequence of frequency changes determined via pseudo random number sequence
+   - Advantages:
+	– frequency selective fading and interference limited to short period
+	– simple implementation
+	– uses only small portion of spectrum at any time
+   - Hopping Sequence
+
+4. Slow and Fast Hopping in FHSS:
+   - Slow Hopping: The hop rate is slower than the symbol rate.
+   - Fast Hopping: The hop rate is faster than the symbol rate.
+
+5. Multiple Simultaneous Communications:
+   - DSSS: Yes, using orthogonal codes to minimize interference (CDMA).
+   - FHSS: Yes, by assigning different hopping sequences to different users.
+
+6. Benefits of Spread Spectrum Systems:
+   - Benefits: Interference resistance, security, multipath resistance.
+   - Spreading: Done through techniques like DSSS and FHSS, each with its specific method of spreading the signal.
+
+7. Orthogonality in CDMA:
+   - Definition: Spreading sequences are designed to minimize cross-correlation, reducing interference.
+
+8. Intersymbol Interference (ISI):
+   - Definition: Overlapping of symbols causing distortion.
+   - Causes: Multipath propagation, limited bandwidth.
+   - Effects: Reduces transmission rate.
+   - Reduction: Use equalization, guard intervals, spread spectrum.
+
+9. Orthogonality in MCM:
+   - Definition: Subcarriers are orthogonal to each other, reducing interference.
+   - OFDM Advantages: Frequency selective fading only affects some subcarriers, bandwidth efficiency, robustness to ISI.
+
+10. MCM Tackling ISI:
+    - Method: Divides bandwidth into orthogonal subcarriers, each experiencing flat fading.
+
+11. OFDM System Bandwidth and Data Rate:
+    a. Subcarrier Bandwidth: B/N
+    b. Subcarrier Data Rate: R/N
+    c. Subcarrier Bit Duration: N/R
+    d. Single-Carrier Bit Duration: 1/R
+    e. Single-Carrier Data Rate: R
+    f. Importance: Mitigates multipath effects, enhancing reliability.
+
+12. MAC Scheme Failures in Wireless:
+    - Reason: Hidden terminal problem and varying propagation delays.
+    - Solutions: RTS/CTS, power control, scheduling.
+
+13. Collision Despite Idle Sensing:
+    - Reason: Propagation delay causes overlapping transmissions.
+
+14. Hidden Terminals and MAC Protocols:
+    - ALOHA: High collision rate.
+    - Slotted ALOHA: Reduced collisions but still significant.
+    - CSMA: Collisions still possible.
+    - CSMA/CA (RTS/CTS): Mitigates but doesn't fully eliminate hidden terminal issues.
+
+15. CSMA/CA with Hidden Terminals:
+    - Possible Failures: If RTS/CTS packets collide or are not heard by all terminals.
+
+16. Contention Window in CSMA/CA:
+    - Purpose: Avoids collisions by randomizing transmission times.
+    - After Collision: Size increases exponentially (Binary Exponential Backoff).
+
+17. CSMA/CA with Variable Load:
+    - Handling Variations: Adjusts contention window.
+    - Fair Share: Through distributed coordination function (DCF).
+
+18. MAC Schemes in Cellular and WLANs:
+    - Cellular: Centralized, reservation-based (e.g., TDMA, CDMA).
+    - WLANs: Distributed, random access (e.g., CSMA/CA).
+
+19. MAC Reservation vs. Random Access:
+    - Reservation: Guaranteed bandwidth and QoS for users, efficient for high load as collisions are minimized.
+    - Random Access: Lower access delay, more flexible and simpler to implement without the need for centralized control or scheduling.
+
+20. Spectral Efficiency:
+    - Definition: Spectral efficiency is a measure of how effectively a given communication system uses the available bandwidth to transmit data (bps/Hz).
+    - Comparison: 16-QAM more efficient than ASK by 4-1 = 3 bps/Hz.
+
+21. FEC in Wireless System:
+    Data Bits (D) + Error Bits (E) = 100
+    D/(D+E) = 3/4 <=> D = 1000*3/4 = 750 bits
+    - Data Bits: 750
+    - Error Bits: 1000-750=250
+
+22. IEEE 802.11ac Throughput:
+    a. Modulation Type: Higher-order modulations increase throughput.
+    b. Coding Rate: Higher rates increase throughput but reduce error correction.
+    c. Channel Bandwidth: Wider bandwidths increase capacity.
+    d. Guard Interval: Reduces ISI, impacting throughput.
+
+23. MIMO:
+    - Definition: Technique for sending and receiving more than one data signal simultaneously over the same radio channel by exploiting multipath propagation
+    - Four Uses of MIMO:
+    	- Diversity for improved system performance 
+    	- Beam-forming for improved coverage (less cells to cover a given area) 
+    	- Spatial division multiple access ("MU-MIMO") for improved capacity (more user per cell) 
+    	- Multi layer transmission ("SU-MIMO") for higher data rates in a given bandwidth
+    - Benefits: Increased data rate, reliability, coverage, and spectrum efficiency.
+
+24. 4x3 MIMO Spatial Streams:
+    - Maximum Streams: 3.
+
+25. 2x3 MIMO Parallel Streams:
+    - Maximum Streams: 2.
+
+26. Data Rate with Modulation and Coding Changes:
+    a. 12 Kbps (= 10*1.2)
+    b. 18 Kbps (= 12*1.5)
+
+    or
+
+    Rs = Rb/(Coding_rate*Bits_per_symbol) = 10/((1/2)*5) = 4 Ksymbols/s
+    a. Rb = Rs*Coding_rate*Bits_per_symbol = 4*(1/2)*6 = 12 Kbps
+    b. Rb = 4*(3/4)*6 = 18 Kbps
+
+27. Transmission Types:
+    - Simplex: One-way.
+    - Half-Duplex: Two-way but not simultaneous.
+    - Full-Duplex: Simultaneous two-way.
+
+28. Duplex Channel Alternatives:
+    - Time Division Duplexing (TDD) and Frequency Division Duplexing (FDD).
+
+29. GSM Channels in Europe:
+    - 900 MHz and 1800 MHz bands
+    - GSM 900:
+	- Uplink: 890-915 MHz
+	- Downlink: 935-960 MHz
+	- Each channel has a bandwidth of 200 kHz.
+	- The total available bandwidth for uplink or downlink is 25 MHz.
+	- Number of channels: (25 MHz)/(200 kHz) = 125.
+    - GSM 1800:
+	- Uplink: 1710-1785 MHz
+	- Downlink: 1805-1880 MHz
+	- Each channel has a bandwidth of 200 kHz.
+	- The total available bandwidth for uplink or downlink is 75 MHz.
+	- Number of channels: (75 MHz)/(200 kHz) = 375. 
+    - There are 498 (=124+374) channels available
+	- The guard bands at the edges of the spectrum are crucial for reducing interference with neighboring frequency bands and ensuring clear communication channels. This is why the number of usable channels is slightly less than the theoretical maximum calculated
+
+30. Multiple Access Techniques:
+    - FDMA: Bandwidth divided into several frequency bands 
+    - TDMA: Bandwidth divided into time slots
+    - CDMA: Allows multiple users to share the same frequency band by assigning unique codes to each user
+    - OFDMA: Subdivides the frequency band into multiple orthogonal sub-carriers and allocates subsets of these sub-carriers to individual users
+    - CDMA has some degree of inherent security due to spread spectrum properties.
+
+31. Interference Countermeasures:
+    - SDMA: Use beamforming to spatial separate signals.
+    - TDMA: Time slots.
+    - FDMA: Frequency bands.
+    - OFDMA: Orthogonal subcarriers.
+    - CDMA: Orthogonal codes.
+
+32. (=ex.6)
+
+33. Power Control in CDMA:
+    - Purpose: To minimize interference, maximize capacity, improve performance.
+
+34. Cell Shrinking in CDMA:
+    - Cell breathing
+    - Cause: Additional traffic appears as noise to other users. If the noise level is too high users drop out of cells
+
+35. Universal Reuse in CDMA:
+    - Reason: Each user has a unique code, which distinguishes their signal from others even if they share the same frequency band and reduce interference.
+
+36. TDMA vs. CDMA:
+    - TDMA: Simplicity, efficient for low traffic.
+    - CDMA: Higher capacity, better handling of interference.
+
+37. 
+    - Cellular System Reasons: Capacity, coverage, frequency reuse.
+    - SDM/FDM Combination: Typically each cell holds a certain number of frequency bands. Neighboring cells are not allowed to use the same frequencies.
+    - DCA influence: Whether or not DCA depends on the current load. It can react upon sudden increase in traffic by borrowing capacity from other cells. However the "borrowed" frequency must then be blocked in neighboring cells.
+
+38. 
+    - Simplicity; efficient at low load
+
+39.
+    - GSM supports simultaneous transmissions of multiple users through the combination of TDMA and FDMA, allowing multiple users to share the same frequency channel by assigning different time slots.
+    - GSM ses FDD to separate uplink and downlink transmissions, assigning different frequency bands for each direction to ensure simultaneous bidirectional communication without interference
+
+40. GSM Collisions:
+    - Possibility: Yes, only during connection setup.
+
+41. GSM System Elements:
+    - Elements: 
+	- MS: Represents the mobile device used by the end-use
+	- BTS: Transmits and receives radio signals to/from mobile devices within its coverage area
+	- BSC: Manages multiple BTSs, handles handovers, and controls radio resources.
+	- MSC: Core of the GSM network, connects calls between mobile users and external networks
+	- HLR: Central database storing permanent subscriber information and user profiles.
+	- VLR: Stores temporary information about visiting mobile users.
+	- EIR: Manages information about mobile equipment, helping to prevent theft and fraud.
+	- AUC: Provides authentication and encryption keys for secure communication.
+    - Advantages: Interoperability, efficiency, scalability, security
+
+42. GSM Evolution for Data Services:
+    - New Elements:
+	- GPRS: General Packet Radio Service
+	- EDGE: Enhanced Data Rates for GSM Evolution
+	- UMTS: Universal Mobile Telecommunication Network
+	- HSPA: High-Speed Packet Access (HSxPA: HSDPA, HSUPA)
+	- LTE: Long Term Evolution
+	- LTE-A: LTE Advanced
+	- eMBB: Enhanced Mobile Broadband
+	- URLLC: Ultra Reliable Low Latency Communications
+	- mMTC: Massive Machine Type Communications
+   - New network elements like SGSN, GGSN, RNC, and Node B were introduced to manage packet-switched data sessions, provide higher data speeds, and enhance overall network efficiency for mobile data services.
+
+
+-------- Completely from chatgpt from here --------
+
+43. GSM Identifiers:
+    - Use: Different purposes for tracking, billing, and security.
+    - User-related: MSISDN, IMSI.
+    - System-related: LAI, CI.
+
+44. Location Tracking in GSM:
+    - Method: Location updates through LAI changes.
+
+45. MS and SIM Functions:
+    - Separation: Ensures flexibility and security.
+    - User Data: Stored in SIM, protected by encryption.
+
+46. GSM Call Establishment Signaling:
+    - Steps: Paging, authentication, setup, and completion.
+
+47. GSM/GPRS, UMTS, LTE Differences:
+    - Architecture: Increasing complexity and capability.
+    - Radio Technology: From TDMA to CDMA to OFDMA.
+
+48. UMTS Multi-user Support:
+    - Scheme: WCDMA.
+    - Uplink/Downlink: Typically FDD.
+
+49. GSM, UMTS, LTE Differences:
+    - Radio Network: Evolution from circuit-switched to packet-switched.
+    - Technology: Advances in modulation and coding.
+
+50. Cell Breathing:
+    - Definition: Variable cell size due to load.
+    - Systems: CDMA-based

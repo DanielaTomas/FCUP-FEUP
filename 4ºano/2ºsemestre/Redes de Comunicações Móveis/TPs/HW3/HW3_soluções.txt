@@ -1,0 +1,178 @@
+Exercises 3
+
+1.
+a. The expression provides information about the gain of the antenna in dBi (decibels relative to isotropic)
+
+b.
+Antenna gain = 3dBi
+Pout = 10W
+Glinear = 10^(GdBi/10)
+
+Pout_total = Pout * 10^(Gain/10)
+Pout_total = 10 * 10^(3/10) ~ 20W 
+Pout_total ~ 10*log(20) ~ 13dBW
+
+Area = 1 (o prof. vai colocar no enunciado a distância)
+
+Wav = Pout_total / Area
+Wav = 20W/1 ~ 13dBW
+
+2.
+The formula for the length of a half-wave dipole: L = λ/2
+λ = 2*L = 2*10 = 20m
+f = c/λ = (3*10⁸)/20 = 15 MHz
+
+3.
+a.
+λ = c/f = (3*10⁸)/300 = 10⁶m
+L = λ/2 = 10⁶/2 = 500000m = 500km
+
+b.
+λ = 2*L = 2*1 = 2m
+f = c/λ = (3*10⁸)/2 = 150 MHz
+
+4.
+Pt = 50W
+a.
+Pt(dBW) = 10*log(Pt/1W) = 10*log(50) ~ 17 dBW
+Pt(dBm) = 10*log(Pt/1mW) = 10*log(50000) ~ 47 dBm
+
+b.
+f = 900 MHz = 9*10⁸ Hz
+λ = c/f = (3*10⁸)/(9*10⁸) = 1/3 = 0.33m
+
+Pr = Pt*Gt*Gr*(λ/(4πd))²
+Pr = 50*((1/3)/(4π*100))² = 3.5*10⁻⁶ W = 3.5*10⁻³mW
+Pr = 10*log(3.5*10⁻³) ~ -25 dBm
+
+Outra forma de resolver:
+n = 2 (free space)
+LdB = 20*log(f) + 10*n*log(d) - 147.56 dB
+LdB = 20*log(9*10⁸) + 10*2*log(100) - 147.56
+LdB ~ 72 dB
+Pr = Pt + Gt + Gr - L = 47 + 0 + 0 - 71.53 ~ -25 dBm
+
+c.
+Pr = Pt*Gt*Gr*(λ/(4πd))²
+Pr = 50*((1/3)/(4π*10000))² = 3.5*10⁻¹⁰ W = 3.5*10⁻⁷ mW
+Pr = 10*log(3.5*10⁻⁷) ~ -65 dBm
+
+Outra forma de resolver:
+LdB = 20*log(9*10⁸) + 10*2*log(10000) - 147.56
+LdB ~ 112 dB
+Pr = 47 + 0 + 0 - 112 ~ -65 dBm
+
+Mais outra forma:
+Pr(d=10km) = Pr(d=100m)/10000 => Pr(dbm) = -65dbm
+
+d.
+Pr = Pt*Gt*Gr*(λ/(4πd))²
+Pr = 50*2*((1/3)/(4π*10000))² = 7*10⁻¹⁰ W = 7*10⁻⁷ mW
+Pr = 10*log(7*10⁻⁷) ~ -62 dBm
+
+Outra forma de resolver:
+LdB = 20*log(9*10⁸) + 10*2*log(10000) - 147.56
+LdB ~ 112 dB
+2 = 3dB
+Pr = 47 + 0 + 3 - 112 ~ -62 dBm
+
+Mais outra forma:
+Gt: 1 -> 2
+    0 -> ~3dB
+=> Pr = -65 + 3 = -62 dbm
+
+5.
+Pt = 50W = 47dBm
+n = 3.1
+
+a. 2.7 to 3.5
+
+b.
+LdB = 20*log(9*10⁸) + 10*3.1*log(100) - 147.56
+LdB ~ 93.5 dB
+Pr = 47 + 0 + 0 - 93.5 ~ -47 dBm
+
+c.
+LdB = 20*log(9*10⁸) + 10*3.1*log(10000) - 147.56
+LdB ~ 155.5 dB
+Pr = 47 + 0 + 0 - 155.5 ~ 109 dBm
+
+d.
+Pr = 47 + 0 + 2 - 155.5 ~ 107 dBm
+
+6. (feito na aula)
+
+7.
+Pt = 0.1W
+f = 2GHz
+diameter = 1.2m
+
+a.
+r = 1.2/2 = 0.6
+f = 2Hz = 2*10⁹ Hz
+A = π*r²
+
+G = (7*A)/λ²
+  = (7*A*f²)/c²
+  = (7*π*(0.6)²*(2*10⁹)²)/(3*10⁸)²
+  = 351.85 = 10*log(351.85) = 25.46 dB
+
+b.
+Effective radiated power (ERP) = Pt * G
+0.1W * 351.85 = 35.185W
+
+c.
+LdB = 20*log(f) + 10*n*log(d) - 147.56 dB
+LdB = 20*log(2*10⁹) + 10*2*log(24000) - 147.56
+LdB ~ 126 dB
+Pr = 20 + 25.46 + 25.46 - 126 ~ 55 dBm
+
+8.
+a.
+f = 1.575GHz = 1.575×10⁹Hz
+λ = c/f = (3*10⁸)/(1.575*10⁹) ~ 0.19m
+
+b./c.
+Pt = 50W = 47dbm
+20000 km = 20000000 m
+L = 20*log(1.575*10⁹) + 20*log(20000000) - 147.56 ~ 182dB
+Pr = Pt + Gt + Gr - L = 47 + 5 + 0 - 182 = -130dBm
+Ө ~ -130 dBm
+
+d.
+Path loss will increase by 6 dB (assuming free space propagation) and therefore Pr will decrease by 6 dB. As a result, Ө will also decrease by about 6dB.
+
+9.
+Pt = 20W ~ 43 dbm
+Pr = -116 dbm
+Gt = 0 dB
+Gr = 2.5 dB
+α = 3.5
+f = 2Ghz
+
+Pr = Pt + Gt + Gr - L <=> L = 116 + 43 + 2.5 + 0 = 161.5 dB
+
+L = 20*log(f) + 10*α*log(d)
+<=> 161.5 = 20*log(2) + 10*3.5*log(d)
+<=> 161.5 = 35*log(d)
+<=> d ~ 27687m
+
+------------ Não é preciso fazer/estudar a partir daqui
+
+10.
+Coherence time (Tc) = 10 ms
+Coherence bandwidth (Bc) = 600 kHz
+Bit rate (R) = 50 kbps
+
+a.
+Symbol duration (Ts) = 1/R = 1/50000 = 0.02 ms
+Since Tc >> Tb, the channel is experiencing slow fading
+
+b.
+Signal Bandwidth ~ Bit rate <=> 50kbps ~ 50kHz
+Since the coherence bandwidth (600 kHz) is much larger than the signal bandwidth (50 kHz), the channel is experiencing flat fading.
+
+11.
+Any signal with a bandwidth <= 100kHz will experience flat fading
+C = 2*B*log₂(M) = 2*100*log₂(2) = 200 kbps
+Answer: 0 to 200 kbps

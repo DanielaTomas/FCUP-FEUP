@@ -1,0 +1,85 @@
+Exercises 5
+
+1.
+a.
+Bit rate = 9.6 kbps = 9.6*10³ bps
+Chip rate = 1.2288 Mchips/sec = 1.2288*10⁶ chips/sec
+
+Chips per bit = Bit rate/Chip rate = (1.2288*10⁶)/(9.6*10³) = 128
+
+b. 128 (same as the number of chips per bit)
+
+c. Bandwidth ratio = Bandwidth of original signal / Bandwidth of spread signal ~ Spreading Factor = 128
+
+2. 
+a.
+(ver imagem ex2a.jpg)
+d21 = (2+2+2+2)/8 = 1
+d20 = (2+2+2+2)/8 = 1
+
+b.
+1  1 1 -1 1 -1 -1 -1 | 1  1 1 -1 1 -1 -1 -1
+1 -1 1  1 1 -1  1  1 | 1 -1 1  1 1 -1  1  1
+
+1-1+1-1+1+1-1-1 + 1-1+1-1+1+1-1-1 = 0 -> São ortogonais
+
+c. 8
+
+d. 8
+
+e.
+1 error:
+2 -2 0 2 0 0 2 2 | 2 0 2 0 2 -2 0 0
+d11 = (2-2-2-2-2)/8 = -0.75
+d10 remains the same
+
+3 errors:
+2 2 2 2 0 0 2 2 | 2 0 2 0 2 -2 0 0
+d11 = (2+2+2+2-2-2-2)/8 = 0
+d10 remains the same
+
+5 errors:
+2 2 2 2 2 2 2 2 | 2 0 2 0 2 -2 0 0
+d11 = (2+2+2-2+2-2-2-2)/8 = 0
+d10 remains the same
+
+The CDMA system can tolerate errors in received signals, with a correlation for Code1 slightly decreasing with one error. However, as errors increase, the correlation drops to zero, while Code2 remains consistent with a 1 correlation, indicating robustness but decreased accuracy.
+
+3.
+Transmission rate: 30 kbps
+Bits per symbol: 3
+Time between hops: 0.125 ms
+
+Hop rate = 1 / Time between hops = 1 / 0.125 ms = 8000 hops per second
+
+Symbol rate = Transmission rate / Bits per symbol = 30 Kbps / 3 = 10000 symbols per second
+
+The 8000 hops per second hop rate is less than the 10000 symbols per second symbol rate. Thus, the system uses a slow frequency hopping spread spectrum.
+
+4.
+Total bandwidth: Ws = 400 MHz
+Individual channel bandwidth: fd = 100 Hz
+
+M = Ws/fd = (400 MHz)/(100 Hz) = 4*10⁶
+The minimum number of PN bits = log₂(4*10⁶) = 22
+
+5.
+a. log₂(M) = log₂(4) = 2
+b. 250 (4*250=1000)
+c. Ws = 250*Wd
+
+6.
+a. MFSK
+b. L = 2
+c. M = 2^L = 2^2 = 4
+d. slow FHSS
+e. 2^3 = 8
+f. f2, f0, f2, f1, f3, f2, f2
+
+7.
+a. B_subcarrier = B/N
+b. R_subcarrier = R/N
+c. T_subcarrier = 1/R_subcarrier = N/R
+d. T_single-carrier = 1/R
+e. R_single-carrier = R
+f. Importance: Mitigates multipath effects, enhancing reliability. (…)

@@ -1,0 +1,108 @@
+Revision questions I
+
+1.
+The equation λ = v/f describes the relationship between the wavelength (λ) and frequency (f) of a sine wave, where v represents the wave's speed. As a result, as the frequency of a sine wave increases, its wavelength decreases, and vice versa, given that the speed remains constant.
+
+2.
+The spectrum of a signal is the range of frequencies it consists in while the bandwidth of a signal is the width of the spectrum.
+
+3.
+A*sin(2πft + Φ)
+Amplitude, frequency/period, phase
+
+4.
+Channel Capacity - the maximum rate at which data can be transmitted over a given communication path, or channel, under given conditions (bits/s).
+
+5.
+C = B*log₂(1+SNR)
+Bandwidth, Signal-to-Noise (SNR)
+
+6.
+Spectral Efficiency refers to the efficiency with which a given bandwidth is utilized to transmit information.
+
+7.
+Transmission - radiates electromagnetic energy into space.
+Reception - collects electromagnetic energy from space.
+
+8.
+Isotropic antenna (idealized) - Radiates power equally in all directions. Convenient reference for expressing the properties of real antennas.
+
+9.
+Antenna gain - Power output, in a particular direction, compared to that produced in any direction by a perfect isotropic antenna.
+
+10.
+The statement "The antenna has a gain of 10 dBi" means that the antenna provides 10 decibels of gain compared to an ideal isotropic antenna.
+
+11.
+Antenna's directional properties, such as its main lobe, side lobes, backbone and beamwidth.
+
+12.
+Shape of antenna proportional to wavelength.
+
+13.
+The advantage of a parabolic reflective antenna lies in its ability to focus electromagnetic energy in a specific direction.
+
+14.
+Attenuation is the gradual weakening of a signal over distance.
+
+15.
+The primary cause of signal loss in satellite communications is attenuation due to the long propagation path through the Earth's atmosphere. Factors such as atmospheric absorption, scattering, and weather conditions can all contribute to signal loss in satellite communications. Additionally, signal loss can occur due to free space path loss, which is the natural spreading out of signal energy as it travels through space away from the satellite.
+
+16.
+Radio propagation on land differs from free space due to obstacles and terrain features. In free space, radio waves travel straight lines, while on land, they can undergo reflection, diffraction, and scattering due to interactions with objects like buildings and trees, resulting in signal attenuation and multipath propagation.
+
+17.
+Refraction - bending of microwaves by the atmosphere.
+
+18.
+Diffraction - Secondary waves behind objects with sharp edges.
+Scattering - Interactions between small objects or rough surfaces.
+
+19.
+Beyond a certain distance, received power decreases logarithmically with distance.
+
+20.
+Reflection, refraction, diffraction, scattering, multipath propagation.
+Sky wave or ground wave propagation (frequencies below 30 MHz).
+
+21.
+Reflection, diffraction, and scattering cause Multipath Propagation.
+
+Multiple copies of a signal may arrive at different phases - If phases add destructively, the signal level relative to noise declines, making detection more difficult.
+
+Intersymbol interference (ISI) - One or more delayed copies of a pulse may arrive at the same time as the primary pulse for a subsequent bit (or symbol).
+
+Rapid signal fluctuations - Over a few centimeters.
+
+22., 23., 24., 25. Não saem no teste
+
+26.
+Intersymbol interference (ISI) - One or more delayed copies of a pulse may arrive at the same time as the primary pulse for a subsequent bit (or symbol).
+ISI is caused by channel characteristics such as multipath propagation.
+ISI can significantly degrade the performance of a digital channel by making it difficult to distinguish between successive symbols, leading to errors in decoding and reducing the achievable transmission rate.
+
+27.
+Amplitude Shift Keying (ASK) is a method where binary values are represented by different amplitudes of the carrier signal. However, it is susceptible to interference. Multilevel ASK (M-ASK) can address this limitation by encoding more than two amplitude levels per symbol, but the system becomes more susceptible to errors and requires higher signal-to-noise ratios for reliable communication.
+
+27. https://mcsnitc.blogspot.com/2012/04/t1.html
+The receiver may "check" the distance between the received point and the neighbouring points. The receiver then chooses the closest neighbour and assumes that the sender originally transmitted data represented by the chosen point. The more points a PSK scheme uses the higher are chances that interference (noise) shifts a transmitted "point" onto another. If the gaps between the points are too small, in particular smaller than noise added during transmission, chances are very high that the receiver will map received data onto the wrong point in the constellation diagram (please note: data is coded using PSK, the points in the constellation diagram represent codes, these codes are then transmitted – it is just simpler to think in "points"...).
+
+29.
+Minimizes errors and facilitates error recovery by reducing errors when there is noise.
+
+30.
+Phase shift with reference to previous bit
+- Binary 0: signal burst of same phase as previous signal burst
+- Binary 1: signal burst of opposite phase to previous signal burst
+
+31.
+QAM is a combination of ASK and PSK
+
+32.
+The "Quadrature" part refers to the fact that it operates on two carrier waves with a phase difference of π/2 radians (one quarter of a cycle), and "Amplitude Modulation" refers to the modulation of the amplitude levels of these carrier waves to represent digital data. 
+
+33. Não demos
+
+34.
+Yes, but there are limitations to consider: noise sensitivity, complexity, bandwidth usage.
+
