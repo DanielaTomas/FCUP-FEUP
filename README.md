@@ -1,8 +1,5 @@
 # FCUP & FEUP
 
-* [dropbox fcup](https://www.dropbox.com/sh/3qfjyb43fkof7ll/AAAfKRquLZRwHRWPYyqcupSia?dl=0)
-* [accio](https://accio.pt/feup/L:EIC)
-
 ## 1º Ano (2020/2021)
 <table>
     <tr>
