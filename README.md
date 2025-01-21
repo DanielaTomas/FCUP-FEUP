@@ -103,7 +103,7 @@
     <tr>
         <td>FSI</td>
         <td><a href="https://github.com/DanielaTomas/FCUP-FEUP/tree/main/3%C2%BAano/1%C2%BAsemestre/Fundamentos%20de%20Seguran%C3%A7a%20Inform%C3%A1tica">Fundamentos de Segurança Informática</a></td>
-        <td>C</td>
+        <td>COMP</td>
         <td><a href="https://github.com/DanielaTomas/FCUP-FEUP/tree/main/3%C2%BAano/2%C2%BAsemestre/Compiladores">Compiladores</a></td>
     </tr>
     <tr>
@@ -173,4 +173,27 @@
         <td><a href="https://github.com/DanielaTomas/FCUP-FEUP/tree/main/4%C2%BAano/1%C2%BAsemestre/Vis%C3%A3o%20Computacional">Visão Computacional</a></td>
         <td>TAR</td>
         <td><a href="https://github.com/DanielaTomas/FCUP-FEUP/tree/main/4%C2%BAano/2%C2%BAsemestre/T%C3%B3picos%20Avan%C3%A7ados%20em%20Redes">Tópicos Avançados em Redes</a></td>
+    </tr>
+</table>
+
+## 5º Ano (2024/2025)
+<table>
+  <tr>
+    <th colspan="2">1º semestre</th>
+    <th colspan="2">2º semestre</th>
+  </tr>
+<tbody>
+  <tr>
+    <td align="center" colspan="4"><s>Dissertação</s>&#128274</td>
+  </tr>
+  <tr>
+    <td>GES</td>
+    <td><a href="https://github.com/DanielaTomas/FCUP-FEUP/tree/main/5%C2%BAano/1%C2%BAsemestre/Gest%C3%A3o%20e%20Empreendedorismo">Gestão e Empreendedorismo</a></td>
+    <td colspan="2" rowspan="2"></td>
+  </tr>
+  <tr>
+    <td>ERMS</td>
+    <td><a href="https://github.com/DanielaTomas/FCUP-FEUP/tree/main/5%C2%BAano/1%C2%BAsemestre/Engenharia%20de%20Requisitos%20e%20Modula%C3%A7%C3%A3o%20de%20Software">Engenharia de Requisitos e Modulação de Software</a></td>
+  </tr>
+</tbody>
 </table>
