@@ -184,7 +184,7 @@
   </tr>
 <tbody>
   <tr>
-    <td align="center" colspan="4"><s>Dissertação</s>&#128274</td>
+    <td align="center" colspan="4"><a href="https://github.com/DanielaTomas/FCUP-SCHEDULE/">Dissertação - Improved Monte Carlo Tree Search for University Course Timetabling</a></td>
   </tr>
   <tr>
     <td>GES</td>
